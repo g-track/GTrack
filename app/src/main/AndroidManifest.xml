@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".studentComplaintCompose"></activity>
         <activity android:name=".parentRegister">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +20,7 @@
         <activity android:name=".parentLogin" />
         <activity android:name=".studentComplaintDetails" />
         <activity android:name=".studentLogin" />
-        <activity android:name=".studentHome">
-
-        </activity>
+        <activity android:name=".studentHome"></activity>
     </application>
 
 </manifest>
