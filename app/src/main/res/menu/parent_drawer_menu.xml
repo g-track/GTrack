@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/group_upper"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/myProfile_id"
+            android:title="My Profile"
+            android:icon="@drawable/profile_icon"
+            >
+        </item>
+        <item
+            android:id="@+id/viewBusDetails_id"
+            android:title="View Bus Details"
+            android:icon="@drawable/bus_icon">
+        </item>
+    </group>
+    <group
+        android:id="@+id/group_lower">
+        <item
+            android:id="@+id/logOut_id"
+            android:title="Log Out"
+            android:icon="@drawable/logout_icon">
+        </item>
+    </group>
+
+</menu>
