@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/trackBus_id"
+            android:title="Track Bus"
+            android:icon="@drawable/car_icon">
+        </item>
+        <item
+            android:id="@+id/complaint_id"
+            android:title="Complaint"
+            android:icon="@drawable/complaint_icon">
+        </item>
+        <item
+            android:id="@+id/setting_id"
+            android:title="Time Setting"
+            android:icon="@drawable/time_set_icon">
+        </item>
+
+    </group>
+</menu>
