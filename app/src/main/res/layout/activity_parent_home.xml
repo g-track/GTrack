@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".studentHome"
+    tools:context=".parentHome"
     android:background="@color/colorPrimary"
-    android:id="@+id/drawer_id">
+    android:id="@+id/parent_drawer">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <include
-            android:id="@+id/main_toolbar"
+            android:id="@+id/parent_main_toolbar"
             layout="@layout/app_toolbar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -23,7 +23,7 @@
         </include>
 
         <FrameLayout
-            android:id="@+id/framLayout_id"
+            android:id="@+id/parent_framLayout_id"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="56dp"
@@ -31,12 +31,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/main_toolbar">
+            app:layout_constraintTop_toBottomOf="@id/parent_main_toolbar">
 
         </FrameLayout>
 
         <android.support.design.widget.BottomNavigationView
-            android:id="@+id/bottomNavigation_id"
+            android:id="@+id/parent_bottomNavigation_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -52,7 +52,7 @@
     </android.support.constraint.ConstraintLayout>
 
     <android.support.design.widget.NavigationView
-        android:id="@+id/navigationView_id"
+        android:id="@+id/parent_navigationView_id"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="start"
