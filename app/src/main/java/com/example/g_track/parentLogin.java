@@ -59,7 +59,7 @@ public class parentLogin extends AppCompatActivity {
     public void parentLogin(View view){
         Toast.makeText(this, "Login Successfull!", Toast.LENGTH_LONG).show();
 
-        Intent studentHomePage = new Intent(getApplicationContext(), studentHome.class);
-        startActivity(studentHomePage);
+        Intent parentHomePage = new Intent(getApplicationContext(), parentHome.class);
+        startActivity(parentHomePage);
     }
 }

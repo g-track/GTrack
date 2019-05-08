@@ -18,13 +18,17 @@
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity android:name=".parentRegister">
         </activity>
         <activity android:name=".parentLogin" />
         <activity android:name=".studentComplaintDetails" />
-        <activity android:name=".studentLogin" />
+        <activity android:name=".studentLogin" >
+
+        </activity>
         <activity android:name=".studentHome">
+
 
         </activity>
     </application>
