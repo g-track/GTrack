@@ -16,7 +16,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class parentProfileFragment extends Fragment {
     private CircleImageView parentProfileImage;
-    private Button btnParentUpdateProfile;
+
 
 
     public parentProfileFragment() {
@@ -36,7 +36,6 @@ public class parentProfileFragment extends Fragment {
 
     private void initialization(View view) {
         parentProfileImage = view.findViewById(R.id.parent_profile_image);
-        btnParentUpdateProfile = view.findViewById(R.id.btn_parent_update_info);
     }
 
 }
