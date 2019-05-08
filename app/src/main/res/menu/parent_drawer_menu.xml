@@ -5,13 +5,13 @@
         android:id="@+id/group_upper"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/myProfile_id"
+            android:id="@+id/parent_myProfile_id"
             android:title="My Profile"
             android:icon="@drawable/profile_icon"
             >
         </item>
         <item
-            android:id="@+id/viewBusDetails_id"
+            android:id="@+id/parent_viewBusDetails_id"
             android:title="View Bus Details"
             android:icon="@drawable/bus_icon">
         </item>
@@ -19,7 +19,7 @@
     <group
         android:id="@+id/group_lower">
         <item
-            android:id="@+id/logOut_id"
+            android:id="@+id/parent_logOut_id"
             android:title="Log Out"
             android:icon="@drawable/logout_icon">
         </item>
