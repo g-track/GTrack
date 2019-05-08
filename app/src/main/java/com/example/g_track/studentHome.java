@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -87,6 +88,7 @@ public class studentHome extends AppCompatActivity {
                         fragment = new studentProfileFragment();
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
+                       // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.updateStop_id:
                         Toast.makeText(studentHome.this, "Update Stop Location is Clicked.", Toast.LENGTH_SHORT).show();
@@ -95,7 +97,11 @@ public class studentHome extends AppCompatActivity {
                         Toast.makeText(studentHome.this, "View Route is Clicked.", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.viewBusDetails_id:
-                        Toast.makeText(studentHome.this, "View Bus Details is Clicked.", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(studentHome.this, "View Bus Details is Clicked.", Toast.LENGTH_SHORT).show();
+                        fragment = new studentViewBusDetailsFragment();
+                        loadFragment(fragment);
+                        main_drawer.closeDrawer(GravityCompat.START);
+                       // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.logOut_id:
                         Toast.makeText(studentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();

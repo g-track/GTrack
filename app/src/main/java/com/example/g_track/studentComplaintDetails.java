@@ -37,7 +37,7 @@ public class studentComplaintDetails extends AppCompatActivity {
         setSupportActionBar(mToolbar);
         if (getSupportActionBar()!=null){
             getSupportActionBar().setTitle("Complaint Details");
-          //  getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         }
     }
 }
