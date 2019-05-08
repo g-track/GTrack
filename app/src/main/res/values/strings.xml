@@ -17,5 +17,9 @@
     <string name="enter_your_child_s_id">Enter your child\'s ID</string>
     <string name="enter_your_password">Enter your password...</string>
     <string name="subject">Subject</string>
+    <string name="forget_password">Forget Password?</string>
+    <string name="reset_password">We just sent a 4 digit code to your mobile number. Please enter the code below to reset the password.</string>
+    <string name="next">Next</string>
+    <string name="reset_password_">Reset Password</string>
 
 </resources>

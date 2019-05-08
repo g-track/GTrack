@@ -84,6 +84,9 @@ public class parentHome extends AppCompatActivity {
                         break;
                     case R.id.parent_viewBusDetails_id:
                         Toast.makeText(parentHome.this, "View Bus Details is Clicked.", Toast.LENGTH_SHORT).show();
+                        fragment = new parentViewBusDetails();
+                        loadFragment(fragment);
+                        main_drawer.closeDrawer(GravityCompat.START);
                         break;
                     case R.id.parent_logOut_id:
                         Toast.makeText(parentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();

@@ -62,4 +62,10 @@ public class parentLogin extends AppCompatActivity {
         Intent parentHomePage = new Intent(getApplicationContext(), parentHome.class);
         startActivity(parentHomePage);
     }
+    public void forgetPassword(View view){
+        Toast.makeText(this, "Forget Password!", Toast.LENGTH_LONG).show();
+
+        Intent parentForgetPass = new Intent(getApplicationContext(), parentForgetPassword.class);
+        startActivity(parentForgetPass);
+    }
 }
