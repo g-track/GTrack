@@ -1,14 +1,309 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".studentProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <RelativeLayout
+        android:id="@+id/student_profile_relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Student profile Fragment" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-</FrameLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@color/colorPrimary"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/student_profile_image"
+                    android:layout_width="150dp"
+                    android:layout_height="150dp"
+                    android:src="@drawable/profileimage"
+                    android:layout_centerHorizontal="true"
+                    android:elevation="2dp" />
+
+                <LinearLayout
+                    android:id="@+id/student_profile_cardview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <android.support.v7.widget.CardView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="90dp"
+                        android:padding="15dp"
+                        app:cardCornerRadius="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/student_cardView_LinearLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <LinearLayout
+                                android:id="@+id/student_login_LineraLayout"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorAccent"
+                                android:gravity="center"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/student_login_Text"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="70dp"
+                                    android:layout_marginBottom="30dp"
+                                    android:fontFamily="sans-serif-medium"
+                                    android:text="Hazik Saeed"
+                                    android:textColor="@color/colorWhite"
+                                    android:textSize="25sp"
+                                    android:textStyle="bold" />
+
+                            </LinearLayout>
+
+                            <!-- <TextView
+                                 android:layout_width="wrap_content"
+                                 android:layout_height="wrap_content"
+                                 android:text="Muhammad Ali"
+                                 android:textSize="25sp"
+                                 android:textStyle="bold"
+                                 android:fontFamily="sans-serif-medium"
+                                 android:layout_gravity="center_horizontal"
+                                 android:layout_marginTop="90dp"
+
+                                 />-->
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/id_student_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ID: "
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"/>
+                                <TextView
+                                    android:id="@+id/student_id_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text=" 15137070"
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:layout_alignBaseline="@id/id_student_textView"
+                                    android:layout_toRightOf="@id/id_student_textView"/>
+
+
+                            </RelativeLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="12dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/father_student_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:text="Father Name:"
+                                    android:textSize="17dp" />
+
+                                <TextView
+                                    android:id="@+id/student_father_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/father_student_textView"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_toRightOf="@id/father_student_textView"
+                                    android:paddingLeft="20dp"
+                                    android:text="Muhammad Ali"
+                                    android:textSize="17dp" />
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="12dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/fatherCnic_student_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+
+                                    android:paddingLeft="20dp"
+                                    android:text="Father CNIC:"
+                                    android:textSize="17dp" />
+
+                                <TextView
+                                    android:id="@+id/student_fatherCnic_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/fatherCnic_student_textView"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_toRightOf="@id/fatherCnic_student_textView"
+                                    android:paddingLeft="20dp"
+                                    android:text="35302-1234547-1"
+                                    android:textSize="17dp" />
+
+
+                            </RelativeLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="12dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/phone_student_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:text="Phone No:"
+                                    android:textSize="17dp" />
+
+                                <TextView
+                                    android:id="@+id/student_phoneNo_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/phone_student_textView"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_toRightOf="@id/phone_student_textView"
+                                    android:paddingLeft="20dp"
+                                    android:text="03212342211"
+                                    android:textSize="17dp" />
+
+                                <ImageView
+                                    android:id="@+id/btn_student_phone_edit"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="30dp"
+                                    android:src="@drawable/edit_phone"
+                                    android:layout_alignParentEnd="true"
+                                    android:layout_alignParentRight="true"
+                                    android:layout_marginRight="10dp"
+                                    />
+
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="12dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/route_student_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:text="Route:"
+                                    android:textSize="17dp" />
+
+                                <TextView
+                                    android:id="@+id/student_route_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/route_student_textView"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_toRightOf="@id/route_student_textView"
+                                    android:paddingLeft="20dp"
+                                    android:text=" Sialkot"
+                                    android:textSize="17dp" />
+
+
+                            </RelativeLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="12dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/stop_student_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:text="Stop:"
+                                    android:textSize="17dp"
+                                    android:layout_marginBottom="20dp"/>
+
+                                <TextView
+                                    android:id="@+id/student_stop_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_alignBaseline="@id/stop_student_textView"
+                                    android:layout_marginTop="12dp"
+                                    android:layout_toRightOf="@id/stop_student_textView"
+                                    android:paddingLeft="20dp"
+                                    android:text=" Company Park"
+                                    android:textSize="17dp"
+                                    android:layout_marginBottom="12dp"/>
+
+
+                            </RelativeLayout>
+
+                        </LinearLayout>
+
+                    </android.support.v7.widget.CardView>
+
+                </LinearLayout>
+
+
+
+            </RelativeLayout>
+
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>

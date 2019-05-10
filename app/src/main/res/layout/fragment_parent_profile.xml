@@ -93,14 +93,31 @@
                                 android:layout_marginTop="90dp"
 
                                 />-->
-                            <TextView
-                                android:id="@+id/parent_cnic_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="CNIC: 35301-1234567-1"
-                                android:textSize="17dp"
-                                android:layout_marginTop="20dp"
-                                android:paddingLeft="20dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/parent_cnic_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="CNIC: "
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="20dp"
+                                    android:paddingLeft="20dp"/>
+                                <TextView
+                                    android:id="@+id/parent_cnicNo_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="  35301-1234567-3"
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="20dp"
+                                    android:paddingLeft="20dp"
+                                    android:layout_alignBaseline="@id/parent_cnic_textView"
+                                    android:layout_toRightOf="@id/parent_cnic_textView"/>
+
+
+                            </RelativeLayout>
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
@@ -114,10 +131,20 @@
                                     android:id="@+id/parent_phone_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="Phone: 0300-1234567"
+                                    android:text="Phone: "
                                     android:textSize="17dp"
                                     android:layout_marginTop="20dp"
                                     android:paddingLeft="20dp"/>
+                                <TextView
+                                    android:id="@+id/parent_phoneNo_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="03001234567"
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="20dp"
+                                    android:paddingLeft="20dp"
+                                    android:layout_alignBaseline="@id/parent_phone_textView"
+                                    android:layout_toRightOf="@id/parent_phone_textView"/>
 
                                 <ImageView
                                     android:id="@+id/btn_parent_phone_edit"
@@ -138,15 +165,33 @@
                                 android:layout_height="1dp"
                                 android:background="@color/editTextBG"
                                 android:layout_marginTop="20dp"/>
-                            <TextView
-                                android:id="@+id/parent_childId_textView"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Child Id: 15137000"
-                                android:textSize="17dp"
-                                android:layout_marginTop="20dp"
-                                android:paddingLeft="20dp"
-                                android:layout_marginBottom="30dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <TextView
+                                    android:id="@+id/childid_parent_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Child ID:"
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="20dp"
+                                    android:paddingLeft="20dp"
+                                    android:layout_marginBottom="20dp"/>
+                                <TextView
+                                    android:id="@+id/parent_childid_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="15137070"
+                                    android:textSize="17dp"
+                                    android:layout_marginTop="20dp"
+                                    android:paddingLeft="20dp"
+                                    android:layout_marginBottom="20dp"
+                                    android:layout_alignBaseline="@id/childid_parent_textView"
+                                    android:layout_toRightOf="@id/childid_parent_textView"/>
+
+
+                            </RelativeLayout>
 
                         </LinearLayout>
 

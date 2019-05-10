@@ -4,6 +4,8 @@ package com.example.g_track;
 import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,6 +24,10 @@ public class parentProfileFragment extends Fragment {
     private CircleImageView parentProfileImage;
     private ImageView btnEditPhone;
     private TextView phoneText;
+    private EditText popupEditTextPhone;
+    private AlertDialog.Builder updatePhone;
+    private AlertDialog dialogPopup;
+    private Button btnUpdatePhone;
 
 
 
@@ -50,22 +56,27 @@ public class parentProfileFragment extends Fragment {
     private void initialization(View view) {
         parentProfileImage = view.findViewById(R.id.parent_profile_image);
         btnEditPhone = view.findViewById(R.id.btn_parent_phone_edit);
-        phoneText = view.findViewById(R.id.parent_phone_textView);
+        phoneText = view.findViewById(R.id.parent_phoneNo_textView);
+
     }
 
     public void updatePhone(View view){
-        Button btnUpdatePhone = view.findViewById(R.id.btn_popup_parent_edit_phone);
+
+        phoneText.setText(popupEditTextPhone.getText());
+        dialogPopup.cancel();
+
 
     }
 
     public void editPhone(View view){
         try{
-            AlertDialog.Builder updatePhone = new AlertDialog.Builder(getContext());
+            updatePhone = new AlertDialog.Builder(getContext());
             final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_phone_parent, null);
 
-            EditText phoneNo = popupView.findViewById(R.id.editText_parent_edit_phone);
-            phoneNo.setText(phoneText.getText());
-            Button btnUpdatePhone = popupView.findViewById(R.id.btn_popup_parent_edit_phone);
+            popupEditTextPhone = popupView.findViewById(R.id.editText_parent_edit_phone);
+            popupEditTextPhone.setText(phoneText.getText());
+            btnUpdatePhone = popupView.findViewById(R.id.btn_popup_parent_edit_phone);
+            popupEditTextPhone.addTextChangedListener(updatePhoneNo);
 
             btnUpdatePhone.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -75,10 +86,35 @@ public class parentProfileFragment extends Fragment {
             });
 
             updatePhone.setView(popupView);
-            AlertDialog dialogPopup = updatePhone.create();
+            dialogPopup = updatePhone.create();
             dialogPopup.show();
         }catch(Exception e){}
 
     }
+
+    private TextWatcher updatePhoneNo = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            try{
+                if(popupEditTextPhone.length() < 11){
+                    popupEditTextPhone.setError("Phone Number must be of 11 digits!");
+                }else{
+                    btnUpdatePhone.setEnabled(true);
+                }
+
+            }catch(Exception e){}
+
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
 
 }
