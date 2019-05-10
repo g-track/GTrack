@@ -88,10 +88,15 @@ public class studentHome extends AppCompatActivity {
                         fragment = new studentProfileFragment();
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
+                        actionBar.setTitle("Profile");
                        // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.updateStop_id:
-                        Toast.makeText(studentHome.this, "Update Stop Location is Clicked.", Toast.LENGTH_SHORT).show();
+                       // Toast.makeText(studentHome.this, "Update Stop Location is Clicked.", Toast.LENGTH_SHORT).show();
+                        fragment = new studentUpdateStopFragment();
+                        loadFragment(fragment);
+                        main_drawer.closeDrawer(GravityCompat.START);
+                        actionBar.setTitle("Update Stop");
                         break;
                     case R.id.viewRoute_id:
                         Toast.makeText(studentHome.this, "View Route is Clicked.", Toast.LENGTH_SHORT).show();
@@ -101,6 +106,7 @@ public class studentHome extends AppCompatActivity {
                         fragment = new studentViewBusDetailsFragment();
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
+                        actionBar.setTitle("View Bus Details");
                        // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.logOut_id:
