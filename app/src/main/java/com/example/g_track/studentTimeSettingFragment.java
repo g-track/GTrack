@@ -27,6 +27,7 @@ import static android.R.layout.simple_spinner_item;
  */
 public class studentTimeSettingFragment extends Fragment {
     private Spinner timeSpinner;
+    private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
     private ConstraintLayout alert_time_set_layout;
     public studentTimeSettingFragment() {
@@ -45,6 +46,7 @@ public class studentTimeSettingFragment extends Fragment {
         setOfOnAlert();
         return view;
     }
+
 
     private void setOfOnAlert() {
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -66,12 +68,14 @@ public class studentTimeSettingFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
         adapter.setDropDownViewResource(simple_spinner_dropdown_item);
         timeSpinner.setAdapter(adapter);
+        departureTimeSpinner.setAdapter(adapter);
     }
 
     private void initialization(View view) {
         timeSpinner = view.findViewById(R.id.timeSpinner_id);
         OffOnAlert_btn = view.findViewById(R.id.switch_id);
         alert_time_set_layout = view.findViewById(R.id.time_set_layout_id);
+        departureTimeSpinner = view.findViewById(R.id.timeSpinner_second_id);
     }
 
     private void setColorOfSelectedItem(){
@@ -79,6 +83,18 @@ public class studentTimeSettingFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ((TextView) view).setTextColor(Color.WHITE); //Change selected text color
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        departureTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                ((TextView) view).setTextColor(Color.WHITE);
             }
 
             @Override

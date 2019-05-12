@@ -2,6 +2,7 @@ package com.example.g_track;
 
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -28,6 +29,7 @@ public class parentProfileFragment extends Fragment {
     private AlertDialog.Builder updatePhone;
     private AlertDialog dialogPopup;
     private Button btnUpdatePhone;
+    private TextView updatePassword;
 
 
 
@@ -48,8 +50,19 @@ public class parentProfileFragment extends Fragment {
                 editPhone(v);
             }
         });
+        updatePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatePassword(v);
+            }
+        });
 
         return view;
+    }
+
+    public void updatePassword(View view){
+        Intent updatePassword = new Intent(this.getContext(), parentForgetPassword.class);
+        startActivity(updatePassword);
     }
 
 
@@ -57,7 +70,7 @@ public class parentProfileFragment extends Fragment {
         parentProfileImage = view.findViewById(R.id.parent_profile_image);
         btnEditPhone = view.findViewById(R.id.btn_parent_phone_edit);
         phoneText = view.findViewById(R.id.parent_phoneNo_textView);
-
+        updatePassword = view.findViewById(R.id.parent_updatePassword_textView);
     }
 
     public void updatePhone(View view){

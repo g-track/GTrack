@@ -272,8 +272,7 @@
                                     android:layout_marginTop="12dp"
                                     android:paddingLeft="20dp"
                                     android:text="Stop:"
-                                    android:textSize="17dp"
-                                    android:layout_marginBottom="20dp"/>
+                                    android:textSize="17dp" />
 
                                 <TextView
                                     android:id="@+id/student_stop_textView"
@@ -284,6 +283,28 @@
                                     android:layout_toRightOf="@id/stop_student_textView"
                                     android:paddingLeft="20dp"
                                     android:text=" Company Park"
+                                    android:textSize="17dp" />
+
+
+                            </RelativeLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="12dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorAccent">
+
+                                <TextView
+                                    android:id="@+id/student_updatePassword_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:textColor="@color/colorWhite"
+                                    android:text="Update Password"
                                     android:textSize="17dp"
                                     android:layout_marginBottom="12dp"/>
 

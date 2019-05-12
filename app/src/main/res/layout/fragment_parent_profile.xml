@@ -176,8 +176,7 @@
                                     android:text="Child ID:"
                                     android:textSize="17dp"
                                     android:layout_marginTop="20dp"
-                                    android:paddingLeft="20dp"
-                                    android:layout_marginBottom="20dp"/>
+                                    android:paddingLeft="20dp" />
                                 <TextView
                                     android:id="@+id/parent_childid_textView"
                                     android:layout_width="wrap_content"
@@ -186,9 +185,31 @@
                                     android:textSize="17dp"
                                     android:layout_marginTop="20dp"
                                     android:paddingLeft="20dp"
-                                    android:layout_marginBottom="20dp"
                                     android:layout_alignBaseline="@id/childid_parent_textView"
                                     android:layout_toRightOf="@id/childid_parent_textView"/>
+
+
+                            </RelativeLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/editTextBG"
+                                android:layout_marginTop="20dp"/>
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@color/colorAccent">
+
+                                <TextView
+                                    android:id="@+id/parent_updatePassword_textView"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginTop="12dp"
+                                    android:paddingLeft="20dp"
+                                    android:textColor="@color/colorWhite"
+                                    android:text="Update Password"
+                                    android:textSize="17dp"
+                                    android:layout_marginBottom="20dp"/>
 
 
                             </RelativeLayout>

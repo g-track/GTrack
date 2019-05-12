@@ -11,31 +11,32 @@
         android:id="@+id/parent_textView_turn_onOff"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
+        android:layout_marginTop="16dp"
         android:text="Turn OFF/ON Alert"
         android:textColor="@color/colorWhite"
-        android:textSize="20sp"
+        android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.235"
+        app:layout_constraintHorizontal_bias="0.066"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 
     <Switch
         android:id="@+id/parent_switch_id"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginRight="32dp"
+        android:layout_width="0dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:switchPadding="250dp"
         android:text="OFF"
+        android:textSize="22sp"
         android:textColor="@color/colorWhite"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.757"
+        app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/parent_textView_turn_onOff"
         tools:checked="false" />
@@ -51,8 +52,10 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/parent_switch_id">
 
+
+
         <TextView
-            android:id="@+id/parent_textView7"
+            android:id="@+id/parent_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="32dp"
@@ -63,28 +66,30 @@
             android:drawableLeft="@drawable/timer_icon_white"
             android:drawablePadding="15dp"
             android:paddingLeft="20dp"
-            android:textColor="@color/colorWhite"
             android:text="Set Time Of Alert Before Bus Arrival at Stop"
+            android:textColor="@color/colorWhite"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+
         <Spinner
             android:id="@+id/parent_timeSpinner_id"
             android:layout_width="0dp"
             android:layout_height="50dp"
-            android:layout_marginStart="50dp"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="50dp"
-            android:layout_marginRight="50dp"
-            android:theme="@style/spinnerTheme"
-            android:popupTheme="@color/colorAccent"
+            android:layout_marginStart="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="44dp"
+            android:layout_marginEnd="32dp"
+            android:layout_marginRight="32dp"
             android:background="@color/colorAccent"
+            android:popupTheme="@color/colorAccent"
+            android:theme="@style/spinnerTheme"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/parent_textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/parent_textView" />
 
 
     </android.support.constraint.ConstraintLayout>
