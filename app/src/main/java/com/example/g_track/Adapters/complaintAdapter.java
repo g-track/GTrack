@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.g_track.Activities.studentComplaintDetails;
+import com.example.g_track.R;
 
 public class complaintAdapter extends RecyclerView.Adapter<complaintAdapter.complaintViewHolder> {
 
@@ -36,7 +38,7 @@ public class complaintAdapter extends RecyclerView.Adapter<complaintAdapter.comp
         complaintViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Intent intent_go_to_complaintDetail = new Intent(mContext,studentComplaintDetails.class);
+                 Intent intent_go_to_complaintDetail = new Intent(mContext, studentComplaintDetails.class);
                  mContext.startActivity(intent_go_to_complaintDetail);
                // Toast.makeText(mContext, "item is clicked.", Toast.LENGTH_SHORT).show();
             }

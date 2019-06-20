@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".parentLogin"
+    tools:context=".Activities.parentLogin"
     android:id="@+id/parent_login"
     android:background="@color/colorPrimary">
 
@@ -98,7 +98,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_toRightOf="@id/parent_login_name_icon_image"
                     android:background="@color/editTextBG"
-                    android:hint="@string/enter_your_username"
+                    android:hint="Enter your ID..."
                     android:paddingLeft="20dp"
                     android:textSize="15sp" />
             </RelativeLayout>

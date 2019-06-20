@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Activities;
 
 
 import android.os.Bundle;
@@ -7,14 +7,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.g_track.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class studentViewRouteFragment extends Fragment {
+public class parentViewBusDetails extends Fragment {
 
 
-    public studentViewRouteFragment() {
+    public parentViewBusDetails() {
         // Required empty public constructor
     }
 
@@ -23,7 +25,7 @@ public class studentViewRouteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_student_view_route, container, false);
+        return inflater.inflate(R.layout.fragment_parent_view_bus_details, container, false);
     }
 
 }

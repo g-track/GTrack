@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
+
+import com.example.g_track.R;
 
 public class studentComplaintDetails extends AppCompatActivity {
     private Toolbar mToolbar;

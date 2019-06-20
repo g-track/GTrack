@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,6 +8,9 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.example.g_track.Activities.parentLogin;
+import com.example.g_track.R;
 
 public class parentRegister extends AppCompatActivity {
     private EditText parentName;
@@ -87,7 +90,7 @@ public class parentRegister extends AppCompatActivity {
 
 
     public void registerParent(View view){
-        Intent parentLogin = new Intent(getApplicationContext(), parentLogin.class);
+        Intent parentLogin = new Intent(getApplicationContext(), com.example.g_track.Activities.parentLogin.class);
         startActivity(parentLogin);
     }
 

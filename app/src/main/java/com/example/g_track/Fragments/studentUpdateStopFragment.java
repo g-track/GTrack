@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Fragments;
 
 
 import android.graphics.Color;
@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.example.g_track.R;
 
 
 /**

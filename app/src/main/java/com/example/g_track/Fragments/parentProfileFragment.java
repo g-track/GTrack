@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Fragments;
 
 
 import android.app.AlertDialog;
@@ -14,6 +14,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.g_track.R;
+import com.example.g_track.Activities.parentForgetPassword;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 

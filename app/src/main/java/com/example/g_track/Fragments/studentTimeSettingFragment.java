@@ -1,4 +1,4 @@
-package com.example.g_track;
+package com.example.g_track.Fragments;
 
 
 import android.graphics.Color;
@@ -14,6 +14,8 @@ import android.widget.CompoundButton;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+
+import com.example.g_track.R;
 
 import java.util.ArrayList;
 import java.util.List;

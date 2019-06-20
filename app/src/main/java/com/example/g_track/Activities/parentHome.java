@@ -1,7 +1,5 @@
-package com.example.g_track;
+package com.example.g_track.Activities;
 
-import android.graphics.Color;
-import android.graphics.PorterDuff;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -15,47 +13,47 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-public class studentHome extends AppCompatActivity {
+import com.example.g_track.Fragments.parentProfileFragment;
+import com.example.g_track.Fragments.parentTimeSettingFragment;
+import com.example.g_track.Fragments.parentTrackBusFragment;
+import com.example.g_track.R;
+
+public class parentHome extends AppCompatActivity {
     private Toolbar toolbar;
     private DrawerLayout main_drawer;
     private NavigationView main_navigationView;
     private ActionBarDrawerToggle main_actionBarToggle;
-    private BottomNavigationView main_student_bottomNavigation;
+    private BottomNavigationView main_parent_bottomNavigation;
     private ActionBar actionBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_parent_home);
+
         initialization();
         setUpToolbar();
         actionOnClickingMainItems();
         actionOnClickingBottomMenu();
     }
 
+
     private void actionOnClickingBottomMenu() {
-        main_student_bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+        main_parent_bottomNavigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 Fragment fragment;
                 int id = menuItem.getItemId();
                 switch (id){
-                    case R.id.trackBus_id:
-                        fragment = new studentTrackBusFragment();
+                    case R.id.parent_trackBus_id:
+                        fragment = new parentTrackBusFragment();
                         loadFragment(fragment);
                         actionBar.setTitle("Track Bus");
                         return true;
-                    case R.id.complaint_id:
-                        fragment = new studentComplaintFragment();
-                        loadFragment(fragment);
-                        actionBar.setTitle("Complaint");
-                        return true;
-                    case R.id.setting_id:
-                        fragment = new studentTimeSettingFragment();
+                    case R.id.parent_setting_id:
+                        fragment = new parentTimeSettingFragment();
                         loadFragment(fragment);
                         actionBar.setTitle("Time Setting");
                         return true;
@@ -66,7 +64,7 @@ public class studentHome extends AppCompatActivity {
     }
 
     private void setUpToolbar() {
-        toolbar = findViewById(R.id.main_toolbar);
+        toolbar = findViewById(R.id.parent_main_toolbar);
         setSupportActionBar(toolbar);
         actionBar = getSupportActionBar();
         actionBar.setTitle("G-Track");
@@ -83,42 +81,25 @@ public class studentHome extends AppCompatActivity {
                 Fragment fragment;
                 int id = menuItem.getItemId();
                 switch (id){
-                    case R.id.myProfile_id:
-                        //Toast.makeText(studentHome.this, "My Profile is Clicked.", Toast.LENGTH_SHORT).show();
-                        fragment = new studentProfileFragment();
+                    case R.id.parent_myProfile_id:
+                        Toast.makeText(parentHome.this, "My Profile is Clicked.", Toast.LENGTH_SHORT).show();
+                        fragment = new parentProfileFragment();
                         loadFragment(fragment);
-                        main_drawer.closeDrawer(GravityCompat.START);
                         actionBar.setTitle("My Profile");
-                       // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
-                        break;
-                    case R.id.updateStop_id:
-                       // Toast.makeText(studentHome.this, "Update Stop Location is Clicked.", Toast.LENGTH_SHORT).show();
-                        fragment = new studentUpdateStopFragment();
-                        loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
-                        actionBar.setTitle("Update Stop");
                         break;
-                    case R.id.viewRoute_id:
-                        Toast.makeText(studentHome.this, "View Route is Clicked.", Toast.LENGTH_SHORT).show();
-                        fragment = new studentViewRouteFragment();
+                    case R.id.parent_viewBusDetails_id:
+                        Toast.makeText(parentHome.this, "View Bus Details is Clicked.", Toast.LENGTH_SHORT).show();
+                        fragment = new parentViewBusDetails();
                         loadFragment(fragment);
-                        main_drawer.closeDrawer(GravityCompat.START);
-                        actionBar.setTitle("Route Details");
-
-                        break;
-                    case R.id.viewBusDetails_id:
-                       // Toast.makeText(studentHome.this, "View Bus Details is Clicked.", Toast.LENGTH_SHORT).show();
-                        fragment = new studentViewBusDetailsFragment();
-                        loadFragment(fragment);
-                        main_drawer.closeDrawer(GravityCompat.START);
                         actionBar.setTitle("Bus Details");
-                       // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
+                        main_drawer.closeDrawer(GravityCompat.START);
                         break;
-                    case R.id.logOut_id:
-                        Toast.makeText(studentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();
+                    case R.id.parent_logOut_id:
+                        Toast.makeText(parentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();
                         break;
-                     default:
-                         return true;
+                    default:
+                        return true;
                 }
                 return true;
             }
@@ -126,14 +107,14 @@ public class studentHome extends AppCompatActivity {
     }
 
     private void initialization() {
-        main_drawer = findViewById(R.id.drawer_id);
-        main_navigationView = findViewById(R.id.navigationView_id);
-        main_student_bottomNavigation = findViewById(R.id.bottomNavigation_id);
+        main_drawer = findViewById(R.id.parent_drawer);
+        main_navigationView = findViewById(R.id.parent_navigationView_id);
+        main_parent_bottomNavigation = findViewById(R.id.parent_bottomNavigation_id);
     }
 
     private void loadFragment(Fragment fragment){
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.framLayout_id,fragment);
+        fragmentTransaction.replace(R.id.parent_framLayout_id,fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
