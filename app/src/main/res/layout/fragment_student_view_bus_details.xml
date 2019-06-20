@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".studentViewBusDetailsFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -27,7 +27,7 @@
         android:layout_marginTop="16dp"
         android:paddingLeft="30sp"
         android:text="Bus No:          Ok 4578"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,7 +40,7 @@
         android:layout_marginTop="16dp"
         android:paddingLeft="30dp"
         android:text="Driver:             Salman Baba"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -53,7 +53,7 @@
         android:layout_marginTop="16dp"
         android:paddingLeft="30dp"
         android:text="Route:             Sialkot"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:id="@+id/busDetails_textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@drawable/gradient"
         android:paddingLeft="30dp"
         android:text="Bus Details"
         android:textColor="@color/colorWhite"
@@ -76,7 +76,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="7dp"
-        android:background="@color/colorWhite"
+        android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bus_no_textView">
@@ -86,16 +86,18 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
-        android:background="@color/colorWhite"
+        android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bus_driver_textView"></View>
+        app:layout_constraintTop_toBottomOf="@+id/bus_driver_textView">
+
+    </View>
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="12dp"
-        android:background="@color/colorWhite"
+        android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bus_route_textVew" />

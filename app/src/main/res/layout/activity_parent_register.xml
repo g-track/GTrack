@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".parentRegister"
     android:id="@+id/background_layout"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <android.support.v7.widget.CardView
         android:id="@+id/register_page_cardView"
@@ -24,6 +24,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:cardElevation="3dp"
+        android:outlineAmbientShadowColor="@color/colorBlack"
         app:cardCornerRadius="10dp"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true">
@@ -36,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:background="@color/colorAccent"
+                android:background="@drawable/gradient"
                 android:gravity="center">
 
                 <ImageView
@@ -86,7 +87,7 @@
                     android:id="@+id/name_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:tint="@color/colorWhite"
                     android:src="@drawable/icon_parent_name"
                     android:padding="8dp"
@@ -118,7 +119,7 @@
                     android:id="@+id/password_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:tint="@color/colorWhite"
                     android:src="@drawable/icon_password"
                     android:padding="8dp"
@@ -150,7 +151,7 @@
                     android:id="@+id/childName_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:tint="@color/colorWhite"
                     android:src="@drawable/icon_parent_name"
                     android:padding="8dp"
@@ -182,7 +183,7 @@
                     android:id="@+id/cnic_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:tint="@color/colorWhite"
                     android:src="@drawable/icon_cnic_card"
                     android:padding="8dp"
@@ -214,7 +215,7 @@
                     android:id="@+id/phone_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:tint="@color/colorWhite"
                     android:src="@drawable/icon_parent_name"
                     android:padding="8dp"
@@ -247,7 +248,7 @@
                 android:enabled="false"
                 android:onClick="registerParent"
                 android:textColor="@color/colorWhite"
-                android:background="@color/colorAccent"
+                android:background="@drawable/gradient"
                 android:textSize="18sp"
 
                 />

@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="172dp"
-    android:background="@color/colorAccent"
+    android:background="@drawable/gradient"
     style="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".studentUpdateStopFragment"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -24,7 +24,7 @@
         android:id="@+id/textView12"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/colorAccent"
+        android:background="@drawable/gradient"
         android:paddingLeft="30dp"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
@@ -42,7 +42,7 @@
         android:layout_marginTop="44dp"
         android:paddingLeft="35dp"
         android:text="Select From Route Your Nearest Stop"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -59,7 +59,7 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:layout_marginRight="32dp"
-        android:background="@color/colorAccent"
+        android:background="@drawable/gradient"
         android:theme="@style/spinnerTheme"
         android:popupTheme="@color/colorAccent"
         style="@style/CustomSpinnerTheme"

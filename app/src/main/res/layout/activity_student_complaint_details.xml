@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".studentComplaintDetails"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <include
         android:id="@+id/toolbar_complaintDetail_id"
@@ -26,7 +26,7 @@
         android:layout_marginTop="42dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:text="Complaint 1"
         android:textSize="25sp"
         android:paddingLeft="10dp"
@@ -42,7 +42,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:tint="@color/colorWhite"
+        android:tint="@color/colorBlack"
         android:src="@drawable/user_icon"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -56,7 +56,7 @@
         android:layout_marginTop="24dp"
         android:text="Ghulam Mustafa"
         android:textStyle="bold"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:textSize="18dp"
         app:layout_constraintStart_toEndOf="@+id/imageView3"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -68,7 +68,7 @@
         android:layout_marginTop="8dp"
         android:textStyle="italic"
         android:text="to Transport Manager"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
@@ -77,7 +77,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:text="june 11:30pm"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         app:layout_constraintStart_toStartOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView5" />
 
@@ -91,7 +91,7 @@
         android:layout_marginEnd="29dp"
         android:layout_marginRight="29dp"
         android:src="@drawable/delete_icon"
-        android:tint="@color/colorWhite"
+        android:tint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView5"
         app:layout_constraintTop_toBottomOf="@+id/textView3" />
@@ -104,7 +104,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
-        android:textColor="@color/colorWhite"
+        android:textColor="@color/colorBlack"
         android:text="That is awesome!! I love this design. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam felis magna, scelerisque vitae blandit ac, vulputate vel mi. Etiam nec mauris sem. Praesent id rhoncus elit. Nam id aliquam enim, ut faucibus ante. Integer sit amet efficitur lorem. Cras luctus dui sed tortor elementum blandit."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".parentLogin"
     android:id="@+id/parent_login"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
 
     <android.support.v7.widget.CardView
@@ -20,6 +20,7 @@
         android:layout_marginRight="16dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="3dp"
+        android:outlineSpotShadowColor="@color/colorBlack"
         app:cardPreventCornerOverlap="false"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +36,7 @@
                 android:id="@+id/student_login_LineraLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@drawable/gradient"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -85,7 +86,7 @@
                     android:id="@+id/parent_login_name_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:padding="8dp"
                     android:src="@drawable/icon_parent_name"
                     android:tint="@color/colorWhite" />
@@ -116,7 +117,7 @@
                     android:id="@+id/parent_login_password_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:padding="8dp"
                     android:src="@drawable/icon_password"
                     android:tint="@color/colorWhite" />
@@ -144,7 +145,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="10dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/gradient"
                 android:fontFamily="sans-serif-medium"
                 android:onClick="parentLogin"
                 android:text="@string/login"

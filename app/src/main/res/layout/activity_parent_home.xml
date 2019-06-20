@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/parent_bottom_menu"
-            android:background="@color/colorAccent"
+            android:background="@drawable/gradient"
             app:itemTextColor="@color/colorWhite"
             app:itemIconTint="@color/colorWhite"
             android:theme="@style/NavigationView">

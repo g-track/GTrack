@@ -23,7 +23,21 @@ public class studentComplaintFragment extends Fragment {
     private FloatingActionButton compose_floating_btn;
     private RecyclerView recyclerView;
     String[] subject = {"Complaint 1","Complaint 2","Complaint 3","Complaint 4","Complaint 5","Complaint 6",
-             "Complaint 7","Complaint 8","Complaint 9","Complaint 10","Complaint 11","Complaint 12","Complaint 12"};
+             "Complaint 7","Complaint 8","Complaint 9","Complaint 10"};
+    String[] desc = {"The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
+            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them."};
+    String[] time = {"2h","3h","1-1-2019","2-4-2019","1h","5h",
+            "10h","5h","7h","25h"};
+    String[] status = {"Pending","Aknowledged","Processing","Done","Invalid","Pending",
+            "In Process","Pending","Done", "Done"};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +66,7 @@ public class studentComplaintFragment extends Fragment {
     public void setUpRecyclerView(View view){
         recyclerView = view.findViewById(R.id.recyclerView_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new complaintAdapter(subject,getContext()));
+        recyclerView.setAdapter(new complaintAdapter(subject,desc, time, status, getContext()));
     }
 
 }
