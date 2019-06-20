@@ -45,6 +45,7 @@
         <activity android:name=".Activities.studentComplaintDetails" />
         <activity android:name=".Activities.studentLogin" />
         <activity android:name=".Activities.studentHome">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

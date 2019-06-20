@@ -4,9 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     tools:context=".Activities.studentHome"
-    android:background="@color/colorPrimary"
-    android:id="@+id/drawer_id">
+    android:background="@color/colorPrimary">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -43,7 +43,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:menu="@menu/student_bottom_menu"
-            android:background="@color/colorAccent"
+            android:background="@drawable/gradient"
             app:itemTextColor="@color/colorWhite"
             app:itemIconTint="@color/colorWhite"
             android:theme="@style/NavigationView">
@@ -58,9 +58,9 @@
         android:layout_gravity="start"
         app:menu="@menu/drawer_menu"
         app:headerLayout="@layout/header"
-        android:background="@color/colorPrimary"
-        app:itemTextColor="@color/colorWhite"
-        app:itemIconTint="@color/colorWhite"
+        android:background="@color/colorWhite"
+        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/colorAccent"
         android:theme="@style/NavigationView"
         android:fitsSystemWindows="true">
 

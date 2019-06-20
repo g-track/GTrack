@@ -33,7 +33,7 @@
                 android:id="@+id/student_login_LineraLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorAccent"
+                android:background="@drawable/gradient"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -83,7 +83,7 @@
                     android:id="@+id/student_login_name_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:padding="8dp"
                     android:src="@drawable/icon_parent_name"
                     android:tint="@color/colorWhite" />
@@ -116,7 +116,7 @@
                     android:id="@+id/student_login_password_icon_image"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:background="@color/colorAccent"
+                    android:background="@drawable/gradient"
                     android:padding="8dp"
                     android:src="@drawable/icon_password"
                     android:tint="@color/colorWhite" />
@@ -144,7 +144,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginBottom="20dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/gradient"
                 android:fontFamily="sans-serif-medium"
                 android:onClick="studentLogin"
                 android:text="@string/login"

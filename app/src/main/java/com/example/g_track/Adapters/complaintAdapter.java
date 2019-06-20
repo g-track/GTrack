@@ -15,11 +15,17 @@ import com.example.g_track.R;
 public class complaintAdapter extends RecyclerView.Adapter<complaintAdapter.complaintViewHolder> {
 
      String[] data;
+     String[] desc;
+     String[] time;
+     String[] status;
      Context mContext;
 
-    public complaintAdapter(String[] data,Context context) {
+    public complaintAdapter(String[] data, String[] desc, String[] time, String[] status, Context mContext) {
         this.data = data;
-        this.mContext = context;
+        this.desc = desc;
+        this.time = time;
+        this.status = status;
+        this.mContext = mContext;
     }
 
     @NonNull
@@ -34,7 +40,15 @@ public class complaintAdapter extends RecyclerView.Adapter<complaintAdapter.comp
     @Override
     public void onBindViewHolder(@NonNull complaintViewHolder complaintViewHolder, int i) {
         String Subject = data[i];
+        String Desc= desc[i];
+        String Time = time[i];
+        String Status = status[i];
+
         complaintViewHolder.complaintSubject.setText(Subject);
+        complaintViewHolder.complaintDesc.setText(Desc);
+        complaintViewHolder.complaintStatus.setText(Status);
+        complaintViewHolder.complaintTime.setText(Time);
+
         complaintViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,11 +69,15 @@ public class complaintAdapter extends RecyclerView.Adapter<complaintAdapter.comp
         public TextView complaintSubject;
         public TextView complaintDesc;
         public ImageView complaintImg;
+        public TextView complaintTime;
+        public TextView complaintStatus;
         public complaintViewHolder(@NonNull View itemView) {
             super(itemView);
-            complaintSubject = itemView.findViewById(R.id.complain_subject_txt_id);
-            complaintDesc = itemView.findViewById(R.id.complaint_desc_txt_id);
-            complaintImg = itemView.findViewById(R.id.complaint_icon_img);
+            complaintSubject = itemView.findViewById(R.id.tv_complaint_subject);
+            complaintDesc = itemView.findViewById(R.id.tv_complaint_desc);
+            complaintStatus = itemView.findViewById(R.id.tv_complaint_status);
+            complaintTime = itemView.findViewById(R.id.tv_complaint_time);
+            complaintImg = itemView.findViewById(R.id.img_complaint_icon);
         }
     }
 }

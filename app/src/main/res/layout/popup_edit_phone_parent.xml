@@ -51,7 +51,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_parent_edit_phone"
         app:layout_constraintVertical_bias="0.0"
-        android:background="@color/colorAccent"
+        android:background="@drawable/gradient"
         android:textColor="@color/colorWhite"
         />
 
