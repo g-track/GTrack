@@ -1,8 +1,36 @@
 package com.example.g_track.Model;
 
-public class Driver extends Person{
+public class Driver{
+
+    int driverID;
+    String driverName;
+    String phoneNo;
     String licenseNo;
     boolean driverStatus;
+
+    public int getDriverID() {
+        return driverID;
+    }
+
+    public void setDriverID(int driverID) {
+        this.driverID = driverID;
+    }
+
+    public String getDriverName() {
+        return driverName;
+    }
+
+    public void setDriverName(String driverName) {
+        this.driverName = driverName;
+    }
+
+    public String getPhoneNo() {
+        return phoneNo;
+    }
+
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
+    }
 
     public String getLicenseNo() {
         return licenseNo;

@@ -1,14 +1,74 @@
 package com.example.g_track.Model;
 
 public class Student {
+    int studentID;
+    String studentName;
+    String studentPhoneNo;
     String fatherName;
     String fatherCNIC;
-    Route studentRoute;
-    Stop studentStop;
+    int  studentRouteID;
+    int studentStopID;
     boolean feeStatus;
     boolean alertStatus;
-    long alertTime;
+    long alertDepartureTime;
+    long alertArrivalTime;
     boolean studentStatus;
+
+    public int getStudentID() {
+        return studentID;
+    }
+
+    public void setStudentID(int studentID) {
+        this.studentID = studentID;
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getStudentPhoneNo() {
+        return studentPhoneNo;
+    }
+
+    public void setStudentPhoneNo(String studentPhoneNo) {
+        this.studentPhoneNo = studentPhoneNo;
+    }
+
+    public int getStudentRouteID() {
+        return studentRouteID;
+    }
+
+    public void setStudentRouteID(int studentRouteID) {
+        this.studentRouteID = studentRouteID;
+    }
+
+    public int getStudentStopID() {
+        return studentStopID;
+    }
+
+    public void setStudentStopID(int studentStopID) {
+        this.studentStopID = studentStopID;
+    }
+
+    public long getAlertDepartureTime() {
+        return alertDepartureTime;
+    }
+
+    public void setAlertDepartureTime(long alertDepartureTime) {
+        this.alertDepartureTime = alertDepartureTime;
+    }
+
+    public long getAlertArrivalTime() {
+        return alertArrivalTime;
+    }
+
+    public void setAlertArrivalTime(long alertArrivalTime) {
+        this.alertArrivalTime = alertArrivalTime;
+    }
 
     public String getFatherName() {
         return fatherName;
@@ -26,22 +86,6 @@ public class Student {
         this.fatherCNIC = fatherCNIC;
     }
 
-    public Route getStudentRoute() {
-        return studentRoute;
-    }
-
-    public void setStudentRoute(Route studentRoute) {
-        this.studentRoute = studentRoute;
-    }
-
-    public Stop getStudentStop() {
-        return studentStop;
-    }
-
-    public void setStudentStop(Stop studentStop) {
-        this.studentStop = studentStop;
-    }
-
     public boolean isFeeStatus() {
         return feeStatus;
     }
@@ -56,14 +100,6 @@ public class Student {
 
     public void setAlertStatus(boolean alertStatus) {
         this.alertStatus = alertStatus;
-    }
-
-    public long getAlertTime() {
-        return alertTime;
-    }
-
-    public void setAlertTime(long alertTime) {
-        this.alertTime = alertTime;
     }
 
     public boolean isStudentStatus() {

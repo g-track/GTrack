@@ -8,9 +8,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.g_track.Model.Bus;
+import com.example.g_track.Model.Driver;
+import com.example.g_track.Model.Route;
+import com.example.g_track.Model.Student;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -24,12 +28,13 @@ import com.google.firebase.database.ValueEventListener;
  */
 public class studentViewBusDetailsFragment extends Fragment {
     private FirebaseDatabase database;
-    private DatabaseReference myRef;
+    private DatabaseReference studentRef,routeRef,busRef,driverRef;
+    private TextView busNo,busDriverName,busRoutName;
 
     public studentViewBusDetailsFragment() {
         // Required empty public constructor
-    }
 
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,15 +47,67 @@ public class studentViewBusDetailsFragment extends Fragment {
     }
 
     private void getDataFromDatabase() {
-        myRef.addValueEventListener(new ValueEventListener() {
+        studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                    Bus bus = snapshot.getValue(Bus.class);
-                   // Toast.makeText(getContext(), "busID" +  bus.getBusID(), Toast.LENGTH_SHORT).show();
+                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
+                    Student student = studentSnapshot.getValue(Student.class);
+                    if (student.getStudentID()==15137029){
+                        final int routeId = student.getStudentRouteID();
+                        routeRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()){
+                                    Route route = routeSnapshot.getValue(Route.class);
+                                    if (route.getRouteID()==routeId){
+                                       String routeName = route.getRouteName();
+                                        busRoutName.setText(routeName);
+                                        final int busId = route.getRouteBusID();
+                                        busRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot busSnapshot : dataSnapshot.getChildren()){
+                                                    Bus bus = busSnapshot.getValue(Bus.class);
+                                                    if (bus.getBusID()==busId){
+                                                        final int driverId = bus.getBusDriverID();
+                                                        int busId = bus.getBusID();
+                                                        busNo.setText(String.valueOf(busId));;
+                                                        //Log.i("Sohail","ROUTE NAME:"+routeName+" , BUS NO:"+busNo);
+                                                        driverRef.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot driverSnapshot : dataSnapshot.getChildren()){
+                                                                    Driver driver = driverSnapshot.getValue(Driver.class);
+                                                                    if (driver.getDriverID()==driverId){
+                                                                       String driverName = driver.getDriverName();
+                                                                        busDriverName.setText(driverName);
+                                                                    }
+                                                                }
+                                                            }
 
-                    if(bus.getBusID()==12) {
-                        Log.i("Muhammad Sohail :", "busID:" + bus.getBusID() + ", busDriver:" + bus.getBusDriver() + ", busStatus:" + bus.isBusStatus());
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 }
             }
@@ -60,14 +117,16 @@ public class studentViewBusDetailsFragment extends Fragment {
 
             }
         });
-
     }
 
     private void initialization(View view) {
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("bus");
-
+        studentRef = database.getReference("Student");
+        routeRef = database.getReference("Route");
+        busRef = database.getReference("Bus");
+        driverRef = database.getReference("Driver");
+        busNo = view.findViewById(R.id.bus_no_id);
+        busDriverName = view.findViewById(R.id.driver_name_id);
+        busRoutName = view.findViewById(R.id.rout_name_id);
     }
-
-
 }

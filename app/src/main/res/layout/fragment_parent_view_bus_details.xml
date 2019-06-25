@@ -23,42 +23,75 @@
 
     <TextView
         android:id="@+id/bus_no_textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="108dp"
+        android:layout_height="32dp"
         android:layout_marginTop="16dp"
         android:paddingLeft="30sp"
-        android:text="Bus No:          Ok 4578"
+        android:text="Bus No:"
         android:textColor="@color/colorBlack"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/busDetails_textView" />
 
     <TextView
-        android:id="@+id/bus_driver_textView"
-        android:layout_width="match_parent"
+        android:id="@+id/parent_bus_no_id"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="30dp"
-        android:text="Driver:             Salman Baba"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="20dp"
+        android:text="300"
         android:textColor="@color/colorBlack"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bus_no_textView"
+        app:layout_constraintTop_toBottomOf="@+id/busDetails_textView" />
+
+    <TextView
+        android:id="@+id/bus_driver_textView"
+        android:layout_width="102dp"
+        android:layout_height="26dp"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="30dp"
+        android:text="Driver:"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bus_no_textView" />
 
     <TextView
-        android:id="@+id/bus_route_textVew"
-        android:layout_width="match_parent"
+        android:id="@+id/parent_driver_name_id"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:paddingLeft="30dp"
-        android:text="Route:             Sialkot"
+        android:layout_marginStart="46dp"
+        android:layout_marginTop="8dp"
+        android:text="Salman Khan"
         android:textColor="@color/colorBlack"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bus_driver_textView"
+        app:layout_constraintTop_toBottomOf="@+id/view6" />
+
+    <TextView
+        android:id="@+id/bus_route_textVew"
+        android:layout_width="104dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="30dp"
+        android:text="Route:"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bus_driver_textView" />
+
+    <TextView
+        android:id="@+id/parent_route_name_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="8dp"
+        android:text="Sialkot"
+        android:textColor="@color/colorBlack"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/bus_route_textVew"
+        app:layout_constraintTop_toBottomOf="@+id/view7" />
 
     <TextView
         android:id="@+id/busDetails_textView"
@@ -70,20 +103,22 @@
         android:textColor="@color/colorWhite"
         android:textSize="30dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/parent_busDetails_image" />
 
     <View
+        android:id="@+id/view6"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="7dp"
         android:background="@drawable/gradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bus_no_textView">
-    </View>
+        app:layout_constraintTop_toBottomOf="@+id/bus_no_textView"></View>
 
     <View
+        android:id="@+id/view7"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="8dp"

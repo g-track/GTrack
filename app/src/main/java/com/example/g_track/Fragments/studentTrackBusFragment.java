@@ -1,8 +1,10 @@
 package com.example.g_track.Fragments;
 
 
+import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,7 +16,11 @@ import android.widget.Toast;
 
 import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
+import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Location;
+import com.example.g_track.Model.Parent;
+import com.example.g_track.Model.Route;
+import com.example.g_track.Model.Student;
 import com.example.g_track.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -25,6 +31,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,19 +47,15 @@ import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
  * A simple {@link Fragment} subclass.
  */
 public class studentTrackBusFragment extends Fragment implements OnMapReadyCallback {
-    private DatabaseReference myRef;
-    private FirebaseDatabase database;
     private  GoogleMap mGoogleMap;
     private MapView mapView;
     private  View view;
-    private String latitude;
-    private String longitude;
-    private Location BusLocation;
-    double lt,lg;
+    private double latitude = 32.2500 ,longitude = 74.1667;
+    private Marker mMarker;
+    private DatabaseReference studentRef,routeRef,busRef;
+    private FirebaseDatabase database;
+    //MarkerOptions place1, place2;
 
-    ///
-    MarkerOptions place1, place2;
-    ///
 
     public studentTrackBusFragment() {
         // Required empty public constructor
@@ -63,20 +66,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-       view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
-       initialization(view);
-       addLocationToDatabase();
-       getDataFromFirebase();
-
-
+        view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
+        initialization(view);
+        getDataFromFirebase();
         return  view;
     }
-
-    private void addLocationToDatabase() {
-        BusLocation = new Location(123,32,74);
-        myRef.child("Location").setValue(BusLocation);
-    }
-
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -87,42 +81,95 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
             mapView.onResume();
             mapView.getMapAsync(this);
         }
-
     }
 
     private void initialization(View view) {
         database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Bus Location");
+        studentRef = database.getReference("Student");
+        routeRef = database.getReference("Route");
+        busRef = database.getReference("Bus");
+    }
+
+    private void updateBusLocationOnMap(double latitude, double longitude) {
+        if (null != mMarker) {
+            mMarker.remove();
+        }
+        mMarker = mGoogleMap.addMarker(new MarkerOptions().position(
+                new LatLng(latitude, longitude))
+                .title("===============Bus Location=============").visible(true)
+                .snippet("Latitude:"+latitude+" , Longitude:"+longitude)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
+        mMarker.showInfoWindow();
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),14));
+    }
+
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     private void getDataFromFirebase() {
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //latitude =  dataSnapshot.child("latitude").getValue().toString();
-                //longitude = dataSnapshot.child("longitude").getValue().toString();
-                //Toast.makeText(getContext(), "latitude: " + latitude + " longitude: " + longitude, Toast.LENGTH_SHORT).show();
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                        studentRef.addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
+                                    Student student = studentSnapshot.getValue(Student.class);
+                                    if (student.getStudentID() == 15137029) {
+                                        final int routeId = student.getStudentRouteID();
+                                        routeRef.addValueEventListener(new ValueEventListener() {
+                                            @Override
+                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
+                                                    Route route = routeSnapshot.getValue(Route.class);
+                                                    if (route.getRouteID() == routeId) {
+                                                        final int busId = route.getRouteBusID();
+                                                        busRef.addValueEventListener(new ValueEventListener() {
+                                                            @Override
+                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                                for (DataSnapshot busSnapshot : dataSnapshot.getChildren()) {
+                                                                    Bus bus = busSnapshot.getValue(Bus.class);
+                                                                    if (bus.getBusID() == busId) {
+                                                                        latitude = bus.getBusLatitude();
+                                                                        longitude = bus.getBusLongitude();
+                                                                        updateBusLocationOnMap(latitude, longitude);
+                                                                    }
+                                                                }
+                                                            }
 
-            }
-        });
-    }
+                                                            @Override
+                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                                            }
+                                                        });
+                                                    }
+                                                }
+                                            }
+
+                                            @Override
+                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
        // MapsInitializer.initialize(getContext());
-
-       // System.out.println("My Name is M.Sohail "+latitude);
-//        Log.i("latitude :" , latitude);
-       // lt = Double.parseDouble(latitude);
-       // lg = Double.parseDouble(longitude);
-
+      // Log.i("Latitudddddddddddd", "Latitude:"+latitude+" Longitude:"+longitude);
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        LatLng myLocation = new LatLng(32,	73);
+        LatLng myLocation = new LatLng(latitude,longitude);
         mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),12.0f));
 

@@ -4,6 +4,7 @@ package com.example.g_track.Fragments;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,8 +16,14 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.g_track.Model.Parent;
 import com.example.g_track.R;
 import com.example.g_track.Activities.parentForgetPassword;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -32,14 +39,13 @@ public class parentProfileFragment extends Fragment {
     private AlertDialog.Builder updatePhone;
     private AlertDialog dialogPopup;
     private Button btnUpdatePhone;
-    private TextView updatePassword;
-
-
+    private TextView updatePassword,parentName,parentCNIC,parentPhoneNo,parentChildID;
+    private FirebaseDatabase database;
+    private DatabaseReference parentRef;
 
     public parentProfileFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,8 +65,31 @@ public class parentProfileFragment extends Fragment {
                 updatePassword(v);
             }
         });
-
+        getDataFromFirebase();
         return view;
+    }
+
+    private void getDataFromFirebase() {
+        parentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
+                    Parent parent = parentSnapshot.getValue(Parent.class);
+                    if (parent.getParentID()==51){
+                        parentName.setText(parent.getParentName());
+                        parentCNIC.setText(parent.getParentCNIC());
+                        phoneText.setText(parent.getParentPhoneNo());
+                        parentChildID.setText(String.valueOf(parent.getChildStudentID()));
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void updatePassword(View view){
@@ -74,38 +103,36 @@ public class parentProfileFragment extends Fragment {
         btnEditPhone = view.findViewById(R.id.btn_parent_phone_edit);
         phoneText = view.findViewById(R.id.parent_phoneNo_textView);
         updatePassword = view.findViewById(R.id.parent_updatePassword_textView);
+        parentName = view.findViewById(R.id.parent_login_Text);
+        parentCNIC = view.findViewById(R.id.parent_cnicNo_textView);
+        parentChildID = view.findViewById(R.id.parent_childid_textView);
+        database = FirebaseDatabase.getInstance();
+        parentRef = database.getReference("Parent");
     }
 
     public void updatePhone(View view){
-
         phoneText.setText(popupEditTextPhone.getText());
         dialogPopup.cancel();
-
-
     }
 
     public void editPhone(View view){
         try{
             updatePhone = new AlertDialog.Builder(getContext());
             final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_phone_parent, null);
-
             popupEditTextPhone = popupView.findViewById(R.id.editText_parent_edit_phone);
             popupEditTextPhone.setText(phoneText.getText());
             btnUpdatePhone = popupView.findViewById(R.id.btn_popup_parent_edit_phone);
             popupEditTextPhone.addTextChangedListener(updatePhoneNo);
-
             btnUpdatePhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     updatePhone(popupView);
                 }
             });
-
             updatePhone.setView(popupView);
             dialogPopup = updatePhone.create();
             dialogPopup.show();
         }catch(Exception e){}
-
     }
 
     private TextWatcher updatePhoneNo = new TextWatcher() {
@@ -124,7 +151,6 @@ public class parentProfileFragment extends Fragment {
                 }
 
             }catch(Exception e){}
-
         }
 
         @Override
@@ -132,5 +158,4 @@ public class parentProfileFragment extends Fragment {
 
         }
     };
-
 }

@@ -33,6 +33,11 @@ public class parentHome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parent_home);
 
+        if (savedInstanceState == null) {
+            Fragment fragment = new parentTrackBusFragment();
+            loadFragment(fragment);
+        }
+
         initialization();
         setUpToolbar();
         actionOnClickingMainItems();

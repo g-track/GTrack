@@ -15,7 +15,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.g_track.Model.Bus;
+import com.example.g_track.Model.Driver;
+import com.example.g_track.Model.Route;
+import com.example.g_track.Model.Stop;
+import com.example.g_track.Model.Student;
 import com.example.g_track.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +39,9 @@ public class studentTimeSettingFragment extends Fragment {
     private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
     private ConstraintLayout alert_time_set_layout;
+    private FirebaseDatabase database;
+    private DatabaseReference myRef;
+
     public studentTimeSettingFragment() {
         // Required empty public constructor
     }
@@ -46,7 +56,39 @@ public class studentTimeSettingFragment extends Fragment {
         setSpinner();
         setColorOfSelectedItem();
         setOfOnAlert();
+        // Set Data in Firebase
+        setDataInFirebase();
         return view;
+    }
+
+    private void setDataInFirebase() {
+       /* Student student = new Student();
+        student.setStudentID(15137029);
+        student.setStudentName("Ghulam Mustafa");
+        student.setStudentPhoneNo("0306-4567874");
+        student.setFatherName("Father Name");
+        student.setFatherCNIC("35302-7898675-1");
+        student.setStudentRouteID(305);
+        student.setStudentStopID(295);
+        student.setFeeStatus(true);
+        student.setAlertStatus(true);
+        student.setAlertArrivalTime(45);
+        student.setAlertDepartureTime(5);*/
+
+      /*  Stop stop = new Stop();
+        stop.setStopID(203);
+        stop.setStopName("model town");
+        stop.setStopLatitude(35.456789);
+        stop.setStopLongitude(71.564321);
+        stop.setStopStatus(true);
+        stop.setStopRouteID(1001);*/
+
+      /*  Route route = new Route();
+        route.setRouteID(1004);
+        route.setRouteName("Muridki");
+        route.setRouteBusID(32);
+        route.setRouteStatus(true);
+        myRef.push().setValue(route);*/
     }
 
 
@@ -78,6 +120,9 @@ public class studentTimeSettingFragment extends Fragment {
         OffOnAlert_btn = view.findViewById(R.id.switch_id);
         alert_time_set_layout = view.findViewById(R.id.time_set_layout_id);
         departureTimeSpinner = view.findViewById(R.id.timeSpinner_second_id);
+
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Route");
     }
 
     private void setColorOfSelectedItem(){

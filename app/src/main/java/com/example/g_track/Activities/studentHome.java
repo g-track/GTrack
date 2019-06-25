@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+
 import com.example.g_track.Fragments.studentComplaintFragment;
 import com.example.g_track.Fragments.studentProfileFragment;
 import com.example.g_track.Fragments.studentTimeSettingFragment;
@@ -36,6 +37,11 @@ public class studentHome extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (savedInstanceState == null) {
+            Fragment fragment = new studentTrackBusFragment();
+            loadFragment(fragment);
+        }
+
         initialization();
         setUpToolbar();
         actionOnClickingMainItems();

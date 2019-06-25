@@ -2,21 +2,37 @@ package com.example.g_track.Model;
 
 public class Bus {
     int busID;
-   // Driver busDriver;
-    String busDriver;
     boolean busStatus;
+    int busDriverID;
+    double busLatitude;
+    double busLongitude;
 
-    public String getBusDriver() {
-        return busDriver;
+    public double getBusLatitude() {
+        return busLatitude;
     }
 
-    public void setBusDriver(String busDriver) {
-        this.busDriver = busDriver;
+    public void setBusLatitude(double busLatitude) {
+        this.busLatitude = busLatitude;
+    }
+
+    public double getBusLongitude() {
+        return busLongitude;
+    }
+
+    public void setBusLongitude(double busLongitude) {
+        this.busLongitude = busLongitude;
     }
 
     public Bus() {
     }
 
+    public int getBusDriverID() {
+        return busDriverID;
+    }
+
+    public void setBusDriverID(int busDriverID) {
+        this.busDriverID = busDriverID;
+    }
     public int getBusID() {
         return busID;
     }
@@ -24,14 +40,6 @@ public class Bus {
     public void setBusID(int busID) {
         this.busID = busID;
     }
-
-   /* public Driver getBusDriver() {
-        return busDriver;
-    }*/
-
-   /* public void setBusDriver(Driver busDriver) {
-        this.busDriver = busDriver;
-    }*/
 
     public boolean isBusStatus() {
         return busStatus;
