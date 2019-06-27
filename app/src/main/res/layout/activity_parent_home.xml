@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.parentHome"
-    android:background="@color/colorPrimary"
+    android:background="@color/colorWhite"
     android:id="@+id/parent_drawer">
 
     <android.support.constraint.ConstraintLayout

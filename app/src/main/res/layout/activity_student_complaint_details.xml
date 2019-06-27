@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.studentComplaintDetails"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <include
         android:id="@+id/toolbar_complaintDetail_id"
@@ -17,97 +17,139 @@
         >
     </include>
 
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="42dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:textColor="@color/colorBlack"
-        android:text="Complaint 1"
-        android:textSize="25sp"
-        android:paddingLeft="10dp"
-        android:textStyle="bold"
+    <ImageView
+        android:id="@+id/img_cmp_status"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/status_icon"
+        android:layout_marginEnd="391dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar_complaintDetail_id" />
 
-    <ImageView
-        android:id="@+id/imageView3"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+    <TextView
+        android:id="@+id/tv_cmp_status"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:tint="@color/colorBlack"
-        android:src="@drawable/user_icon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="24dp"
-        android:text="Ghulam Mustafa"
+        android:text="Pending"
+        android:textSize="30sp"
         android:textStyle="bold"
-        android:textColor="@color/colorBlack"
-        android:textSize="18dp"
-        app:layout_constraintStart_toEndOf="@+id/imageView3"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        android:textColor="#0C4609"
 
-    <TextView
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:textStyle="italic"
-        android:text="to Transport Manager"
-        android:textColor="@color/colorBlack"
-        app:layout_constraintStart_toStartOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="june 11:30pm"
-        android:textColor="@color/colorBlack"
-        app:layout_constraintStart_toStartOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
-
-    <ImageView
-        android:id="@+id/delete__icon_id"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="84dp"
-        android:layout_marginLeft="84dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="29dp"
-        android:layout_marginRight="29dp"
-        android:src="@drawable/delete_icon"
-        android:tint="@color/colorBlack"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintStart_toEndOf="@+id/img_cmp_status"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_complaintDetail_id" />
 
-    <TextView
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_cm_subject"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:textColor="@color/colorBlack"
-        android:text="That is awesome!! I love this design. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam felis magna, scelerisque vitae blandit ac, vulputate vel mi. Etiam nec mauris sem. Praesent id rhoncus elit. Nam id aliquam enim, ut faucibus ante. Integer sit amet efficitur lorem. Cras luctus dui sed tortor elementum blandit."
+        android:layout_marginRight="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+        app:layout_constraintTop_toBottomOf="@+id/img_cmp_status">
+
+        <LinearLayout
+            android:id="@+id/linearrLayout_cmp_subject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tv_cmp_subject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingLeft="15dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="5dp"
+                android:text="Late Bus"
+                android:textColor="@color/colorBlack"
+                android:textSize="30sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cv_cmp_details"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="16dp"
+        app:cardElevation="3dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cv_cm_subject">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/img_cmp_detil"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/complaint_icon"/>
+            <TextView
+                android:id="@+id/tv_cmp_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ghulam Mustafa"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:textColor="@color/colorBlack"
+                android:layout_toRightOf="@id/img_cmp_detil"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/tv_cmp_receiver"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="to: Transport Manager"
+                android:textStyle="italic"
+                android:layout_toRightOf="@id/img_cmp_detil"
+                android:layout_below="@id/tv_cmp_userName"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"/>
+            <TextView
+                android:id="@+id/tv_cmp_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="29 June 2019"
+                android:layout_below="@id/tv_cmp_receiver"
+                android:layout_toRightOf="@id/img_cmp_detil"
+                android:padding="5dp"
+                android:layout_marginLeft="5dp"/>
+            <ImageView
+                android:id="@+id/img_cmp_delete"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/delete_icon"
+                android:layout_alignParentEnd="true"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/tv_cmp_details"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:textSize="15dp"
+                android:layout_marginTop="20dp"
+                android:layout_below="@id/img_cmp_detil"
+                android:text="In legal terminology, a complaint is any formal legal document that sets out the facts and legal reasons that the filing party or parties believes are sufficient to support a claim against the party or parties against whom the claim is brought that entitles the plaintiff to a remedy."/>
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
 
 </android.support.constraint.ConstraintLayout>
