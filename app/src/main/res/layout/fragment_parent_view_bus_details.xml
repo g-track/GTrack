@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
 
     tools:context=".Activities.parentViewBusDetails"
-    android:background="@color/colorPrimary">
+    android:background="@color/colorWhite">
 
     <!-- TODO: Update blank fragment layout -->
 

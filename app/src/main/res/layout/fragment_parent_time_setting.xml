@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragments.parentTimeSettingFragment">
 
@@ -21,75 +22,120 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <Switch
-        android:id="@+id/parent_switch_id"
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:switchPadding="250dp"
-        android:text="OFF"
-        android:textSize="22sp"
-        android:textColor="@color/colorBlack"
+        android:layout_height="60dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="15dp"
+        android:padding="10dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.345"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/parent_textView_turn_onOff"
-        tools:checked="false" />
+        app:layout_constraintTop_toBottomOf="@+id/parent_textView_turn_onOff">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Switch
+                android:id="@+id/parent_switch_id"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:switchPadding="200dp"
+                android:text="OFF"
+                android:textColor="@color/colorBlack"
+                android:textSize="22sp"
+                tools:checked="false" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/parent_time_set_layout_id"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="46dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="403dp"
+        android:layout_height="282dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/parent_switch_id">
+        app:layout_constraintTop_toBottomOf="@+id/cardView">
 
 
-
-        <TextView
-            android:id="@+id/parent_textView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginTop="41dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:drawableLeft="@drawable/timer_icon_white"
-            android:drawablePadding="15dp"
-            android:paddingLeft="20dp"
-            android:text="Set Time Of Alert Before Bus Arrival at Stop"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
+        <android.support.v7.widget.CardView
+            android:id="@+id/cv_spinner_ts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="8dp"
+            app:cardCornerRadius="10dp"
+            android:layout_marginBottom="10dp"
+            app:cardElevation="3dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/img_student_clock_2"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/time_set_icon"
+                    android:layout_marginTop="40dp"
+                    android:layout_marginLeft="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/student_textView_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_toRightOf="@id/img_student_clock_2"
+                    android:layout_marginTop="41dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="40dp"
+                    android:layout_marginBottom="10dp"
+                    android:drawablePadding="20dp"
+                    android:paddingLeft="20dp"
+                    android:text="Set Time Of Alert Before Bus Arrival at Stop"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
 
 
-        <Spinner
-            android:id="@+id/parent_timeSpinner_id"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="60dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginTop="44dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="32dp"
-            android:background="@drawable/gradient"
-            android:popupTheme="@color/colorAccent"
-            android:theme="@style/spinnerTheme"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/parent_textView" />
+                <Spinner
+                    android:id="@+id/parent_timeSpinner_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_below="@id/student_textView_2"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="50dp"
+                    android:layout_marginEnd="32dp"
+                    android:layout_marginRight="40dp"
+                    android:gravity="center_horizontal"
+                    android:popupTheme="@color/colorAccent"
+                    android:background="@drawable/spinner"
+                    android:theme="@style/spinnerTheme" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
 
 
     </android.support.constraint.ConstraintLayout>

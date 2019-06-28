@@ -41,6 +41,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
+import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
 
 
 /**
@@ -68,7 +69,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
         initialization(view);
-        getDataFromFirebase();
+        //getDataFromFirebase();
         return  view;
     }
 
@@ -90,7 +91,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         busRef = database.getReference("Bus");
     }
 
-    private void updateBusLocationOnMap(double latitude, double longitude) {
+    /*private void updateBusLocationOnMap(double latitude, double longitude) {
         if (null != mMarker) {
             mMarker.remove();
         }
@@ -98,13 +99,13 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                 new LatLng(latitude, longitude))
                 .title("===============Bus Location=============").visible(true)
                 .snippet("Latitude:"+latitude+" , Longitude:"+longitude)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
+                .icon(fromResource(R.drawable.busiconmap)));
         mMarker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),14));
-    }
+    }*/
 
 
-    @Override
+    /*@Override
     public void onStart() {
         super.onStart();
     }
@@ -161,7 +162,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
 
                             }
                         });
-                    }
+                    }*/
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -170,7 +171,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng myLocation = new LatLng(latitude,longitude);
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
+        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.busiconmap)));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),12.0f));
 
    /*    //int x=10;

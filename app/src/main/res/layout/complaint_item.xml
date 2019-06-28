@@ -4,84 +4,86 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="160dp"
-    android:layout_marginBottom="8dp">
+    android:layout_height="140dp"
+    android:background="@color/colorWhite">
 
 
     <android.support.v7.widget.CardView
         android:id="@+id/complaint_cardView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardElevation="3dp"
-        app:cardCornerRadius="10dp"
-        android:layout_marginBottom="4dp"
-        app:cardPreventCornerOverlap="true"
+        android:layout_height="110dp"
         android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
+        android:layout_marginBottom="2dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        app:cardPreventCornerOverlap="true"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
-    <RelativeLayout
-        android:background="#fffff7"
-        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        android:layout_height="match_parent">
-        <ImageView
-            android:id="@+id/img_complaint_icon"
-            android:layout_width="100dp"
-            android:layout_height="140dp"
-            android:src="@drawable/user_icon"
-            android:padding="5dp"
-            />
-        <TextView
-            android:id="@+id/tv_complaint_subject"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_toRightOf="@id/img_complaint_icon"
-            android:text="Conplaint Subject"
-            android:textColor="@color/colorPrimary"
-            android:textStyle="bold"
-            android:textSize="22sp"
-            />
-        <TextView
-            android:id="@+id/tv_complaint_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:padding="2dp"
-            android:textColor="@color/colorBlack"
-            android:text="2h"
-            android:layout_marginRight="5dp"
-            android:textSize="16dp"
-            />
-        <TextView
-            android:id="@+id/tv_complaint_desc"
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            android:text="Complaint Description"
-            android:layout_toRightOf="@id/img_complaint_icon"
-            android:layout_below="@id/tv_complaint_subject"
-            android:padding="5dp"
-            android:textColor="@color/colorBlack"
-            />
-        <TextView
-            android:id="@+id/tv_complaint_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Pending"
-            android:padding="2dp"
-            android:layout_marginRight="8dp"
-            android:textColor="@color/colorBlack"
-            android:layout_below="@id/tv_complaint_desc"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="8dp"/>
-    </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#fffff7">
+
+            <ImageView
+                android:id="@+id/img_complaint_icon"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:padding="5dp"
+                android:src="@drawable/complaint_icon" />
+
+            <TextView
+                android:id="@+id/tv_complaint_subject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/img_complaint_icon"
+                android:padding="5dp"
+                android:text="Complaint Subject"
+                android:textColor="@color/colorPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_complaint_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="5dp"
+                android:padding="2dp"
+                android:text="2h"
+                android:textColor="@color/colorBlack"
+                android:textSize="16dp" />
+
+            <TextView
+                android:id="@+id/tv_complaint_desc"
+                android:layout_width="250dp"
+                android:layout_height="30dp"
+                android:layout_below="@id/tv_complaint_subject"
+                android:layout_toRightOf="@id/img_complaint_icon"
+                android:padding="5dp"
+                android:text="Complaint Description"
+                android:textColor="@color/colorBlack" />
+
+            <TextView
+                android:id="@+id/tv_complaint_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_complaint_desc"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="8dp"
+                android:padding="2dp"
+                android:text="Pending"
+                android:textColor="#32cd32"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+        </RelativeLayout>
     </android.support.v7.widget.CardView>
 </android.support.constraint.ConstraintLayout>

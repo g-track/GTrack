@@ -39,8 +39,7 @@ public class studentTimeSettingFragment extends Fragment {
     private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
     private ConstraintLayout alert_time_set_layout;
-    private FirebaseDatabase database;
-    private DatabaseReference myRef;
+
 
     public studentTimeSettingFragment() {
         // Required empty public constructor
@@ -57,7 +56,7 @@ public class studentTimeSettingFragment extends Fragment {
         setColorOfSelectedItem();
         setOfOnAlert();
         // Set Data in Firebase
-        setDataInFirebase();
+        //setDataInFirebase();
         return view;
     }
 
@@ -116,13 +115,13 @@ public class studentTimeSettingFragment extends Fragment {
     }
 
     private void initialization(View view) {
-        timeSpinner = view.findViewById(R.id.timeSpinner_id);
+        timeSpinner = view.findViewById(R.id.student_timeSpinner_1);
         OffOnAlert_btn = view.findViewById(R.id.switch_id);
-        alert_time_set_layout = view.findViewById(R.id.time_set_layout_id);
-        departureTimeSpinner = view.findViewById(R.id.timeSpinner_second_id);
+        alert_time_set_layout = view.findViewById(R.id.layout_spinner_1);
+        departureTimeSpinner = view.findViewById(R.id.student_timeSpinner_2);
 
-        database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Route");
+        /*database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("Route");*/
     }
 
     private void setColorOfSelectedItem(){

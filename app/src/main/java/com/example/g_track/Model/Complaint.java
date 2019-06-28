@@ -1,21 +1,59 @@
 package com.example.g_track.Model;
 
-public class Complaint {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Complaint implements Parcelable {
     int complaintID;
     String complaintDesc;
     String complaintSubject;
     int resolvedStatus;
     boolean complaintStatus;
-    Route complaintRoute;
+    long studentId;
+    long complaintTime;
 
-    public Route getComplaintRoute() {
-        return complaintRoute;
+
+    public Complaint() {
+
     }
 
-    public void setComplaintRoute(Route complaintRoute) {
-        this.complaintRoute = complaintRoute;
+    protected Complaint(Parcel in) {
+        complaintID = in.readInt();
+        complaintDesc = in.readString();
+        complaintSubject = in.readString();
+        resolvedStatus = in.readInt();
+        complaintStatus = in.readByte() != 0;
+        studentId = in.readLong();
+        complaintTime = in.readLong();
     }
 
+    public static final Creator<Complaint> CREATOR = new Creator<Complaint>() {
+        @Override
+        public Complaint createFromParcel(Parcel in) {
+            return new Complaint(in);
+        }
+
+        @Override
+        public Complaint[] newArray(int size) {
+            return new Complaint[size];
+        }
+    };
+
+    public long getComplaintTime() {
+        return complaintTime;
+    }
+
+    public void setComplaintTime(long complaintTime) {
+        this.complaintTime = complaintTime;
+    }
+
+    public long getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(long studentId) {
+        this.studentId = studentId;
+    }
     public int getComplaintID() {
         return complaintID;
     }
@@ -48,11 +86,27 @@ public class Complaint {
         this.resolvedStatus = resolvedStatus;
     }
 
-    public boolean isComplaintStatus() {
+    public boolean getComplaintStatus() {
         return complaintStatus;
     }
 
     public void setComplaintStatus(boolean complaintStatus) {
         this.complaintStatus = complaintStatus;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(complaintID);
+        dest.writeString(complaintDesc);
+        dest.writeString(complaintSubject);
+        dest.writeInt(resolvedStatus);
+        dest.writeByte((byte) (complaintStatus ? 1 : 0));
+        dest.writeLong(studentId);
+        dest.writeLong(complaintTime);
     }
 }

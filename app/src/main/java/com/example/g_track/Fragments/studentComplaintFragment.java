@@ -3,6 +3,7 @@ package com.example.g_track.Fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,10 +11,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.g_track.Model.Complaint;
 import com.example.g_track.R;
 import com.example.g_track.Adapters.complaintAdapter;
 import com.example.g_track.Activities.studentComplaintCompose;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -26,27 +37,15 @@ public class studentComplaintFragment extends Fragment {
 
     private FloatingActionButton compose_floating_btn;
     private RecyclerView recyclerView;
-    String[] subject = {"Complaint 1","Complaint 2","Complaint 3","Complaint 4","Complaint 5","Complaint 6",
-             "Complaint 7","Complaint 8","Complaint 9","Complaint 10"};
-    String[] desc = {"The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them.",
-            "The cards are drawn to the screen with a default elevation, which causes the system to draw a shadow underneath them."};
-    String[] time = {"2h","3h","1-1-2019","2-4-2019","1h","5h",
-            "10h","5h","7h","25h"};
-    String[] status = {"Pending","Aknowledged","Processing","Done","Invalid","Pending",
-            "In Process","Pending","Done", "Done"};
+    private List<Complaint> complaintList;
+    DatabaseReference databaseReference;
+    View view;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_student_complaint, container, false);
+        view = inflater.inflate(R.layout.fragment_student_complaint, container, false);
         initialization(view);
         setUpRecyclerView(view);
         goToComposePage();
@@ -64,13 +63,44 @@ public class studentComplaintFragment extends Fragment {
     }
 
     private void initialization(View view) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("Complaint");
+        complaintList = new ArrayList<>();
         compose_floating_btn = view.findViewById(R.id.compose_btn_id);
     }
 
     public void setUpRecyclerView(View view){
         recyclerView = view.findViewById(R.id.recyclerView_id);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(new complaintAdapter(subject,desc, time, status, getContext()));
+       // recyclerView.setAdapter(new complaintAdapter(subject,desc, time, status, getContext()));
     }
 
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                complaintList.clear();
+                for(DataSnapshot complaintSnapShot: dataSnapshot.getChildren()){
+                    Complaint complaint = complaintSnapShot.getValue(Complaint.class);
+                    if(complaint.getComplaintStatus()){
+                        complaintList.add(complaint);
+                    }
+
+                }
+                if(complaintList.isEmpty()){
+                    Toast.makeText(getContext(),  "No Complaints Found", Toast.LENGTH_LONG).show();
+                }
+                complaintAdapter adapter = new complaintAdapter(complaintList, getContext());
+                recyclerView.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
 }
