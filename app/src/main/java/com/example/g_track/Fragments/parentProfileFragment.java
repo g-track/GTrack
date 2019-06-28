@@ -42,6 +42,7 @@ public class parentProfileFragment extends Fragment {
     private TextView updatePassword,parentName,parentCNIC,parentPhoneNo,parentChildID;
     private FirebaseDatabase database;
     private DatabaseReference parentRef;
+    private String parentKey;
 
     public parentProfileFragment() {
         // Required empty public constructor
@@ -76,6 +77,7 @@ public class parentProfileFragment extends Fragment {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
                     Parent parent = parentSnapshot.getValue(Parent.class);
                     if (parent.getParentID()==51){
+                        parentKey = parentSnapshot.getKey();
                         parentName.setText(parent.getParentName());
                         parentCNIC.setText(parent.getParentCNIC());
                         phoneText.setText(parent.getParentPhoneNo());
@@ -113,6 +115,8 @@ public class parentProfileFragment extends Fragment {
     public void updatePhone(View view){
         phoneText.setText(popupEditTextPhone.getText());
         dialogPopup.cancel();
+        parentRef.child(parentKey).child("parentPhoneNo").setValue(String.valueOf(popupEditTextPhone.getText()));
+
     }
 
     public void editPhone(View view){

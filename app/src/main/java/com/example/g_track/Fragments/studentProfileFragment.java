@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,7 @@ public class studentProfileFragment extends Fragment {
     private TextView studentName,studentId,studentFatherName,studentFatherCNIC,studentRouteName,studentStopName;
     private FirebaseDatabase database;
     private DatabaseReference studentRef,routeRef,stopRef;
+    private String studentKey;
 
     public studentProfileFragment() {
         // Required empty public constructor
@@ -81,6 +83,7 @@ public class studentProfileFragment extends Fragment {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     final Student student = studentSnapshot.getValue(Student.class);
                     if (student.getStudentID()==15137038){
+                        studentKey = studentSnapshot.getKey();
                         studentName.setText(student.getStudentName());
                         studentId.setText(String.valueOf(student.getStudentID()));
                         studentFatherName.setText(student.getFatherName());
@@ -148,9 +151,11 @@ public class studentProfileFragment extends Fragment {
         stopRef = database.getReference("Stop");
     }
 
-    public void updatePhone(View view){
+    public void updatePhone(View view) {
         phoneText.setText(popupEditTextPhone.getText());
         dialogPopup.cancel();
+        Log.e("STUDENT KEY:", studentKey);
+        studentRef.child(studentKey).child("studentPhoneNo").setValue(String.valueOf(popupEditTextPhone.getText()));
     }
 
     public void updatePassword(View view){
