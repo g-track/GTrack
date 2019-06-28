@@ -3,8 +3,10 @@ package com.example.g_track.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +17,14 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.example.g_track.Model.Parent;
+import com.example.g_track.Model.Student;
 import com.example.g_track.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import static android.R.layout.simple_spinner_dropdown_item;
 import static android.R.layout.simple_spinner_item;
@@ -28,6 +37,8 @@ public class parentTimeSettingFragment extends Fragment {
     private Spinner timeSpinner;
     private Switch OffOnAlert_btn;
     private ConstraintLayout alert_time_set_layout;
+    DatabaseReference parentDatabase;
+    Parent parentData, parent;
 
 
     public parentTimeSettingFragment() {
@@ -69,9 +80,35 @@ public class parentTimeSettingFragment extends Fragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
         adapter.setDropDownViewResource(simple_spinner_dropdown_item);
         timeSpinner.setAdapter(adapter);
+
+        parentDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                    parentData = studentSnapShot.getValue(Parent.class);
+                    if(parentData.getParentID() == 51){
+                        parent = parentData;
+                    }
+                }
+                String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
+                adapter.setDropDownViewResource(simple_spinner_dropdown_item);
+                timeSpinner.setAdapter(adapter);
+                Log.i("STUDNET", String.valueOf(parent.getArrivalTime()));
+                timeSpinner.setSelection(parent.getArrivalTime());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void initialization(View view) {
+        parentDatabase = FirebaseDatabase.getInstance().getReference("Parent");
+        parent = new Parent();
+        parentData = new Parent();
         timeSpinner = view.findViewById(R.id.parent_timeSpinner_id);
         OffOnAlert_btn = view.findViewById(R.id.parent_switch_id);
         alert_time_set_layout = view.findViewById(R.id.parent_time_set_layout_id);

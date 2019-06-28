@@ -10,8 +10,8 @@ public class Student {
     int studentStopID;
     boolean feeStatus;
     boolean alertStatus;
-    long alertDepartureTime;
-    long alertArrivalTime;
+    int alertDepartureTime;
+    int alertArrivalTime;
     boolean studentStatus;
 
     public int getStudentID() {
@@ -54,19 +54,19 @@ public class Student {
         this.studentStopID = studentStopID;
     }
 
-    public long getAlertDepartureTime() {
+    public int getAlertDepartureTime() {
         return alertDepartureTime;
     }
 
-    public void setAlertDepartureTime(long alertDepartureTime) {
+    public void setAlertDepartureTime(int alertDepartureTime) {
         this.alertDepartureTime = alertDepartureTime;
     }
 
-    public long getAlertArrivalTime() {
+    public int getAlertArrivalTime() {
         return alertArrivalTime;
     }
 
-    public void setAlertArrivalTime(long alertArrivalTime) {
+    public void setAlertArrivalTime(int alertArrivalTime) {
         this.alertArrivalTime = alertArrivalTime;
     }
 

@@ -6,8 +6,28 @@ public class Parent{
     String parentCNIC;
     String parentPhoneNo;
     int childStudentID;
+    int arrivalTime;
+    boolean alertStatus;
+
+
 
     public Parent() {
+    }
+
+    public boolean isAlertStatus() {
+        return alertStatus;
+    }
+
+    public void setAlertStatus(boolean alertStatus) {
+        this.alertStatus = alertStatus;
+    }
+
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public void setArrivalTime(int arrivalTime) {
+        this.arrivalTime = arrivalTime;
     }
 
     public int getParentID() {

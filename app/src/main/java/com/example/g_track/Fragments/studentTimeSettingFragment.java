@@ -3,8 +3,10 @@ package com.example.g_track.Fragments;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +23,11 @@ import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
 import com.example.g_track.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +44,10 @@ public class studentTimeSettingFragment extends Fragment {
     private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
     private ConstraintLayout alert_time_set_layout;
+    DatabaseReference databaseReference;
+    Student studentData, student;
+    private String studentKey;
+    String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
 
 
     public studentTimeSettingFragment() {
@@ -107,27 +116,103 @@ public class studentTimeSettingFragment extends Fragment {
     }
 
     private void setSpinner() {
-        String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
-        adapter.setDropDownViewResource(simple_spinner_dropdown_item);
-        timeSpinner.setAdapter(adapter);
-        departureTimeSpinner.setAdapter(adapter);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                    studentData = studentSnapShot.getValue(Student.class);
+                    if(studentData.getStudentID() == 15137038){
+                        student = studentData;
+                    }
+                }
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
+                adapter.setDropDownViewResource(simple_spinner_dropdown_item);
+                timeSpinner.setAdapter(adapter);
+                Log.i("STUDNET", String.valueOf(student.getAlertArrivalTime()));
+                timeSpinner.setSelection(student.getAlertArrivalTime());
+                departureTimeSpinner.setAdapter(adapter);
+                Log.i("STUDNET", String.valueOf(student.getAlertDepartureTime()));
+                departureTimeSpinner.setSelection(student.getAlertDepartureTime());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
     }
 
     private void initialization(View view) {
         timeSpinner = view.findViewById(R.id.student_timeSpinner_1);
         OffOnAlert_btn = view.findViewById(R.id.switch_id);
+        studentData = new Student();
+        student = new Student();
         alert_time_set_layout = view.findViewById(R.id.layout_spinner_1);
         departureTimeSpinner = view.findViewById(R.id.student_timeSpinner_2);
+        databaseReference = FirebaseDatabase.getInstance().getReference("Student");
 
         /*database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Route");*/
     }
 
+    private void setArrivalTime(final int pos){
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                            studentData = studentSnapShot.getValue(Student.class);
+                            if(studentData.getStudentID() == 15137038){
+                                student = studentData;
+                                studentKey = studentSnapShot.getKey();
+                                Log.i("TAG", "onDataChange: "+studentKey);
+                            }
+                        }
+                        Log.i("TAG", "onDataChangeoutSideloop: "+studentKey);
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+        if(studentKey != null){
+            databaseReference.child(studentKey).child("alertArrivalTime").setValue(pos);
+        }
+    }
+
+    private void setDepartureTime(final int pos){
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                    studentData = studentSnapShot.getValue(Student.class);
+                    if(studentData.getStudentID() == 15137038){
+                        student = studentData;
+                        studentKey = studentSnapShot.getKey();
+                        Log.i("STUDENT", studentKey);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        if(studentKey != null){
+            databaseReference.child(studentKey).child("alertDepartureTime").setValue(pos);
+        }
+
+    }
+
     private void setColorOfSelectedItem(){
         timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent,  View view, int position, long id) {
+                setArrivalTime(position);
                 ((TextView) view).setTextColor(Color.WHITE); //Change selected text color
             }
 
@@ -140,6 +225,7 @@ public class studentTimeSettingFragment extends Fragment {
         departureTimeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setDepartureTime(position);
                 ((TextView) view).setTextColor(Color.WHITE);
             }
 
