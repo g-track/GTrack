@@ -39,6 +39,9 @@ public class parentTimeSettingFragment extends Fragment {
     private ConstraintLayout alert_time_set_layout;
     DatabaseReference parentDatabase;
     Parent parentData, parent;
+    boolean status;
+    String parentKey;
+    String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
 
 
     public parentTimeSettingFragment() {
@@ -54,43 +57,99 @@ public class parentTimeSettingFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_parent_time_setting, container, false);
         initialization(view);
+        setToogleButton();
         setSpinner();
         setColorOfSelectedItem();
         setOfOnAlert();
         return view;
     }
 
+
+    private void setToogleButton(){
+        parentDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
+                    parentData = parentSnapShot.getValue(Parent.class);
+                    if(parentData.getParentID() == 51){
+                        parent = parentData;
+                        status = parent.isAlertStatus();
+                        //studentKey = studentSnapShot.getKey();
+                        if(status){
+                            alert_time_set_layout.setVisibility(ConstraintLayout.VISIBLE);
+                            OffOnAlert_btn.setText("ON");
+                            OffOnAlert_btn.setChecked(true);
+                        }else {
+                            alert_time_set_layout.setVisibility(ConstraintLayout.INVISIBLE);
+                            OffOnAlert_btn.setText("OFF");
+                            OffOnAlert_btn.setChecked(false);
+                        }
+                        Log.i("ALERT STATUS", "onDataChange: "+ parent.isAlertStatus());
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Log.i("ALERT STATUS OUT", "onDataChange: "+ status);
+    }
+
+
+
     private void setOfOnAlert() {
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                parentDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
+                            parentData = parentSnapShot.getValue(Parent.class);
+                            if(parentData.getParentID() == 51){
+                                parent = parentData;
+                                parentKey = parentSnapShot.getKey();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 if(isChecked){
                     alert_time_set_layout.setVisibility(ConstraintLayout.VISIBLE);
                     OffOnAlert_btn.setText("ON");
+                    if(parentKey != null){
+                        parentDatabase.child(parentKey).child("alertStatus").setValue(true);
+                    }
+
                 }else {
                     alert_time_set_layout.setVisibility(ConstraintLayout.INVISIBLE);
                     OffOnAlert_btn.setText("OFF");
+                    if(parentKey != null){
+                        parentDatabase.child(parentKey).child("alertStatus").setValue(false);
+                    }
                 }
             }
         });
     }
 
     private void setSpinner() {
-        String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
-        adapter.setDropDownViewResource(simple_spinner_dropdown_item);
-        timeSpinner.setAdapter(adapter);
-
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
-                    parentData = studentSnapShot.getValue(Parent.class);
+                for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
+                    parentData = parentSnapShot.getValue(Parent.class);
                     if(parentData.getParentID() == 51){
                         parent = parentData;
                     }
                 }
-                String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
                 adapter.setDropDownViewResource(simple_spinner_dropdown_item);
                 timeSpinner.setAdapter(adapter);
@@ -103,6 +162,8 @@ public class parentTimeSettingFragment extends Fragment {
 
             }
         });
+
+
     }
 
     private void initialization(View view) {
@@ -114,10 +175,34 @@ public class parentTimeSettingFragment extends Fragment {
         alert_time_set_layout = view.findViewById(R.id.parent_time_set_layout_id);
     }
 
+    private void setArrivalTime(final int pos){
+        parentDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
+                    parentData = parentSnapShot.getValue(Parent.class);
+                    if(parentData.getParentID() == 51){
+                        parent = parentData;
+                        parentKey = parentSnapShot.getKey();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        if(parentKey != null){
+            parentDatabase.child(parentKey).child("arrivalTime").setValue(pos);
+        }
+    }
+
     private void setColorOfSelectedItem(){
         timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                setArrivalTime(position);
                 ((TextView) view).setTextColor(Color.WHITE); //Change selected text color
             }
 
