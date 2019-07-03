@@ -47,6 +47,7 @@ public class studentTimeSettingFragment extends Fragment {
     DatabaseReference databaseReference;
     Student studentData, student;
     private String studentKey;
+    boolean status;
     String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
 
 
@@ -61,55 +62,84 @@ public class studentTimeSettingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_time_setting, container, false);
         initialization(view);
+        setToogleButton();
         setSpinner();
         setColorOfSelectedItem();
         setOfOnAlert();
-        // Set Data in Firebase
-        //setDataInFirebase();
+
         return view;
     }
 
-    private void setDataInFirebase() {
-       /* Student student = new Student();
-        student.setStudentID(15137029);
-        student.setStudentName("Ghulam Mustafa");
-        student.setStudentPhoneNo("0306-4567874");
-        student.setFatherName("Father Name");
-        student.setFatherCNIC("35302-7898675-1");
-        student.setStudentRouteID(305);
-        student.setStudentStopID(295);
-        student.setFeeStatus(true);
-        student.setAlertStatus(true);
-        student.setAlertArrivalTime(45);
-        student.setAlertDepartureTime(5);*/
 
-      /*  Stop stop = new Stop();
-        stop.setStopID(203);
-        stop.setStopName("model town");
-        stop.setStopLatitude(35.456789);
-        stop.setStopLongitude(71.564321);
-        stop.setStopStatus(true);
-        stop.setStopRouteID(1001);*/
+    private void setToogleButton(){
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                    studentData = studentSnapShot.getValue(Student.class);
+                    if(studentData.getStudentID() == 15137038){
+                        student = studentData;
+                        status = student.isAlertStatus();
+                        //studentKey = studentSnapShot.getKey();
+                        if(status){
+                            alert_time_set_layout.setVisibility(ConstraintLayout.VISIBLE);
+                            OffOnAlert_btn.setText("ON");
+                            OffOnAlert_btn.setChecked(true);
+                        }else {
+                            alert_time_set_layout.setVisibility(ConstraintLayout.INVISIBLE);
+                            OffOnAlert_btn.setText("OFF");
+                            OffOnAlert_btn.setChecked(false);
+                        }
+                        Log.i("ALERT STATUS", "onDataChange: "+student.isAlertStatus());
 
-      /*  Route route = new Route();
-        route.setRouteID(1004);
-        route.setRouteName("Muridki");
-        route.setRouteBusID(32);
-        route.setRouteStatus(true);
-        myRef.push().setValue(route);*/
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Log.i("ALERT STATUS OUT", "onDataChange: "+ status);
     }
 
 
     private void setOfOnAlert() {
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
+                databaseReference.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                            studentData = studentSnapShot.getValue(Student.class);
+                            if(studentData.getStudentID() == 15137038){
+                                student = studentData;
+                                studentKey = studentSnapShot.getKey();
+                            }
+                        }
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
                 if(isChecked){
                     alert_time_set_layout.setVisibility(ConstraintLayout.VISIBLE);
                     OffOnAlert_btn.setText("ON");
+                    if(studentKey != null){
+                        databaseReference.child(studentKey).child("alertStatus").setValue(true);
+                    }
+
                 }else {
                     alert_time_set_layout.setVisibility(ConstraintLayout.INVISIBLE);
                     OffOnAlert_btn.setText("OFF");
+                    if(studentKey != null){
+                        databaseReference.child(studentKey).child("alertStatus").setValue(false);
+                    }
                 }
             }
         });
@@ -166,11 +196,8 @@ public class studentTimeSettingFragment extends Fragment {
                             if(studentData.getStudentID() == 15137038){
                                 student = studentData;
                                 studentKey = studentSnapShot.getKey();
-                                Log.i("TAG", "onDataChange: "+studentKey);
                             }
                         }
-                        Log.i("TAG", "onDataChangeoutSideloop: "+studentKey);
-
                     }
 
                     @Override
