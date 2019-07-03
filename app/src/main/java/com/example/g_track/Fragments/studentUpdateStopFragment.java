@@ -35,9 +35,10 @@ public class studentUpdateStopFragment extends Fragment {
     private Spinner spinnerStopLsit;
     private FirebaseDatabase database;
     private DatabaseReference studentRef,stopRef;
-    private String selectedItem;
     private String studentKey;
+    private String studentStopName;
     private int updatedStopId;
+    private int mPosition;
     private ArrayList<String> stopList;
     public studentUpdateStopFragment() {
         // Required empty public constructor
@@ -49,57 +50,13 @@ public class studentUpdateStopFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_update_stop, container, false);
         initialization(view);
-       // setStopFromFirebaseToSpinner();
-        setStopList();
+        setStopFromFirebaseToSpinner();
         setColorOfSelectedItem();
         return view;
     }
 
-    /*private void setStopFromFirebaseToSpinner() {
-        stopList = new ArrayList<>();
-        studentRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                stopList.clear();
-                for (final DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
-                    Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==15137029){
-                        studentKey = studentSnapshot.getKey();
-                        Log.i("Sohail",studentKey);
-                        final int routeId = student.getStudentRouteID();
-                        final int stopId = student.getStudentStopID();
-                        stopRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot stopSnapshot : dataSnapshot.getChildren()){
-                                    Stop stop = stopSnapshot.getValue(Stop.class);
-                                    if (stop.getStopRouteID()==routeId) {
-                                        String stopName = stop.getStopName();
-                                        stopList.add(stopName);
-                                        Log.i("Tag", "setStopFromFirebaseToSpinner: "+stopList.get(0));
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }
-*/
-
-    private void setStopList() {
-        final ArrayList<String> stopList = new ArrayList<>();
+    private void setStopFromFirebaseToSpinner() {
+       stopList = new ArrayList<>();
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -110,7 +67,8 @@ public class studentUpdateStopFragment extends Fragment {
                        studentKey = studentSnapshot.getKey();
                         Log.i("Sohail",studentKey);
                         final int routeId = student.getStudentRouteID();
-                        //final int stopId = student.getStudentStopID();
+                        final int stopId = student.getStudentStopID();
+
                         stopRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -119,26 +77,40 @@ public class studentUpdateStopFragment extends Fragment {
                                     if (stop.getStopRouteID()==routeId) {
                                         String stopName = stop.getStopName();
                                         stopList.add(stopName);
+                                       // Log.i("G-Track", "setStopList in side loop;"+stopList.get(1));
+                                    }
+                                    if(stop.getStopID()==stopId){
+                                        studentStopName = stop.getStopName();
                                     }
                                 }
-                                ArrayAdapter<String> adapter =
-                                        new ArrayAdapter<String>(getContext(),  android.R.layout.simple_spinner_dropdown_item, stopList);
+                                Log.i("G-Track", "setStopList outSide loop;"+stopList.get(1));
+                                int index = 0;
+                                for (String stop_name : stopList){
+
+                                    if (stop_name == studentStopName){
+                                        mPosition = index;
+                                        break;
+                                    }
+                                    index++;
+                                }
+                                Log.i("G-track", "onDataChange: position "+mPosition);
+
+                                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_spinner_dropdown_item, stopList);
                                 adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
                                 spinnerStopLsit.setAdapter(adapter);
-                                //spinnerStopLsit.setSelection(0);
+                                spinnerStopLsit.setSelection(mPosition);
                                 spinnerStopLsit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
                                     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        selectedItem = spinnerStopLsit.getSelectedItem().toString();
-                                        Log.i("Sohail",selectedItem);
+                                        final String nameStop = stopList.get(position);
                                         stopRef.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot stopSnapshot : dataSnapshot.getChildren()){
                                                     Stop stop = stopSnapshot.getValue(Stop.class);
-                                                    if (stop.getStopName()==selectedItem){
+                                                    if (stop.getStopName()==nameStop){
                                                         updatedStopId = stop.getStopID();
-                                                        Log.i("Sohail","value "+updatedStopId);
+                                                       // Log.i("Sohail","value "+updatedStopId);
                                                         studentRef.child(studentKey).child("studentStopID").setValue(updatedStopId);
                                                         Log.i("Sohail", "onItemSelected: " +updatedStopId);
                                                     }
@@ -150,8 +122,7 @@ public class studentUpdateStopFragment extends Fragment {
 
                                             }
                                         });
-
-
+                                        studentRef.child(studentKey).child("studentStopID").setValue(updatedStopId);
                                     }
 
                                     @Override
@@ -175,6 +146,7 @@ public class studentUpdateStopFragment extends Fragment {
 
             }
         });
+
     }
 
     private void initialization(View view) {

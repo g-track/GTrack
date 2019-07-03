@@ -69,7 +69,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
         initialization(view);
-        //getDataFromFirebase();
+        getDataFromFirebase();
         return  view;
     }
 
@@ -91,7 +91,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         busRef = database.getReference("Bus");
     }
 
-    /*private void updateBusLocationOnMap(double latitude, double longitude) {
+    private void updateBusLocationOnMap(double latitude, double longitude) {
         if (null != mMarker) {
             mMarker.remove();
         }
@@ -102,10 +102,10 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                 .icon(fromResource(R.drawable.busiconmap)));
         mMarker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),14));
-    }*/
+    }
 
 
-    /*@Override
+    @Override
     public void onStart() {
         super.onStart();
     }
@@ -162,7 +162,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
 
                             }
                         });
-                    }*/
+                    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

@@ -132,7 +132,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
                 .snippet("Latitude:"+latitude+" , Longitude:"+longitude)
                 .icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
         mMarker.showInfoWindow();
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),14));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18));
     }
 
     private void initialization() {
@@ -144,14 +144,15 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
     }
 
     private void setParentData() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Parent");
-        Parent parent = new Parent();
-        parent.setParentID(53);
-        parent.setParentName("Muhammad Hanif");
-        parent.setParentCNIC("35302-7898675-1");
-        parent.setParentPhoneNo("0347-8976500");
-        parent.setChildStudentID(15137029);
-        reference.push().setValue(parent);
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Bus");
+        Bus bus = new Bus();
+        bus.setBusID(32);
+        bus.setBusDriverID(12);
+        bus.setBusStatus(true);
+        bus.setBusLatitude(32.5678);
+        bus.setBusLongitude(72.456789);
+
+        reference.push().setValue(bus);
     }
 
     @Override
