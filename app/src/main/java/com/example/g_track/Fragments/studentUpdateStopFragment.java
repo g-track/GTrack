@@ -34,11 +34,13 @@ public class studentUpdateStopFragment extends Fragment {
 
     private Spinner spinnerStopLsit;
     private FirebaseDatabase database;
-    private DatabaseReference studentRef,stopRef;
+    private DatabaseReference studentRef,stopRef, routeRef;
     private String studentKey;
     private String studentStopName;
+    private TextView routeNameShow;
     private int updatedStopId;
     private int mPosition;
+    private int routeId;
     private ArrayList<String> stopList;
     public studentUpdateStopFragment() {
         // Required empty public constructor
@@ -51,8 +53,28 @@ public class studentUpdateStopFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_update_stop, container, false);
         initialization(view);
         setStopFromFirebaseToSpinner();
+        setRouteName();
         setColorOfSelectedItem();
         return view;
+    }
+
+    public void setRouteName(){
+        routeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(final DataSnapshot routeSnapshot: dataSnapshot.getChildren()){
+                    Route route = routeSnapshot.getValue(Route.class);
+                    if(route.getRouteID() == routeId){
+                        routeNameShow.setText(route.getRouteName().toString());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void setStopFromFirebaseToSpinner() {
@@ -66,7 +88,7 @@ public class studentUpdateStopFragment extends Fragment {
                     if (student.getStudentID()==15137029){
                        studentKey = studentSnapshot.getKey();
                         Log.i("Sohail",studentKey);
-                        final int routeId = student.getStudentRouteID();
+                        routeId = student.getStudentRouteID();
                         final int stopId = student.getStudentStopID();
 
                         stopRef.addValueEventListener(new ValueEventListener() {
@@ -152,8 +174,10 @@ public class studentUpdateStopFragment extends Fragment {
     private void initialization(View view) {
         spinnerStopLsit = view.findViewById(R.id.spinnerStopList_id);
         database = FirebaseDatabase.getInstance();
+        routeNameShow = view.findViewById(R.id.textView12);
         studentRef = database.getReference("Student");
         stopRef = database.getReference("Stop");
+        routeRef = database.getReference("Route");
     }
 
     private void setColorOfSelectedItem(){

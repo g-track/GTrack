@@ -109,20 +109,20 @@ public class studentComplaintDetails extends AppCompatActivity {
         if(complaintExtra.getResolvedStatus() == 1){
             resolvedStatus.setText("Pending");
             resolvedStatus.setTextColor(getResources().getColor(R.color.pendingColor));
-            statusImg.setImageResource(R.drawable.bus);
+            statusImg.setImageResource(R.drawable.busimage);
 
         }else if(complaintExtra.getResolvedStatus() == 2){
             resolvedStatus.setText("In Process");
             resolvedStatus.setTextColor(getResources().getColor(R.color.processColor));
-            statusImg.setImageResource(R.drawable.bus);
+            statusImg.setImageResource(R.drawable.busimage);
         }else if(complaintExtra.getResolvedStatus() == 3){
             resolvedStatus.setText("Resolved");
             resolvedStatus.setTextColor(getResources().getColor(R.color.doneColor));
-            statusImg.setImageResource(R.drawable.bus);
+            statusImg.setImageResource(R.drawable.busimage);
         }else{
             resolvedStatus.setText("Invalid");
             resolvedStatus.setTextColor(getResources().getColor(R.color.invalidColor));
-            statusImg.setImageResource(R.drawable.bus);
+            statusImg.setImageResource(R.drawable.busimage);
         }
         studentName.setText(student.getStudentName());
     }
