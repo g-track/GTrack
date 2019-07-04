@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.ahmadrosid.lib.drawroutemap.DrawMarker;
@@ -42,19 +43,26 @@ import com.google.firebase.database.ValueEventListener;
 
 import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
+import static java.lang.Math.acos;
+import static java.lang.Math.cos;
+import static java.lang.Math.sin;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class studentTrackBusFragment extends Fragment implements OnMapReadyCallback {
-    private  GoogleMap mGoogleMap;
+    private GoogleMap mGoogleMap;
     private MapView mapView;
-    private  View view;
+    private View view;
     private double latitude = 32.2500 ,longitude = 74.1667;
+    private double previousLatitude,previousLongitude,nextLatitude,nextLongitude;
+    private long previousTIme,nextTime;
     private Marker mMarker;
     private DatabaseReference studentRef,routeRef,busRef;
     private FirebaseDatabase database;
+    private double M_PI = 3.14159;
+    private TextView busSpeed,estimatedTime;
     //MarkerOptions place1, place2;
 
 
@@ -70,7 +78,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
         initialization(view);
         getDataFromFirebase();
+        previousLatitude = nextLatitude;
+        previousLongitude = nextLongitude;
+
         return  view;
+
     }
 
     @Override
@@ -89,6 +101,8 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         studentRef = database.getReference("Student");
         routeRef = database.getReference("Route");
         busRef = database.getReference("Bus");
+        busSpeed = view.findViewById(R.id.busSpeed_id);
+        estimatedTime = view.findViewById(R.id.estimatedTime_id);
     }
 
     private void updateBusLocationOnMap(double latitude, double longitude) {
@@ -101,7 +115,24 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                 .snippet("Latitude:"+latitude+" , Longitude:"+longitude)
                 .icon(fromResource(R.drawable.busiconmap)));
         mMarker.showInfoWindow();
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),14));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18));
+
+        double dist = distance_on_geoid(nextLatitude ,  nextLongitude, previousLatitude, previousLongitude);
+        Log.i("Sohail", "Distance : "+dist);
+        // Log.i("Sohail", "Speed : "+(dist/1000)/3);
+        double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-7200000)) / 1000.0);
+        Log.i("Sohail", "Time : "+time_s);
+        double speed_mps = dist / time_s;
+        double speed_kph = (speed_mps * 3600.0) / 1000.0;
+        Log.i("Sohail", "Speed in Kilometer: "+speed_kph);
+
+        busSpeed.setText(speed_kph+" Kph");
+
+
+        previousLatitude = nextLatitude;
+        previousLongitude = nextLongitude;
+
+
     }
 
 
@@ -134,6 +165,8 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                                                                     if (bus.getBusID() == busId) {
                                                                         latitude = bus.getBusLatitude();
                                                                         longitude = bus.getBusLongitude();
+                                                                        nextLatitude = latitude;
+                                                                        nextLongitude = longitude;
                                                                         updateBusLocationOnMap(latitude, longitude);
                                                                     }
                                                                 }
@@ -172,7 +205,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng myLocation = new LatLng(latitude,longitude);
         mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.busiconmap)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),12.0f));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
 
    /*    //int x=10;
         mGoogleMap = googleMap;
@@ -191,5 +224,39 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         Point displaySize = new Point();
        getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));*/
+    }
+
+    double distance_on_geoid(double lat1, double lon1, double lat2, double lon2) {
+
+        // Convert degrees to radians
+        lat1 = lat1 * M_PI / 180.0;
+        lon1 = lon1 * M_PI / 180.0;
+
+        lat2 = lat2 * M_PI / 180.0;
+        lon2 = lon2 * M_PI / 180.0;
+
+        // radius of earth in metres
+        double r = 6378100;
+
+        // P
+        double rho1 = r * cos(lat1);
+        double z1 = r * sin(lat1);
+        double x1 = rho1 * cos(lon1);
+        double y1 = rho1 * sin(lon1);
+
+        // Q
+        double rho2 = r * cos(lat2);
+        double z2 = r * sin(lat2);
+        double x2 = rho2 * cos(lon2);
+        double y2 = rho2 * sin(lon2);
+
+        // Dot product
+        double dot = (x1 * x2 + y1 * y2 + z1 * z2);
+        double cos_theta = dot / (r * r);
+
+        double theta = acos(cos_theta);
+
+        // Distance in Metres
+        return r * theta;
     }
 }
