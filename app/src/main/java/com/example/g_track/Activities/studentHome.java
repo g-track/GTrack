@@ -122,7 +122,7 @@ public class studentHome extends AppCompatActivity {
                         fragment = new studentViewBusDetailsFragment();
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
-                        actionBar.setTitle("Bus Details");
+                        actionBar.setTitle("G-Track");
                        // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.logOut_id:

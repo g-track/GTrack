@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class parentRegister extends AppCompatActivity {
     private EditText parentName;
@@ -25,6 +27,7 @@ public class parentRegister extends AppCompatActivity {
     private EditText parentCnic;
     private EditText parentPhone;
     private Button btnRegister;
+   // private FirebaseAuth firebaseAuth;
 
 
     @Override
@@ -38,6 +41,7 @@ public class parentRegister extends AppCompatActivity {
     }
 
     private void initialization() {
+        //firebaseAuth = FirebaseAuth.getInstance();
         parentName = findViewById(R.id.editText_parent_name);
         parentPassword = findViewById(R.id.editText_parent_passwordR);
         childId = findViewById(R.id.editText_child_id);
@@ -101,8 +105,22 @@ public class parentRegister extends AppCompatActivity {
 
 
     public void registerParent(View view){
-        Intent parentLogin = new Intent(getApplicationContext(), com.example.g_track.Activities.parentLogin.class);
-        startActivity(parentLogin);
+        /*String email = childId.getText().toString() + "@gift.edu.pk";
+        String password = parentPassword.getText().toString();
+        firebaseAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Intent parentLogin = new Intent(getApplicationContext(), com.example.g_track.Activities.parentLogin.class);
+                            startActivity(parentLogin);
+                        } else {
+                            Toast.makeText(parentRegister.this, "Registration Failed!!!", Toast.LENGTH_SHORT).show();
+                        }
+
+                        // ...
+                    }
+                });*/
     }
 
     public void loginActivity(View view){
