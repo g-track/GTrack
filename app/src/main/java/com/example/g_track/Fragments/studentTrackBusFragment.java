@@ -21,6 +21,7 @@ import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Location;
 import com.example.g_track.Model.Parent;
 import com.example.g_track.Model.Route;
+import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
 import com.example.g_track.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -59,10 +60,12 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     private double previousLatitude,previousLongitude,nextLatitude,nextLongitude;
     private long previousTIme,nextTime;
     private Marker mMarker;
-    private DatabaseReference studentRef,routeRef,busRef;
+    private DatabaseReference studentRef,routeRef,busRef,stopRef;
     private FirebaseDatabase database;
     private double M_PI = 3.14159;
     private TextView busSpeed,estimatedTime;
+    private int stopId;
+    double lat ,lng;
     //MarkerOptions place1, place2;
 
 
@@ -100,6 +103,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         database = FirebaseDatabase.getInstance();
         studentRef = database.getReference("Student");
         routeRef = database.getReference("Route");
+        stopRef = database.getReference("Stop");
         busRef = database.getReference("Bus");
         busSpeed = view.findViewById(R.id.busSpeed_id);
         estimatedTime = view.findViewById(R.id.estimatedTime_id);
@@ -118,16 +122,25 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18));
 
         double dist = distance_on_geoid(nextLatitude ,  nextLongitude, previousLatitude, previousLongitude);
-        Log.i("Sohail", "Distance : "+dist);
+        //Log.i("Sohail", "Distance : "+dist);
         // Log.i("Sohail", "Speed : "+(dist/1000)/3);
-        double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-7200000)) / 1000.0);
-        Log.i("Sohail", "Time : "+time_s);
+        double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-20000)) / 1000.0);
+        //Log.i("Sohail", "Time : "+time_s);
         double speed_mps = dist / time_s;
         double speed_kph = (speed_mps * 3600.0) / 1000.0;
-        Log.i("Sohail", "Speed in Kilometer: "+speed_kph);
+        //Log.i("Sohail", "Speed in Kilometer: "+speed_kph);
 
-        busSpeed.setText(speed_kph+" Kph");
 
+        LatLng stopLocation = getStopLatLng(stopId);
+        double distance = (distance_on_geoid(nextLatitude ,  nextLongitude, stopLocation.latitude, stopLocation.longitude)/1000);
+        double time = distance/speed_kph;
+
+        String formatted_speed = String.format("%.4f", speed_kph);
+        String formatted2_time = String.format("%.2f", time);
+
+
+        busSpeed.setText(formatted_speed+" Kph");
+        estimatedTime.setText(formatted2_time+" sec");
 
         previousLatitude = nextLatitude;
         previousLongitude = nextLongitude;
@@ -150,6 +163,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                                     Student student = studentSnapshot.getValue(Student.class);
                                     if (student.getStudentID() == 15137029) {
                                         final int routeId = student.getStudentRouteID();
+                                        stopId = student.getStudentStopID();
                                         routeRef.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -259,4 +273,29 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         // Distance in Metres
         return r * theta;
     }
+
+    LatLng getStopLatLng(final int stop_id){
+
+        stopRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot stopSnapshot : dataSnapshot.getChildren()){
+                    Stop stop = stopSnapshot.getValue(Stop.class);
+                    if (stop.getStopID()==stop_id){
+                        lat = stop.getStopLatitude();
+                        lng = stop.getStopLongitude();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        LatLng latLng = new LatLng(lat,lng);
+        return latLng;
+    }
+
+
 }

@@ -86,10 +86,9 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                                         options.title(stop.getStopName()).visible(true);
                                         // options.snippet("someDesc");
                                         mGoogleMap.addMarker(options);
-                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 8.0f));
+                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 14.0f));
                                     }
                                 }
-
                             }
 
                             @Override

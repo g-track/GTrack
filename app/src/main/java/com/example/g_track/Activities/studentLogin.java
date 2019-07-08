@@ -81,8 +81,7 @@ public class studentLogin extends AppCompatActivity {
                             // Sign in success, update UI with the signed-in user's information
                            // Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent studentHomePage = new Intent(getApplicationContext(), studentHome.class);
-                            startActivity(studentHomePage);
+
                             //updateUI(user);
                         } else {
                             // If sign in fails, display a message to the user.
@@ -96,6 +95,13 @@ public class studentLogin extends AppCompatActivity {
                     }
                 });*/
 
+        Intent studentHomePage = new Intent(getApplicationContext(), studentHome.class);
+        startActivity(studentHomePage);
+    }
 
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        finish();
     }
 }

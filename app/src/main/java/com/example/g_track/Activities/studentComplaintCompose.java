@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,11 +46,9 @@ public class studentComplaintCompose extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(complaintSubject.getText().toString().equals("") && complaintDesc.getText().toString().equals("")){
-
                 }else{
                     generateComplaint();
                 }
-
             }
         });
     }
@@ -82,7 +81,6 @@ public class studentComplaintCompose extends AppCompatActivity {
         complaint.setStudentId(studentId);
 
         databaseReference.push().setValue(complaint);
-
         clearInputFields();
 
     }
@@ -115,4 +113,15 @@ public class studentComplaintCompose extends AppCompatActivity {
         }
     };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+
+                super.onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }
