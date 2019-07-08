@@ -1,5 +1,6 @@
 package com.example.g_track.Activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -46,18 +47,7 @@ public class studentComplaintDetails extends AppCompatActivity {
         deleteComplaint();
 
         complaintExtra = getIntent().getExtras().getParcelable("Complaint");
-        if(complaintExtra != null){
 
-            //complaintReference.child(String.valueOf(complaintExtra.getComplaintID())).child("complaintStatus");
-           /* sub = extras.getString("cmpSubject");
-            desc = extras.getString("cmpDesc");
-            time = extras.getLong("cmpTime");
-            status = extras.getInt("cmpResolvedStatus");
-            name = extras.getLong("cmpStudentId");*/
-
-
-            Log.i("EXTRA", String.valueOf(complaintExtra.getComplaintSubject()));
-        }
     }
 
     private void initialization() {
@@ -96,8 +86,10 @@ public class studentComplaintDetails extends AppCompatActivity {
                     }
                 });
 
-                // Intent complaintFragment = new Intent(this, );
-                Toast.makeText(studentComplaintDetails.this, "Delete Icon is Clicked.", Toast.LENGTH_SHORT).show();
+                Intent complaintFragment = new Intent(getApplicationContext(), studentHome.class);
+                complaintFragment.putExtra("TAG", "CC");
+                startActivity(complaintFragment);
+                //Toast.makeText(studentComplaintDetails.this, "Delete Icon is Clicked.", Toast.LENGTH_SHORT).show();
             }
         });
     }

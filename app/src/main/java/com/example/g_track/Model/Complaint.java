@@ -10,7 +10,7 @@ public class Complaint implements Parcelable {
     int resolvedStatus;
     boolean complaintStatus;
     long studentId;
-    long complaintTime;
+    String complaintTime;
 
 
     public Complaint() {
@@ -24,7 +24,7 @@ public class Complaint implements Parcelable {
         resolvedStatus = in.readInt();
         complaintStatus = in.readByte() != 0;
         studentId = in.readLong();
-        complaintTime = in.readLong();
+        complaintTime = in.readString();
     }
 
     public static final Creator<Complaint> CREATOR = new Creator<Complaint>() {
@@ -39,11 +39,11 @@ public class Complaint implements Parcelable {
         }
     };
 
-    public long getComplaintTime() {
+    public String getComplaintTime() {
         return complaintTime;
     }
 
-    public void setComplaintTime(long complaintTime) {
+    public void setComplaintTime(String complaintTime) {
         this.complaintTime = complaintTime;
     }
 
@@ -107,6 +107,6 @@ public class Complaint implements Parcelable {
         dest.writeInt(resolvedStatus);
         dest.writeByte((byte) (complaintStatus ? 1 : 0));
         dest.writeLong(studentId);
-        dest.writeLong(complaintTime);
+        dest.writeString(complaintTime);
     }
 }

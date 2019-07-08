@@ -27,17 +27,50 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:layout_marginEnd="16dp"
         android:padding="20dp"
         android:text="Daska"
         android:background="@drawable/stroke"
         android:textColor="@color/colorWhite"
-        android:textSize="40sp"
+        android:textSize="32sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginRight="20dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="3dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView12">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/busDetails_textView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/gradient"
+                android:paddingLeft="30dp"
+                android:paddingTop="5dp"
+                android:paddingBottom="5dp"
+                android:text="Update Stop"
+                android:textColor="@color/colorWhite"
+                android:textSize="24dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -59,13 +92,13 @@
                 android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="8dp"
                 android:paddingLeft="35dp"
                 android:text="Select your nearest stop"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -73,12 +106,10 @@
             <Spinner
                 android:id="@+id/spinnerStopList_id"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginStart="32dp"
-                android:layout_marginLeft="32dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_marginEnd="70dp"
                 android:background="@drawable/spinner"
                 android:gravity="center_horizontal"
                 android:paddingLeft="30dp"
@@ -92,10 +123,9 @@
             </Spinner>
 
             <ImageView
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginEnd="32dp"
-                android:layout_marginRight="32dp"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginEnd="75dp"
                 android:src="@drawable/listdown_icon"
                 app:layout_constraintBottom_toBottomOf="@+id/spinnerStopList_id"
                 app:layout_constraintEnd_toEndOf="parent"

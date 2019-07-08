@@ -32,15 +32,28 @@ public class studentHome extends AppCompatActivity {
     private ActionBarDrawerToggle main_actionBarToggle;
     private BottomNavigationView main_student_bottomNavigation;
     private ActionBar actionBar;
-
+    private  String extraTag = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        extraTag = getIntent().getStringExtra("TAG");
+
         if (savedInstanceState == null) {
-            Fragment fragment = new studentTrackBusFragment();
-            loadFragment(fragment);
+            if(extraTag == null){
+                Fragment fragment = new studentTrackBusFragment();
+                loadFragment(fragment);
+            }else{
+                if(extraTag.equals("CC")){
+                    Fragment fragment = new studentComplaintFragment();
+                    loadFragment(fragment);
+                }
+            }
+
         }
+
+
 
         initialization();
         setUpToolbar();
@@ -107,10 +120,10 @@ public class studentHome extends AppCompatActivity {
                         fragment = new studentUpdateStopFragment();
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
-                        actionBar.setTitle("Update Stop");
+                        actionBar.setTitle("G-Track");
                         break;
                     case R.id.viewRoute_id:
-                        Toast.makeText(studentHome.this, "View Route is Clicked.", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(studentHome.this, "View Route is Clicked.", Toast.LENGTH_SHORT).show();
                         fragment = new studentViewRouteFragment();
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);

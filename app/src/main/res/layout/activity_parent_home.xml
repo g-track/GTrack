@@ -58,9 +58,9 @@
         android:layout_gravity="start"
         app:menu="@menu/parent_drawer_menu"
         app:headerLayout="@layout/header"
-        android:background="@color/colorPrimary"
-        app:itemTextColor="@color/colorWhite"
-        app:itemIconTint="@color/colorWhite"
+        android:background="@color/colorWhite"
+        app:itemTextColor="@color/colorAccent"
+        app:itemIconTint="@color/colorAccent"
         android:theme="@style/NavigationView"
         android:fitsSystemWindows="true">
 
