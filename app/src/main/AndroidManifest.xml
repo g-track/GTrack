@@ -53,24 +53,23 @@
         <activity android:name=".Activities.parentForgetPassword" />
         <activity android:name=".Activities.studentComplaintCompose" />
         <activity android:name=".Activities.parentHome" >
+
         </activity>
         <activity android:name=".Activities.parentRegister" >
+
+
+        </activity>
+        <activity android:name=".Activities.parentLogin" />
+        <activity android:name=".Activities.studentComplaintDetails" />
+        <activity android:name=".Activities.studentLogin" />
+        <activity android:name=".Activities.studentHome">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
-        <activity android:name=".Activities.parentLogin" />
-        <activity android:name=".Activities.studentComplaintDetails" />
-        <activity android:name=".Activities.studentLogin" >
 
-
-
-        </activity>
-        <activity android:name=".Activities.studentHome">
-
-        </activity>
     </application>
 </manifest>
