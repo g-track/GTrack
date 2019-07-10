@@ -1,5 +1,6 @@
 package com.example.g_track.Activities;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -140,6 +141,8 @@ public class studentHome extends AppCompatActivity {
                         break;
                     case R.id.logOut_id:
                         Toast.makeText(studentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(getApplicationContext(),studentLogin.class);
+                        startActivity(intent);
                         break;
                      default:
                          return true;
@@ -160,5 +163,11 @@ public class studentHome extends AppCompatActivity {
         fragmentTransaction.replace(R.id.framLayout_id,fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
+        finish();
     }
 }

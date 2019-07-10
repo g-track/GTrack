@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -101,20 +102,20 @@ public class studentComplaintDetails extends AppCompatActivity {
         if(complaintExtra.getResolvedStatus() == 1){
             resolvedStatus.setText("Pending");
             resolvedStatus.setTextColor(getResources().getColor(R.color.pendingColor));
-            statusImg.setImageResource(R.drawable.busimage);
+            statusImg.setImageResource(R.drawable.pending);
 
         }else if(complaintExtra.getResolvedStatus() == 2){
             resolvedStatus.setText("In Process");
             resolvedStatus.setTextColor(getResources().getColor(R.color.processColor));
-            statusImg.setImageResource(R.drawable.busimage);
+            statusImg.setImageResource(R.drawable.processing);
         }else if(complaintExtra.getResolvedStatus() == 3){
             resolvedStatus.setText("Resolved");
             resolvedStatus.setTextColor(getResources().getColor(R.color.doneColor));
-            statusImg.setImageResource(R.drawable.busimage);
+            statusImg.setImageResource(R.drawable.resolved);
         }else{
             resolvedStatus.setText("Invalid");
             resolvedStatus.setTextColor(getResources().getColor(R.color.invalidColor));
-            statusImg.setImageResource(R.drawable.busimage);
+            statusImg.setImageResource(R.drawable.invalid);
         }
         studentName.setText(student.getStudentName());
     }
@@ -151,5 +152,33 @@ public class studentComplaintDetails extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if(getFragmentManager().getBackStackEntryCount() == 0) {
+            super.onBackPressed();
+        }
+        else {
+            getFragmentManager().popBackStack();
+        }
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+
+                /*Intent intent = new Intent(studentComplaintDetails.this, studentHome.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
+                return true;*/
+                super.onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

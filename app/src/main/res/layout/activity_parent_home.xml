@@ -59,8 +59,9 @@
         app:menu="@menu/parent_drawer_menu"
         app:headerLayout="@layout/header"
         android:background="@color/colorWhite"
-        app:itemTextColor="@color/colorAccent"
-        app:itemIconTint="@color/colorAccent"
+        app:itemBackground="@drawable/drawer_selected_item"
+        app:itemTextColor="@color/text_color_selected_item"
+        app:itemIconTint="@color/text_color_selected_item"
         android:theme="@style/NavigationView"
         android:fitsSystemWindows="true">
 

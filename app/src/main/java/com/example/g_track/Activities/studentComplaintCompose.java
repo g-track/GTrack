@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.MenuItem;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -62,6 +63,8 @@ public class studentComplaintCompose extends AppCompatActivity {
         emailSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(complaintSubject.getText().toString().equals("") && complaintDesc.getText().toString().equals("")){
+
                 if(complaintSubject.getText().toString().equals("") || complaintDesc.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_LONG).show();
 
@@ -69,10 +72,11 @@ public class studentComplaintCompose extends AppCompatActivity {
                     generateComplaint();
                     finishActivity();
                 }
-
             }
-        });
+        }
+    });
     }
+
 
     public static String  getCurrentTimeUsingDate() {
         Date date = new Date();
@@ -113,7 +117,6 @@ public class studentComplaintCompose extends AppCompatActivity {
         complaint.setStudentId(studentId);
 
         databaseReference.push().setValue(complaint);
-
         clearInputFields();
         //finishActivity();
 
@@ -165,4 +168,15 @@ public class studentComplaintCompose extends AppCompatActivity {
         }
     };
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // todo: goto back activity from here
+
+                super.onBackPressed();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

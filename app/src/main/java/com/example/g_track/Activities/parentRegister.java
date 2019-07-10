@@ -36,7 +36,7 @@ public class parentRegister extends AppCompatActivity {
         setContentView(R.layout.activity_parent_register);
 
         initialization();
-        
+
 
     }
 
