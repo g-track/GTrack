@@ -218,8 +218,10 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng myLocation = new LatLng(latitude,longitude);
+
         mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),12.0f));
+
         mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.busiconmap)));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
 
