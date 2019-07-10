@@ -63,7 +63,7 @@ public class studentComplaintFragment extends Fragment {
     }
 
     private void initialization(View view) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("Complaint");
+        databaseReference = FirebaseDatabase.getInstance().getReference("complaint");
         complaintList = new ArrayList<>();
         compose_floating_btn = view.findViewById(R.id.compose_btn_id);
     }

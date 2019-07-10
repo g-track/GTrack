@@ -88,7 +88,7 @@ public class studentProfileFragment extends Fragment {
                         studentId.setText(String.valueOf(student.getStudentID()));
                         studentFatherName.setText(student.getFatherName());
                         studentFatherCNIC.setText(student.getFatherCNIC());
-                        phoneText.setText(student.getStudentPhoneNo());
+                        phoneText.setText(student.getStudentPhone());
                         final int stopId = student.getStudentStopID();
                         routeRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -146,9 +146,9 @@ public class studentProfileFragment extends Fragment {
         studentRouteName = view.findViewById(R.id.student_route_textView);
         studentStopName = view.findViewById(R.id.student_stop_textView);
         database = FirebaseDatabase.getInstance();
-        studentRef = database.getReference("Student");
-        routeRef = database.getReference("Route");
-        stopRef = database.getReference("Stop");
+        studentRef = database.getReference("student");
+        routeRef = database.getReference("route");
+        stopRef = database.getReference("stop");
     }
 
     public void updatePhone(View view) {

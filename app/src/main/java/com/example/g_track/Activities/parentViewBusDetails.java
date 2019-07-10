@@ -52,7 +52,7 @@ public class parentViewBusDetails extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentID()==53){
+                    if (parent.getParentID()==51){
                         final int childId = parent.getChildStudentID();
                         studentRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -141,10 +141,10 @@ public class parentViewBusDetails extends Fragment {
         routeText = view.findViewById(R.id.parent_route_name_id);
         database = FirebaseDatabase.getInstance();
         parentRef = database.getReference("Parent");
-        studentRef = database.getReference("Student");
-        routeRef = database.getReference("Route");
-        busRef = database.getReference("Bus");
-        driverRef = database.getReference("Driver");
+        studentRef = database.getReference("student");
+        routeRef = database.getReference("route");
+        busRef = database.getReference("bus");
+        driverRef = database.getReference("driver");
     }
 
 }

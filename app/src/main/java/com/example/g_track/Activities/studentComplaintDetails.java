@@ -53,8 +53,8 @@ public class studentComplaintDetails extends AppCompatActivity {
 
     private void initialization() {
         mToolbar = findViewById(R.id.toolbar_complaintDetail_id);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Student");
-        complaintReference = FirebaseDatabase.getInstance().getReference("Complaint");
+        databaseReference = FirebaseDatabase.getInstance().getReference("student");
+        complaintReference = FirebaseDatabase.getInstance().getReference("complaint");
         student = new Student();
         complaintSubject = findViewById(R.id.tv_cmp_subject);
         complaintDesc = findViewById(R.id.tv_cmp_details);

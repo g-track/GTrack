@@ -11,8 +11,8 @@
     <com.google.android.gms.maps.MapView
         android:id="@+id/studentMap_id"
         android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="408dp"
-        android:layout_height="448dp"
+        android:layout_width="0dp"
+        android:layout_height="430dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,45 +23,48 @@
     <TextView
         android:id="@+id/textView4"
         android:layout_width="150dp"
-        android:layout_height="35dp"
+        android:layout_height="25dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
         android:text="Bus Speed:"
-        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/studentMap_id" />
 
     <TextView
-        android:id="@+id/busSpeed_id"
-        android:layout_width="wrap_content"
+        android:id="@+id/parent_busSpeed_id"
+        android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="50dp"
         android:text="0.0 Kph"
-        android:textSize="20sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@+id/textView4" />
 
     <TextView
         android:id="@+id/textView5"
-        android:layout_width="150dp"
-        android:layout_height="35dp"
-        android:layout_marginTop="16dp"
+        android:layout_width="0dp"
+        android:layout_height="25dp"
         android:text="Estimated Time:"
-        android:textSize="20sp"
+        android:textColor="@color/colorAccent"
+        android:textSize="12sp"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
     <TextView
-        android:id="@+id/estimatedTime_id"
+        android:id="@+id/parent_estimatedTime_id"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:text="0 sec"
-        android:textSize="20sp"
+        android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView5"
-        app:layout_constraintEnd_toEndOf="@+id/busSpeed_id"
-        app:layout_constraintStart_toStartOf="@+id/busSpeed_id"
+        app:layout_constraintEnd_toEndOf="@+id/parent_busSpeed_id"
+        app:layout_constraintStart_toStartOf="@+id/parent_busSpeed_id"
         app:layout_constraintTop_toTopOf="@+id/textView5" />
 
 </android.support.constraint.ConstraintLayout>

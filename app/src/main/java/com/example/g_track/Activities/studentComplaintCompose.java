@@ -63,7 +63,6 @@ public class studentComplaintCompose extends AppCompatActivity {
         emailSendBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(complaintSubject.getText().toString().equals("") && complaintDesc.getText().toString().equals("")){
 
                 if(complaintSubject.getText().toString().equals("") || complaintDesc.getText().toString().equals("")){
                     Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_LONG).show();
@@ -73,8 +72,7 @@ public class studentComplaintCompose extends AppCompatActivity {
                     finishActivity();
                 }
             }
-        }
-    });
+        });
     }
 
 
@@ -92,7 +90,7 @@ public class studentComplaintCompose extends AppCompatActivity {
         complaintSubject = findViewById(R.id.edtText_cmp_subject);
         complaintDesc = findViewById(R.id.edtText_cmp_desc);
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference("Complaint");
+        databaseReference = database.getReference("complaint");
     }
     @SuppressLint("ResourceType")
     public void finishActivity(){
@@ -134,7 +132,6 @@ public class studentComplaintCompose extends AppCompatActivity {
                 for(DataSnapshot complaintSnapShot: dataSnapshot.getChildren()){
                     count++;
                 }
-                Log.i("Sohail", "onDataChange: "+count);
             }
 
             @Override

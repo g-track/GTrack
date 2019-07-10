@@ -52,7 +52,7 @@ public class studentViewBusDetailsFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==15137029){
+                    if (student.getStudentID()==15137038){
                         final int routeId = student.getStudentRouteID();
                         routeRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -121,10 +121,10 @@ public class studentViewBusDetailsFragment extends Fragment {
 
     private void initialization(View view) {
         database = FirebaseDatabase.getInstance();
-        studentRef = database.getReference("Student");
-        routeRef = database.getReference("Route");
-        busRef = database.getReference("Bus");
-        driverRef = database.getReference("Driver");
+        studentRef = database.getReference("student");
+        routeRef = database.getReference("route");
+        busRef = database.getReference("bus");
+        driverRef = database.getReference("driver");
         busNo = view.findViewById(R.id.bus_no_id);
         busDriverName = view.findViewById(R.id.driver_name_id);
         busRoutName = view.findViewById(R.id.rout_name_id);

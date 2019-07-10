@@ -1,3 +1,4 @@
+
 package com.example.g_track.Fragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -28,6 +29,7 @@ import com.google.firebase.database.ValueEventListener;
 /**
  * A simple {@link Fragment} subclass.
  */
+
 public class parentTrackBusFragment extends Fragment implements OnMapReadyCallback {
     private GoogleMap mGoogleMap;
     private FirebaseDatabase database;
@@ -128,9 +130,9 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
         }
         mMarker = mGoogleMap.addMarker(new MarkerOptions().position(
                 new LatLng(latitude, longitude))
-                .title("===============Bus Location=============").visible(true)
-                .snippet("Latitude:"+latitude+" , Longitude:"+longitude)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
+                .title("====Bus Location====").visible(true)
+                .snippet("Lat:"+latitude+" , Lng:"+longitude)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.markerone)));
         mMarker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18));
     }
@@ -138,13 +140,13 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
     private void initialization() {
         database = FirebaseDatabase.getInstance();
         parentRef = database.getReference("Parent");
-        studentRef = database.getReference("Student");
-        routeRef = database.getReference("Route");
-        busRef = database.getReference("Bus");
+        studentRef = database.getReference("student");
+        routeRef = database.getReference("route");
+        busRef = database.getReference("bus");
     }
 
     private void setParentData() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Bus");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bus");
         Bus bus = new Bus();
         bus.setBusID(32);
         bus.setBusDriverID(12);
@@ -160,8 +162,9 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng busLocation = new LatLng(latitude, longitude);
-        mGoogleMap.addMarker(new MarkerOptions().position(busLocation).title("Gift University").icon(BitmapDescriptorFactory.fromResource(R.drawable.busiconmap)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(busLocation.latitude, busLocation.longitude), 12.0f));
+        mGoogleMap.addMarker(new MarkerOptions().position(busLocation).title("Gift University").icon(BitmapDescriptorFactory.fromResource(R.drawable.markerone)));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(busLocation.latitude, busLocation.longitude), 10.0f));
     }
 
 }
+

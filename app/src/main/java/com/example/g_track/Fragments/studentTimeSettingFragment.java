@@ -181,7 +181,7 @@ public class studentTimeSettingFragment extends Fragment {
         student = new Student();
         alert_time_set_layout = view.findViewById(R.id.layout_spinner_1);
         departureTimeSpinner = view.findViewById(R.id.student_timeSpinner_2);
-        databaseReference = FirebaseDatabase.getInstance().getReference("Student");
+        databaseReference = FirebaseDatabase.getInstance().getReference("student");
 
         /*database = FirebaseDatabase.getInstance();
         myRef = database.getReference("Route");*/

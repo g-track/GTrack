@@ -1,25 +1,16 @@
 package com.example.g_track.Fragments;
 
 
-import android.content.Intent;
-import android.graphics.Point;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.ahmadrosid.lib.drawroutemap.DrawMarker;
-import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.example.g_track.Model.Bus;
-import com.example.g_track.Model.Location;
-import com.example.g_track.Model.Parent;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
@@ -27,22 +18,16 @@ import com.example.g_track.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import static com.google.android.gms.maps.CameraUpdateFactory.newLatLng;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
 import static java.lang.Math.acos;
 import static java.lang.Math.cos;
@@ -101,12 +86,12 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
 
     private void initialization(View view) {
         database = FirebaseDatabase.getInstance();
-        studentRef = database.getReference("Student");
-        routeRef = database.getReference("Route");
-        stopRef = database.getReference("Stop");
-        busRef = database.getReference("Bus");
-        busSpeed = view.findViewById(R.id.busSpeed_id);
-        estimatedTime = view.findViewById(R.id.estimatedTime_id);
+        studentRef = database.getReference("student");
+        routeRef = database.getReference("route");
+        stopRef = database.getReference("stop");
+        busRef = database.getReference("bus");
+        busSpeed = view.findViewById(R.id.parent_busSpeed_id);
+        estimatedTime = view.findViewById(R.id.parent_estimatedTime_id);
     }
 
     private void updateBusLocationOnMap(double latitude, double longitude) {
@@ -115,8 +100,8 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         }
         mMarker = mGoogleMap.addMarker(new MarkerOptions().position(
                 new LatLng(latitude, longitude))
-                .title("===============Bus Location=============").visible(true)
-                .snippet("Latitude:"+latitude+" , Longitude:"+longitude)
+                .title("====Bus Location====").visible(true)
+                .snippet("Lat:"+latitude+" , Lng:"+longitude)
                 .icon(fromResource(R.drawable.markertwo)));
         mMarker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18));
@@ -124,7 +109,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         double dist = distance_on_geoid(nextLatitude ,  nextLongitude, previousLatitude, previousLongitude);
         //Log.i("Sohail", "Distance : "+dist);
         // Log.i("Sohail", "Speed : "+(dist/1000)/3);
-        double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-20000)) / 1000.0);
+        double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-10000)) / 1000.0);
         //Log.i("Sohail", "Time : "+time_s);
         double speed_mps = dist / time_s;
         double speed_kph = (speed_mps * 3600.0) / 1000.0;
@@ -161,7 +146,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                                     Student student = studentSnapshot.getValue(Student.class);
-                                    if (student.getStudentID() == 15137029) {
+                                    if (student.getStudentID() == 15137038) {
                                         final int routeId = student.getStudentRouteID();
                                         stopId = student.getStudentStopID();
                                         routeRef.addValueEventListener(new ValueEventListener() {

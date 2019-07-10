@@ -1,3 +1,4 @@
+/*
 package com.example.g_track;
 
 import android.app.NotificationManager;
@@ -40,3 +41,4 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         notificationManager.notify(NOTIFICATION_ID++,builder.build());
     }
 }
+*/

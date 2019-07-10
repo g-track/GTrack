@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+//import com.example.g_track.Model.Root;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
@@ -52,6 +53,9 @@ public class studentUpdateStopFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_update_stop, container, false);
         initialization(view);
+
+
+       // fetchingRoot();
         setStopFromFirebaseToSpinner();
         setRouteName();
         setColorOfSelectedItem();
@@ -85,7 +89,7 @@ public class studentUpdateStopFragment extends Fragment {
                 stopList.clear();
                 for (final DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==15137029){
+                    if (student.getStudentID()==15137038){
                        studentKey = studentSnapshot.getKey();
                         Log.i("Sohail",studentKey);
                         routeId = student.getStudentRouteID();
@@ -105,7 +109,7 @@ public class studentUpdateStopFragment extends Fragment {
                                         studentStopName = stop.getStopName();
                                     }
                                 }
-                                Log.i("G-Track", "setStopList outSide loop;"+stopList.get(1));
+                                Log.i("G-Track", "setStopList outSide loop;"+stopList.get(0));
                                 int index = 0;
                                 for (String stop_name : stopList){
 
@@ -171,13 +175,35 @@ public class studentUpdateStopFragment extends Fragment {
 
     }
 
+
+    /*public void fetchingRoot(){
+        newRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot rootSnapShot: dataSnapshot.getChildren()){
+                    Root root = rootSnapShot.getValue(Root.class);
+                    if(root.getRouteID() == 878){
+                        Log.i("SHOW", root.getRouteName());
+                        //Log.i("SHOW", String.valueOf(root.getRouteStops()));
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }*/
+
     private void initialization(View view) {
         spinnerStopLsit = view.findViewById(R.id.spinnerStopList_id);
         database = FirebaseDatabase.getInstance();
         routeNameShow = view.findViewById(R.id.textView12);
-        studentRef = database.getReference("Student");
-        stopRef = database.getReference("Stop");
-        routeRef = database.getReference("Route");
+        studentRef = database.getReference("student");
+        stopRef = database.getReference("stop");
+        routeRef = database.getReference("route");
     }
 
     private void setColorOfSelectedItem(){

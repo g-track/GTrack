@@ -60,9 +60,9 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
 
     private void initialization() {
         database = FirebaseDatabase.getInstance();
-        studentRef = database.getReference("Student");
-        routeRef = database.getReference("Route");
-        stopRef = database.getReference("Stop");
+        studentRef = database.getReference("student");
+        routeRef = database.getReference("route");
+        stopRef = database.getReference("stop");
     }
 
     private void setLocationOfBusesOnMap() {
@@ -72,7 +72,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID() == 15137029) {
+                    if (student.getStudentID() == 15137038) {
                         final int routeId = student.getStudentRouteID();
 
                         stopRef.addValueEventListener(new ValueEventListener() {
@@ -83,10 +83,10 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                                     if (stop.getStopRouteID() ==routeId) {
                                         LatLng latLng = new LatLng(stop.getStopLatitude(), stop.getStopLongitude());
                                         options.position(latLng);
-                                        options.title(stop.getStopName()).visible(true);
+                                        options.title(stop.getStopName()).icon(fromResource(R.drawable.markertwo)).visible(true);
                                         // options.snippet("someDesc");
                                         mGoogleMap.addMarker(options);
-                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 14.0f));
+                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 10.0f));
                                     }
                                 }
                             }
@@ -123,8 +123,8 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
 
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("GIFT UNIVERSITY").icon(fromResource(R.drawable.busiconmap)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),12.0f));
+        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("GIFT UNIVERSITY").icon(fromResource(R.drawable.markertwo)));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),10.0f));
 
         setLocationOfBusesOnMap();
 

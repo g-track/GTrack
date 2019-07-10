@@ -3,7 +3,7 @@ package com.example.g_track.Model;
 public class Student {
     int studentID;
     String studentName;
-    String studentPhoneNo;
+    String studentPhone;
     String fatherName;
     String fatherCNIC;
     int  studentRouteID;
@@ -30,12 +30,12 @@ public class Student {
         this.studentName = studentName;
     }
 
-    public String getStudentPhoneNo() {
-        return studentPhoneNo;
+    public String getStudentPhone() {
+        return studentPhone;
     }
 
-    public void setStudentPhoneNo(String studentPhoneNo) {
-        this.studentPhoneNo = studentPhoneNo;
+    public void setStudentPhone(String studentPhone) {
+        this.studentPhone = studentPhone;
     }
 
     public int getStudentRouteID() {

@@ -1,4 +1,4 @@
-package com.example.g_track;
+/*package com.example.g_track;
 
 import android.graphics.Point;
 import android.support.v4.app.FragmentActivity;
@@ -19,9 +19,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 public class basicMapDemo extends FragmentActivity implements OnMapReadyCallback, DrawRoute.onDrawRoute {
 
-    GoogleMap mMap;
+    GoogleMap mMap;*/
    // String mapKey =getResources().getString(R.string.google_maps_key);
-    @Override
+    /*@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_basic_map_demo);
@@ -30,10 +30,10 @@ public class basicMapDemo extends FragmentActivity implements OnMapReadyCallback
                 (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
-    @Override
+*/
+    /*@Override
     public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+        mMap = googleMap;*/
        /* LatLng origin = new LatLng(-7.788969, 110.338382);
         LatLng destination = new LatLng(-7.781200, 110.349709);
         DrawRouteMaps.getInstance(this)
@@ -48,7 +48,7 @@ public class basicMapDemo extends FragmentActivity implements OnMapReadyCallback
         getWindowManager().getDefaultDisplay().getSize(displaySize);
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));*/
 
-        DrawRoute.getInstance(this,basicMapDemo.this).setFromLatLong(24.905954,67.0803505)
+        /*DrawRoute.getInstance(this,basicMapDemo.this).setFromLatLong(24.905954,67.0803505)
                 .setToLatLong(24.9053485,67.079119).setGmapAndKey("AIzaSyC6fc7HCZqS-Oergw8jiD8tQSMS1-0BykU",mMap).setColorHash("#00ff00").run();
         DrawRoute.getInstance(this,basicMapDemo.this).run();
     }
@@ -59,3 +59,4 @@ public class basicMapDemo extends FragmentActivity implements OnMapReadyCallback
 
     }
 }
+*/
