@@ -7,16 +7,16 @@ public class Route {
    // ArrayList<Stop> stops;
     String routeName;
     boolean routeStatus;
-    int routeBusID;
+    String routeBusID;
 
     public Route() {
     }
 
-    public int getRouteBusID() {
+    public String getRouteBusID() {
         return routeBusID;
     }
 
-    public void setRouteBusID(int routeBusID) {
+    public void setRouteBusID(String routeBusID) {
         this.routeBusID = routeBusID;
     }
 

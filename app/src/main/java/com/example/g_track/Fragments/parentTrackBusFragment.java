@@ -76,7 +76,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
                                                 for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
                                                     Route route = routeSnapshot.getValue(Route.class);
                                                     if (route.getRouteID()==routeId){
-                                                    final int busId = route.getRouteBusID();
+                                                    final String busId = route.getRouteBusID();
                                                     busRef.addValueEventListener(new ValueEventListener() {
                                                         @Override
                                                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -146,7 +146,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
     }
 
     private void setParentData() {
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bus");
+      /*  DatabaseReference reference = FirebaseDatabase.getInstance().getReference("bus");
         Bus bus = new Bus();
         bus.setBusID(32);
         bus.setBusDriverID(12);
@@ -154,7 +154,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
         bus.setBusLatitude(32.5678);
         bus.setBusLongitude(72.456789);
 
-        reference.push().setValue(bus);
+        reference.push().setValue(bus);*/
     }
 
     @Override

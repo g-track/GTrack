@@ -1,11 +1,19 @@
 package com.example.g_track.Model;
 
 public class Bus {
-    int busID;
+    String busID;
     boolean busStatus;
     int busDriverID;
     double busLatitude;
     double busLongitude;
+
+    public String getBusID() {
+        return busID;
+    }
+
+    public void setBusID(String busID) {
+        this.busID = busID;
+    }
 
     public double getBusLatitude() {
         return busLatitude;
@@ -32,13 +40,6 @@ public class Bus {
 
     public void setBusDriverID(int busDriverID) {
         this.busDriverID = busDriverID;
-    }
-    public int getBusID() {
-        return busID;
-    }
-
-    public void setBusID(int busID) {
-        this.busID = busID;
     }
 
     public boolean isBusStatus() {

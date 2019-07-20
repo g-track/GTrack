@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ahmadrosid.lib.drawroutemap.DrawMarker;
+import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
@@ -17,6 +20,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +40,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     private GoogleMap mGoogleMap;
     private ArrayList<LatLng> latlngs = new ArrayList<>();
     private MarkerOptions options = new MarkerOptions();
-    LatLng myLocation = new LatLng(32.2500,74.1667);
+    LatLng myLocation = new LatLng(32.2019,74.1924);
     private FirebaseDatabase database;
     private DatabaseReference studentRef,routeRef,stopRef;
 
@@ -86,7 +90,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                                         options.title(stop.getStopName()).icon(fromResource(R.drawable.markertwo)).visible(true);
                                         // options.snippet("someDesc");
                                         mGoogleMap.addMarker(options);
-                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 10.0f));
+                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 13.0f));
                                     }
                                 }
                             }
@@ -121,12 +125,27 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
-        mGoogleMap = googleMap;
+      /*  mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("GIFT UNIVERSITY").icon(fromResource(R.drawable.markertwo)));
+        mGoogleMap.addMarker(new MarkerOptions().position(myLocation));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),10.0f));
 
-        setLocationOfBusesOnMap();
+        setLocationOfBusesOnMap();*/
+
+       GoogleMap mMap = googleMap;
+        LatLng origin = new LatLng(-7.788969, 110.338382);
+        LatLng destination = new LatLng(-7.781200, 110.349709);
+        DrawRouteMaps.getInstance(getContext())
+                .draw(origin, destination, mMap);
+        DrawMarker.getInstance(getContext()).draw(mMap, origin, R.drawable.markertwo, "Origin Location");
+        DrawMarker.getInstance(getContext()).draw(mMap, destination, R.drawable.markertwo, "Destination Location");
+
+        LatLngBounds bounds = new LatLngBounds.Builder()
+                .include(origin)
+                .include(destination).build();
+        Point displaySize = new Point();
+        getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
 
     }
 }

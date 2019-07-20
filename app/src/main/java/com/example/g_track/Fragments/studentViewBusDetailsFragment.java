@@ -62,15 +62,15 @@ public class studentViewBusDetailsFragment extends Fragment {
                                     if (route.getRouteID()==routeId){
                                        String routeName = route.getRouteName();
                                         busRoutName.setText(routeName);
-                                        final int busId = route.getRouteBusID();
+                                        final String busId = route.getRouteBusID();
                                         busRef.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                 for (DataSnapshot busSnapshot : dataSnapshot.getChildren()){
                                                     Bus bus = busSnapshot.getValue(Bus.class);
-                                                    if (bus.getBusID()==busId){
+                                                    if (bus.getBusID().equals(busId)){
                                                         final int driverId = bus.getBusDriverID();
-                                                        int busId = bus.getBusID();
+                                                        String busId = bus.getBusID();
                                                         busNo.setText(String.valueOf(busId));;
                                                         //Log.i("Sohail","ROUTE NAME:"+routeName+" , BUS NO:"+busNo);
                                                         driverRef.addValueEventListener(new ValueEventListener() {

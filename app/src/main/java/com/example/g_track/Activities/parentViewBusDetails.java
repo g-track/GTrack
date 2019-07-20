@@ -30,7 +30,7 @@ public class parentViewBusDetails extends Fragment {
     private DatabaseReference parentRef,studentRef,routeRef,busRef,driverRef;
     private String routeName,driverName;
     private TextView busNoText,driverText,routeText;
-    int busNo;
+    String busNo;
 
     public parentViewBusDetails() {
         // Required empty public constructor
@@ -69,16 +69,16 @@ public class parentViewBusDetails extends Fragment {
                                                     if (route.getRouteID()==routeId){
                                                         routeName = route.getRouteName();
                                                         routeText.setText(routeName);
-                                                        final int busId = route.getRouteBusID();
+                                                        final String busId = route.getRouteBusID();
                                                         busRef.addValueEventListener(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                 for (DataSnapshot busSnapshot : dataSnapshot.getChildren()){
                                                                     Bus bus = busSnapshot.getValue(Bus.class);
-                                                                    if (bus.getBusID()==busId){
+                                                                    if (bus.getBusID().equals(busId)){
                                                                         final int driverId = bus.getBusDriverID();
                                                                         busNo = bus.getBusID();
-                                                                        busNoText.setText(String.valueOf(busNo));
+                                                                        busNoText.setText(busNo);
                                                                         Log.i("Sohail","ROUTE NAME:"+routeName+" , BUS NO:"+busNo);
                                                                         driverRef.addValueEventListener(new ValueEventListener() {
                                                                             @Override

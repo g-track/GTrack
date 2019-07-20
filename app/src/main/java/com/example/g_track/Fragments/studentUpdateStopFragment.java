@@ -86,7 +86,6 @@ public class studentUpdateStopFragment extends Fragment {
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                stopList.clear();
                 for (final DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
                     if (student.getStudentID()==15137038){
@@ -98,6 +97,7 @@ public class studentUpdateStopFragment extends Fragment {
                         stopRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                stopList.clear();
                                 for(DataSnapshot stopSnapshot : dataSnapshot.getChildren()){
                                     Stop stop = stopSnapshot.getValue(Stop.class);
                                     if (stop.getStopRouteID()==routeId) {
@@ -127,14 +127,14 @@ public class studentUpdateStopFragment extends Fragment {
                                 spinnerStopLsit.setSelection(mPosition);
                                 spinnerStopLsit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                                     @Override
-                                    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                        final String nameStop = stopList.get(position);
+                                    public void onItemSelected(AdapterView<?> parent, View view, final int position, long id) {
                                         stopRef.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                final String nameStop = stopList.get(position);
                                                 for (DataSnapshot stopSnapshot : dataSnapshot.getChildren()){
                                                     Stop stop = stopSnapshot.getValue(Stop.class);
-                                                    if (stop.getStopName()==nameStop){
+                                                    if (stop.getStopName().equals(nameStop)){
                                                         updatedStopId = stop.getStopID();
                                                        // Log.i("Sohail","value "+updatedStopId);
                                                         studentRef.child(studentKey).child("studentStopID").setValue(updatedStopId);
@@ -142,7 +142,6 @@ public class studentUpdateStopFragment extends Fragment {
                                                     }
                                                 }
                                             }
-
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
 

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,7 +42,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     private GoogleMap mGoogleMap;
     private MapView mapView;
     private View view;
-    private double latitude = 32.2500 ,longitude = 74.1667;
+    private double latitude = 32.20561 ,longitude = 74.19276;
     private double previousLatitude,previousLongitude,nextLatitude,nextLongitude;
     private long previousTIme,nextTime;
     private Marker mMarker;
@@ -68,9 +69,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         getDataFromFirebase();
         previousLatitude = nextLatitude;
         previousLongitude = nextLongitude;
-
         return  view;
-
     }
 
     @Override
@@ -110,10 +109,10 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         //Log.i("Sohail", "Distance : "+dist);
         // Log.i("Sohail", "Speed : "+(dist/1000)/3);
         double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-10000)) / 1000.0);
-        //Log.i("Sohail", "Time : "+time_s);
+        Log.i("Sohail", "Time : "+time_s);
         double speed_mps = dist / time_s;
         double speed_kph = (speed_mps * 3600.0) / 1000.0;
-        //Log.i("Sohail", "Speed in Kilometer: "+speed_kph);
+        Log.i("Sohail", "Speed in Kilometer: "+speed_kph);
 
 
         LatLng stopLocation = getStopLatLng(stopId);
@@ -155,13 +154,13 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                                                 for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
                                                     Route route = routeSnapshot.getValue(Route.class);
                                                     if (route.getRouteID() == routeId) {
-                                                        final int busId = route.getRouteBusID();
+                                                        final String busId = route.getRouteBusID();
                                                         busRef.addValueEventListener(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                                                 for (DataSnapshot busSnapshot : dataSnapshot.getChildren()) {
                                                                     Bus bus = busSnapshot.getValue(Bus.class);
-                                                                    if (bus.getBusID() == busId) {
+                                                                    if (bus.getBusID().equals( busId)) {
                                                                         latitude = bus.getBusLatitude();
                                                                         longitude = bus.getBusLongitude();
                                                                         nextLatitude = latitude;
@@ -205,9 +204,9 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         LatLng myLocation = new LatLng(latitude,longitude);
 
         mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),12.0f));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
 
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.busiconmap)));
+        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
 
    /*    //int x=10;
