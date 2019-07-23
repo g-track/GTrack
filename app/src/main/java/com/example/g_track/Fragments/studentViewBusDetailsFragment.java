@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,7 +32,8 @@ import com.google.firebase.database.ValueEventListener;
 public class studentViewBusDetailsFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference studentRef,routeRef,busRef,driverRef;
-    private TextView busNo,busDriverName,busRoutName;
+    private TextView busNo,busDriverName,busRoutName, driverPhone;
+    private ProgressDialog progressDialog;
 
     public studentViewBusDetailsFragment() {
         // Required empty public constructor
@@ -47,6 +51,10 @@ public class studentViewBusDetailsFragment extends Fragment {
     }
 
     private void getDataFromDatabase() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
+
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -81,8 +89,10 @@ public class studentViewBusDetailsFragment extends Fragment {
                                                                     if (driver.getDriverID()==driverId){
                                                                        String driverName = driver.getDriverName();
                                                                         busDriverName.setText(driverName);
+                                                                        driverPhone.setText(driver.getDriverPhone());
                                                                     }
                                                                 }
+                                                                progressDialog.dismiss();
                                                             }
 
                                                             @Override
@@ -126,6 +136,7 @@ public class studentViewBusDetailsFragment extends Fragment {
         busRef = database.getReference("bus");
         driverRef = database.getReference("driver");
         busNo = view.findViewById(R.id.bus_no_id);
+        driverPhone = view.findViewById(R.id.student_driver_phone_id);
         busDriverName = view.findViewById(R.id.driver_name_id);
         busRoutName = view.findViewById(R.id.rout_name_id);
     }

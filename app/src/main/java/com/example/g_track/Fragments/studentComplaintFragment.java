@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -39,6 +40,7 @@ public class studentComplaintFragment extends Fragment {
     private RecyclerView recyclerView;
     private List<Complaint> complaintList;
     DatabaseReference databaseReference;
+    private ProgressDialog progressDialog;
     View view;
 
     @Override
@@ -78,6 +80,9 @@ public class studentComplaintFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -89,6 +94,7 @@ public class studentComplaintFragment extends Fragment {
                     }
 
                 }
+                progressDialog.dismiss();
                 if(complaintList.isEmpty()){
                     Toast.makeText(getContext(),  "No Complaints Found", Toast.LENGTH_LONG).show();
                 }

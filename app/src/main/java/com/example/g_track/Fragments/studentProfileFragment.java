@@ -2,6 +2,7 @@ package com.example.g_track.Fragments;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ public class studentProfileFragment extends Fragment {
     private AlertDialog dialogPopup;
     private Button btnUpdatePhone;
     private TextView updatePassword;
+    private ProgressDialog progressDialog;
     private TextView studentName,studentId,studentFatherName,studentFatherCNIC,studentRouteName,studentStopName;
     private FirebaseDatabase database;
     private DatabaseReference studentRef,routeRef,stopRef;
@@ -77,6 +79,9 @@ public class studentProfileFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -125,6 +130,7 @@ public class studentProfileFragment extends Fragment {
                         });
                     }
                 }
+                progressDialog.dismiss();
             }
 
             @Override
