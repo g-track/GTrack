@@ -1,5 +1,6 @@
 package com.example.g_track.Activities;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -27,6 +28,7 @@ public class parentHome extends AppCompatActivity {
     private ActionBarDrawerToggle main_actionBarToggle;
     private BottomNavigationView main_parent_bottomNavigation;
     private ActionBar actionBar;
+    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

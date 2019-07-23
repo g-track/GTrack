@@ -2,8 +2,10 @@ package com.example.g_track.Fragments;
 
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -14,11 +16,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.example.g_track.Model.Parent;
 import com.example.g_track.R;
 import com.example.g_track.Activities.parentForgetPassword;
+import com.github.ybq.android.spinkit.style.FadingCircle;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -43,7 +47,8 @@ public class parentProfileFragment extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference parentRef;
     private String parentKey;
-
+    private ProgressBar progressBar;
+    private ProgressDialog progressDialog;
     public parentProfileFragment() {
         // Required empty public constructor
     }
@@ -53,6 +58,7 @@ public class parentProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_parent_profile, container, false);
+        //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         initialization(view);
         btnEditPhone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +77,9 @@ public class parentProfileFragment extends Fragment {
     }
 
     private void getDataFromFirebase() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -82,9 +91,10 @@ public class parentProfileFragment extends Fragment {
                         parentCNIC.setText(parent.getParentCNIC());
                         phoneText.setText(parent.getParentPhoneNo());
                         parentChildID.setText(String.valueOf(parent.getChildStudentID()));
-
+                        progressDialog.dismiss();
                     }
                 }
+
             }
 
             @Override
@@ -92,6 +102,9 @@ public class parentProfileFragment extends Fragment {
 
             }
         });
+
+
+
     }
 
     public void updatePassword(View view){
@@ -110,6 +123,7 @@ public class parentProfileFragment extends Fragment {
         parentChildID = view.findViewById(R.id.parent_childid_textView);
         database = FirebaseDatabase.getInstance();
         parentRef = database.getReference("Parent");
+        //progressBar = view.findViewById(R.id.parent_profile_spin_kit);
     }
 
     public void updatePhone(View view){

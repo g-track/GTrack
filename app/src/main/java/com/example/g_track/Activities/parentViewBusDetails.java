@@ -1,6 +1,7 @@
 package com.example.g_track.Activities;
 
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -30,6 +31,7 @@ public class parentViewBusDetails extends Fragment {
     private DatabaseReference parentRef,studentRef,routeRef,busRef,driverRef;
     private String routeName,driverName;
     private TextView busNoText,driverText,routeText;
+    private ProgressDialog progressDialog;
     String busNo;
 
     public parentViewBusDetails() {
@@ -47,6 +49,9 @@ public class parentViewBusDetails extends Fragment {
     }
 
     private void getDataFromFirebase() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -88,6 +93,7 @@ public class parentViewBusDetails extends Fragment {
                                                                                     if (driver.getDriverID()==driverId){
                                                                                         driverName = driver.getDriverName();
                                                                                         driverText.setText(driverName);
+                                                                                        progressDialog.dismiss();
                                                                                     }
                                                                                 }
                                                                             }
@@ -133,6 +139,7 @@ public class parentViewBusDetails extends Fragment {
 
             }
         });
+       // progressDialog.dismiss();
     }
 
     private void initialization(View view) {

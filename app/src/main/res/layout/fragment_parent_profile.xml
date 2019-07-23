@@ -7,6 +7,9 @@
     android:background="@color/colorWhite"
     tools:context=".Fragments.parentProfileFragment">
 
+
+
+
     <!-- TODO: Update blank fragment layout -->
     <RelativeLayout
         android:id="@+id/parent_profile_relativeLayout"
@@ -230,5 +233,21 @@
         </LinearLayout>
 
     </RelativeLayout>
+   <!-- <com.github.ybq.android.spinkit.SpinKitView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/parent_profile_spin_kit"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="10dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:SpinKit_Color="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@+id/parent_profile_relativeLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/parent_profile_relativeLayout" />-->
 
 </android.support.constraint.ConstraintLayout>

@@ -1,5 +1,6 @@
 
 package com.example.g_track.Fragments;
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -36,6 +37,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
     private DatabaseReference parentRef, studentRef, routeRef, busRef;
     private double latitude = 32.2500, longitude = 74.1667;
     private Marker mMarker;
+    private ProgressDialog progressDialog;
 
     public parentTrackBusFragment() {
         // Required empty public constructor
@@ -56,6 +58,9 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
     }
 
     private void getDataFromFirebaseForBusLocation() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -86,6 +91,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
                                                                     latitude = bus.getBusLatitude();
                                                                     longitude = bus.getBusLongitude();
                                                                     updateBusLocationOnMap(latitude,longitude);
+
                                                                 }
                                                             }
                                                         }
@@ -97,6 +103,7 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
                                                     });
                                                     }
                                                 }
+                                                progressDialog.dismiss();
                                             }
 
                                             @Override
@@ -122,6 +129,8 @@ public class parentTrackBusFragment extends Fragment implements OnMapReadyCallba
 
             }
         });
+
+
     }
 
     private void updateBusLocationOnMap(double latitude, double longitude) {

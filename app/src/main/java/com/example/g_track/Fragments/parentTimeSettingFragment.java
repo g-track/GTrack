@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -41,6 +42,7 @@ public class parentTimeSettingFragment extends Fragment {
     Parent parentData, parent;
     boolean status;
     String parentKey;
+    private ProgressDialog progressDialog;
     String[] time = {"5 minutes","10 minutes","15 minutes","20 minutes","30 minutes", "45 minutes", "1 hour"};
 
 
@@ -56,6 +58,8 @@ public class parentTimeSettingFragment extends Fragment {
        // return inflater.inflate(R.layout.fragment_parent_time_setting, container, false);
 
         View view = inflater.inflate(R.layout.fragment_parent_time_setting, container, false);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading.....");
         initialization(view);
         setToogleButton();
         setSpinner();
@@ -66,6 +70,7 @@ public class parentTimeSettingFragment extends Fragment {
 
 
     private void setToogleButton(){
+        progressDialog.show();
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -138,9 +143,11 @@ public class parentTimeSettingFragment extends Fragment {
                 }
             }
         });
+        progressDialog.dismiss();
     }
 
     private void setSpinner() {
+        progressDialog.show();
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -163,6 +170,7 @@ public class parentTimeSettingFragment extends Fragment {
             }
         });
 
+        progressDialog.dismiss();
 
     }
 
@@ -176,6 +184,7 @@ public class parentTimeSettingFragment extends Fragment {
     }
 
     private void setArrivalTime(final int pos){
+        progressDialog.show();
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -196,6 +205,7 @@ public class parentTimeSettingFragment extends Fragment {
         if(parentKey != null){
             parentDatabase.child(parentKey).child("arrivalTime").setValue(pos);
         }
+        progressDialog.dismiss();
     }
 
     private void setColorOfSelectedItem(){
