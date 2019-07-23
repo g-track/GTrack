@@ -1,6 +1,7 @@
 package com.example.g_track.Activities;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.renderscript.Sampler;
 import android.support.annotation.NonNull;
@@ -39,6 +40,7 @@ public class studentComplaintCompose extends AppCompatActivity {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
     private int count;
+    private ProgressDialog progressDialog;
     Complaint complaint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,8 +70,12 @@ public class studentComplaintCompose extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Please fill all the fields", Toast.LENGTH_LONG).show();
 
                 }else{
+                    progressDialog = new ProgressDialog(studentComplaintCompose.this);
+                    progressDialog.setMessage("Loading...");
+                    progressDialog.show();
                     generateComplaint();
                     finishActivity();
+                    progressDialog.dismiss();
                 }
             }
         });
@@ -100,6 +106,7 @@ public class studentComplaintCompose extends AppCompatActivity {
     }
 
     private void generateComplaint(){
+
         String subject = complaintSubject.getText().toString();
         String desc = complaintDesc.getText().toString();
         long studentId = 15137029;
@@ -116,8 +123,6 @@ public class studentComplaintCompose extends AppCompatActivity {
 
         databaseReference.push().setValue(complaint);
         clearInputFields();
-        //finishActivity();
-
     }
     private void clearInputFields(){
         complaintSubject.getText().clear();

@@ -4,6 +4,7 @@ package com.example.g_track.Fragments;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     private GoogleMap mGoogleMap;
     private MapView mapView;
     private View view;
+    private ProgressDialog progressDialog;
     private double latitude = 32.20561 ,longitude = 74.19276;
     private double previousLatitude=0,previousLongitude=0,nextLatitude,nextLongitude;
     private long prTime, nextTime;
@@ -81,8 +84,10 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
+
         initialization(view);
         getDataFromFirebase();
+
 
         return  view;
     }
@@ -106,6 +111,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         busRef = database.getReference("bus");
         busSpeed = view.findViewById(R.id.parent_busSpeed_id);
         estimatedTime = view.findViewById(R.id.parent_estimatedTime_id);
+
     }
 
     private void updateBusLocationOnMap(double latitude, double longitude) {
@@ -165,6 +171,9 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     }
 
     private void getDataFromFirebase() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         try {
             studentRef.addValueEventListener(new ValueEventListener() {
@@ -198,8 +207,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                                                                 prTime = System.currentTimeMillis();
                                                             }
                                                             updateBusLocationOnMap(latitude, longitude);
+
+
                                                         }
                                                     }
+                                                    progressDialog.dismiss();
                                                 }
 
                                                 @Override
@@ -228,39 +240,18 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         }catch (Exception e){
             Toast.makeText(getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
         }
+
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-       // MapsInitializer.initialize(getContext());
-      // Log.i("Latitudddddddddddd", "Latitude:"+latitude+" Longitude:"+longitude);
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng myLocation = new LatLng(latitude,longitude);
 
-        /*mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));*/
+        mGoogleMap.addMarker(new MarkerOptions().position(myLocation));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
 
-        /*mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));*/
-
-   /*    //int x=10;
-        mGoogleMap = googleMap;
-       *//* LatLng origin = new LatLng(-7.788969, 110.338382);
-        LatLng destination = new LatLng(-7.881200, 110.449709);*//*
-        LatLng origin = new LatLng(-7.788969, 110.338382);
-        LatLng destination = new LatLng(-7.781200, 110.349709);
-        DrawRouteMaps.getInstance(getContext())
-                .draw(origin, destination, mGoogleMap);
-        DrawMarker.getInstance(getContext()).draw(mGoogleMap, origin, R.drawable.car_icon, "Origin Location");
-        DrawMarker.getInstance(getContext()).draw(mGoogleMap, destination, R.drawable.car_icon, "Destination Location");
-
-        LatLngBounds bounds = new LatLngBounds.Builder()
-                .include(origin)
-                .include(destination).build();
-        Point displaySize = new Point();
-       getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));*/
     }
 
     public void lngLat(){

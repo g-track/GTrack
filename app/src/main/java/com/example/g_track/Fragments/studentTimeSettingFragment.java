@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,12 +44,13 @@ public class studentTimeSettingFragment extends Fragment {
     private Spinner timeSpinner;
     private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
+    private ProgressDialog progressDialog;
     private ConstraintLayout alert_time_set_layout;
     DatabaseReference databaseReference;
     Student studentData, student;
     private String studentKey;
     boolean status;
-    String[] time = {"5 minutes","10 minutes","15 minutes","20 minutes","30 minutes", "45 minutes", "1 hour"};
+    String[] time = {"5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes", "45 minutes", "1 hour"};
 
 
     public studentTimeSettingFragment() {
@@ -61,6 +63,8 @@ public class studentTimeSettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_time_setting, container, false);
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
         initialization(view);
         setToogleButton();
         setSpinner();
@@ -71,29 +75,31 @@ public class studentTimeSettingFragment extends Fragment {
     }
 
 
-    private void setToogleButton(){
+    private void setToogleButton() {
+        progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if(studentData.getStudentID() == 15137038){
+                    if (studentData.getStudentID() == 15137038) {
                         student = studentData;
                         status = student.isAlertStatus();
                         //studentKey = studentSnapShot.getKey();
-                        if(status){
+                        if (status) {
                             alert_time_set_layout.setVisibility(ConstraintLayout.VISIBLE);
                             OffOnAlert_btn.setText("ON");
                             OffOnAlert_btn.setChecked(true);
-                        }else {
+                        } else {
                             alert_time_set_layout.setVisibility(ConstraintLayout.INVISIBLE);
                             OffOnAlert_btn.setText("OFF");
                             OffOnAlert_btn.setChecked(false);
                         }
-                        Log.i("ALERT STATUS", "onDataChange: "+student.isAlertStatus());
+                        Log.i("ALERT STATUS", "onDataChange: " + student.isAlertStatus());
 
                     }
                 }
+                progressDialog.dismiss();
             }
 
             @Override
@@ -101,20 +107,21 @@ public class studentTimeSettingFragment extends Fragment {
 
             }
         });
-        Log.i("ALERT STATUS OUT", "onDataChange: "+ status);
+        Log.i("ALERT STATUS OUT", "onDataChange: " + status);
     }
 
 
     private void setOfOnAlert() {
+        progressDialog.show();
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
                 databaseReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                        for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                             studentData = studentSnapShot.getValue(Student.class);
-                            if(studentData.getStudentID() == 15137038){
+                            if (studentData.getStudentID() == 15137038) {
                                 student = studentData;
                                 studentKey = studentSnapShot.getKey();
                             }
@@ -127,42 +134,44 @@ public class studentTimeSettingFragment extends Fragment {
 
                     }
                 });
-                if(isChecked){
+                if (isChecked) {
                     alert_time_set_layout.setVisibility(ConstraintLayout.VISIBLE);
                     OffOnAlert_btn.setText("ON");
-                    if(studentKey != null){
+                    if (studentKey != null) {
                         databaseReference.child(studentKey).child("alertStatus").setValue(true);
                     }
 
-                }else {
+                } else {
                     alert_time_set_layout.setVisibility(ConstraintLayout.INVISIBLE);
                     OffOnAlert_btn.setText("OFF");
-                    if(studentKey != null){
+                    if (studentKey != null) {
                         databaseReference.child(studentKey).child("alertStatus").setValue(false);
                     }
                 }
             }
         });
+        progressDialog.dismiss();
     }
 
     private void setSpinner() {
+        progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if(studentData.getStudentID() == 15137038){
+                    if (studentData.getStudentID() == 15137038) {
                         student = studentData;
                     }
                 }
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),simple_spinner_item,time);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), simple_spinner_item, time);
                 adapter.setDropDownViewResource(simple_spinner_dropdown_item);
                 timeSpinner.setAdapter(adapter);
-                Log.i("STUDNET", String.valueOf(student.getAlertArrivalTime()));
                 timeSpinner.setSelection(student.getAlertArrivalTime());
                 departureTimeSpinner.setAdapter(adapter);
-                Log.i("STUDNET", String.valueOf(student.getAlertDepartureTime()));
                 departureTimeSpinner.setSelection(student.getAlertDepartureTime());
+
+                progressDialog.dismiss();
             }
 
             @Override
@@ -182,41 +191,41 @@ public class studentTimeSettingFragment extends Fragment {
         alert_time_set_layout = view.findViewById(R.id.layout_spinner_1);
         departureTimeSpinner = view.findViewById(R.id.student_timeSpinner_2);
         databaseReference = FirebaseDatabase.getInstance().getReference("student");
-
-        /*database = FirebaseDatabase.getInstance();
-        myRef = database.getReference("Route");*/
     }
 
-    private void setArrivalTime(final int pos){
-                databaseReference.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
-                            studentData = studentSnapShot.getValue(Student.class);
-                            if(studentData.getStudentID() == 15137038){
-                                student = studentData;
-                                studentKey = studentSnapShot.getKey();
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-        if(studentKey != null){
-            databaseReference.child(studentKey).child("alertArrivalTime").setValue(pos);
-        }
-    }
-
-    private void setDepartureTime(final int pos){
+    private void setArrivalTime(final int pos) {
+        progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot studentSnapShot: dataSnapshot.getChildren()){
+                for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if(studentData.getStudentID() == 15137038){
+                    if (studentData.getStudentID() == 15137038) {
+                        student = studentData;
+                        studentKey = studentSnapShot.getKey();
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        if (studentKey != null) {
+            databaseReference.child(studentKey).child("alertArrivalTime").setValue(pos);
+        }
+        progressDialog.dismiss();
+    }
+
+    private void setDepartureTime(final int pos) {
+        progressDialog.show();
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
+                    studentData = studentSnapShot.getValue(Student.class);
+                    if (studentData.getStudentID() == 15137038) {
                         student = studentData;
                         studentKey = studentSnapShot.getKey();
                         Log.i("STUDENT", studentKey);
@@ -229,16 +238,17 @@ public class studentTimeSettingFragment extends Fragment {
 
             }
         });
-        if(studentKey != null){
+        if (studentKey != null) {
             databaseReference.child(studentKey).child("alertDepartureTime").setValue(pos);
         }
+        progressDialog.dismiss();
 
     }
 
-    private void setColorOfSelectedItem(){
+    private void setColorOfSelectedItem() {
         timeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent,  View view, int position, long id) {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 setArrivalTime(position);
                 ((TextView) view).setTextColor(Color.WHITE); //Change selected text color
             }

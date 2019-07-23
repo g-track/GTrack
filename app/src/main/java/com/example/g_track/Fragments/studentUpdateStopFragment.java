@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -42,6 +44,7 @@ public class studentUpdateStopFragment extends Fragment {
     private int updatedStopId;
     private int mPosition;
     private int routeId;
+    private ProgressDialog progressDialog;
     private ArrayList<String> stopList;
     public studentUpdateStopFragment() {
         // Required empty public constructor
@@ -53,7 +56,6 @@ public class studentUpdateStopFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_update_stop, container, false);
         initialization(view);
-
 
        // fetchingRoot();
         setStopFromFirebaseToSpinner();
@@ -82,6 +84,9 @@ public class studentUpdateStopFragment extends Fragment {
     }
 
     private void setStopFromFirebaseToSpinner() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
        stopList = new ArrayList<>();
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -90,7 +95,6 @@ public class studentUpdateStopFragment extends Fragment {
                     Student student = studentSnapshot.getValue(Student.class);
                     if (student.getStudentID()==15137038){
                        studentKey = studentSnapshot.getKey();
-                        Log.i("Sohail",studentKey);
                         routeId = student.getStudentRouteID();
                         final int stopId = student.getStudentStopID();
 
@@ -103,13 +107,11 @@ public class studentUpdateStopFragment extends Fragment {
                                     if (stop.getStopRouteID()==routeId) {
                                         String stopName = stop.getStopName();
                                         stopList.add(stopName);
-                                       // Log.i("G-Track", "setStopList in side loop;"+stopList.get(1));
                                     }
                                     if(stop.getStopID()==stopId){
                                         studentStopName = stop.getStopName();
                                     }
                                 }
-                                Log.i("G-Track", "setStopList outSide loop;"+stopList.get(0));
                                 int index = 0;
                                 for (String stop_name : stopList){
 
@@ -119,7 +121,6 @@ public class studentUpdateStopFragment extends Fragment {
                                     }
                                     index++;
                                 }
-                                Log.i("G-track", "onDataChange: position "+mPosition);
 
                                 ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(),  android.R.layout.simple_spinner_dropdown_item, stopList);
                                 adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
@@ -136,11 +137,10 @@ public class studentUpdateStopFragment extends Fragment {
                                                     Stop stop = stopSnapshot.getValue(Stop.class);
                                                     if (stop.getStopName().equals(nameStop)){
                                                         updatedStopId = stop.getStopID();
-                                                       // Log.i("Sohail","value "+updatedStopId);
                                                         studentRef.child(studentKey).child("studentStopID").setValue(updatedStopId);
-                                                        Log.i("Sohail", "onItemSelected: " +updatedStopId);
                                                     }
                                                 }
+                                                progressDialog.dismiss();
                                             }
                                             @Override
                                             public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -172,29 +172,9 @@ public class studentUpdateStopFragment extends Fragment {
             }
         });
 
+
     }
 
-
-    /*public void fetchingRoot(){
-        newRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot rootSnapShot: dataSnapshot.getChildren()){
-                    Root root = rootSnapShot.getValue(Root.class);
-                    if(root.getRouteID() == 878){
-                        Log.i("SHOW", root.getRouteName());
-                        //Log.i("SHOW", String.valueOf(root.getRouteStops()));
-                    }
-                }
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-    }*/
 
     private void initialization(View view) {
         spinnerStopLsit = view.findViewById(R.id.spinnerStopList_id);

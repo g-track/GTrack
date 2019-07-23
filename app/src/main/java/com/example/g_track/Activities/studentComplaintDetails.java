@@ -1,5 +1,6 @@
 package com.example.g_track.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +30,7 @@ public class studentComplaintDetails extends AppCompatActivity {
     private TextView complaintTime;
     private TextView studentName;
     private ImageView statusImg;
-
+    private ProgressDialog progressDialog;
     private Complaint complaintExtra;
     private Student student;
     private Complaint complaintData, complaint;
@@ -69,6 +70,9 @@ public class studentComplaintDetails extends AppCompatActivity {
         delete_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialog = new ProgressDialog(studentComplaintDetails.this);
+                progressDialog.setMessage("Deleting...");
+                progressDialog.show();
                 complaintReference.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -78,6 +82,9 @@ public class studentComplaintDetails extends AppCompatActivity {
                                 complaint = complaintData;
                                 String complaintKey = complaintSnapShot.getKey();
                                 complaintReference.child(complaintKey).child("complaintStatus").setValue(false);
+
+
+
                             }
                         }
                     }
@@ -90,7 +97,8 @@ public class studentComplaintDetails extends AppCompatActivity {
                 Intent complaintFragment = new Intent(getApplicationContext(), studentHome.class);
                 complaintFragment.putExtra("TAG", "CC");
                 startActivity(complaintFragment);
-                //Toast.makeText(studentComplaintDetails.this, "Delete Icon is Clicked.", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
             }
         });
     }

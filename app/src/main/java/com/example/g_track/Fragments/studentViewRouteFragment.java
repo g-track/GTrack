@@ -1,6 +1,7 @@
 package com.example.g_track.Fragments;
 
 
+import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -43,6 +44,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     LatLng myLocation = new LatLng(32.2019,74.1924);
     private FirebaseDatabase database;
     private DatabaseReference studentRef,routeRef,stopRef;
+    private ProgressDialog progressDialog;
 
     public studentViewRouteFragment() {
         // Required empty public constructor
@@ -70,6 +72,9 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     }
 
     private void setLocationOfBusesOnMap() {
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
+        progressDialog.show();
 
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -91,6 +96,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                                         // options.snippet("someDesc");
                                         mGoogleMap.addMarker(options);
                                         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 13.0f));
+                                        progressDialog.dismiss();
                                     }
                                 }
                             }
@@ -110,15 +116,6 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
             }
         });
 
-       /* latlngs.add(new LatLng(12.334343, 33.43434));
-        latlngs.add(new LatLng(12.8990,33.7896));
-        latlngs.add(new LatLng(12.0090,33.0096));
-        for (LatLng point : latlngs) {
-            options.position(point);
-            options.title("someTitle").visible(true);
-           // options.snippet("someDesc");
-            mGoogleMap.addMarker(options);
-            mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(point.latitude,point.longitude),8.0f));*/
 
     }
 
