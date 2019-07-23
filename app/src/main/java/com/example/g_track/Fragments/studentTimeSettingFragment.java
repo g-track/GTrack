@@ -48,7 +48,7 @@ public class studentTimeSettingFragment extends Fragment {
     Student studentData, student;
     private String studentKey;
     boolean status;
-    String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
+    String[] time = {"5 minutes","10 minutes","15 minutes","20 minutes","30 minutes", "45 minutes", "1 hour"};
 
 
     public studentTimeSettingFragment() {

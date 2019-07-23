@@ -1,4 +1,4 @@
-/*package com.example.g_track;
+package com.example.g_track;
 
 import android.util.Log;
 
@@ -11,4 +11,4 @@ public class GettingDeviceTokenService extends FirebaseInstanceIdService {
         String deviceTOken = FirebaseInstanceId.getInstance().getToken();
         Log.i("My Device ","Token ISSS:"+deviceTOken);
     }
-}*/
+}

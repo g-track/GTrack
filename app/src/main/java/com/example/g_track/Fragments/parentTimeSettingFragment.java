@@ -41,7 +41,7 @@ public class parentTimeSettingFragment extends Fragment {
     Parent parentData, parent;
     boolean status;
     String parentKey;
-    String[] time = {"5 minutes","10 minutes","20 minutes","30 minutes","45 minutes","1 hour"};
+    String[] time = {"5 minutes","10 minutes","15 minutes","20 minutes","30 minutes", "45 minutes", "1 hour"};
 
 
     public parentTimeSettingFragment() {

@@ -1,15 +1,27 @@
 package com.example.g_track.Fragments;
 
 
+
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.app.TaskStackBuilder;
+import android.content.Context;
+import android.content.Intent;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.g_track.Activities.studentHome;
 
 import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Route;
@@ -29,6 +41,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
 import static java.lang.Math.acos;
 import static java.lang.Math.cos;
@@ -43,15 +58,16 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     private MapView mapView;
     private View view;
     private double latitude = 32.20561 ,longitude = 74.19276;
-    private double previousLatitude,previousLongitude,nextLatitude,nextLongitude;
-    private long previousTIme,nextTime;
+    private double previousLatitude=0,previousLongitude=0,nextLatitude,nextLongitude;
+    private long prTime, nextTime;
     private Marker mMarker;
     private DatabaseReference studentRef,routeRef,busRef,stopRef;
     private FirebaseDatabase database;
     private double M_PI = 3.14159;
     private TextView busSpeed,estimatedTime;
-    private int stopId;
+    private int stopId, studentTime, checker=0;
     double lat ,lng;
+    int[] timeArray = {5, 10,15, 20, 30, 45, 60};
     //MarkerOptions place1, place2;
 
 
@@ -67,8 +83,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
         initialization(view);
         getDataFromFirebase();
-        previousLatitude = nextLatitude;
-        previousLongitude = nextLongitude;
+
         return  view;
     }
 
@@ -100,36 +115,47 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mMarker = mGoogleMap.addMarker(new MarkerOptions().position(
                 new LatLng(latitude, longitude))
                 .title("====Bus Location====").visible(true)
-                .snippet("Lat:"+latitude+" , Lng:"+longitude)
+                .snippet("Lat:" + latitude + " , Lng:" + longitude)
                 .icon(fromResource(R.drawable.markertwo)));
         mMarker.showInfoWindow();
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude,longitude),18));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 18));
 
-        double dist = distance_on_geoid(nextLatitude ,  nextLongitude, previousLatitude, previousLongitude);
-        //Log.i("Sohail", "Distance : "+dist);
-        // Log.i("Sohail", "Speed : "+(dist/1000)/3);
-        double time_s = ((System.currentTimeMillis() - (System.currentTimeMillis()-10000)) / 1000.0);
-        Log.i("Sohail", "Time : "+time_s);
+        double dist = distance_on_geoid(latitude, longitude, previousLatitude, previousLongitude);
+
+        double time_s = ((nextTime - prTime) / 1000.0);
+
+
         double speed_mps = dist / time_s;
-        double speed_kph = (speed_mps * 3600.0) / 1000.0;
-        Log.i("Sohail", "Speed in Kilometer: "+speed_kph);
+        double speed_kph = (speed_mps * 3.6);
 
 
         LatLng stopLocation = getStopLatLng(stopId);
-        double distance = (distance_on_geoid(nextLatitude ,  nextLongitude, stopLocation.latitude, stopLocation.longitude)/1000);
-        double time = distance/speed_kph;
+        double distance = (distance_on_geoid(latitude, longitude, stopLocation.latitude, stopLocation.longitude));
+        double time = (distance / speed_mps);
+        String formatted_speed = String.format("%.2f", speed_kph);
+        Log.i("Time", "Time is " + time);
+        String formatted2_time = formatTime(time);
+        busSpeed.setText(formatted_speed + " Kph");
+        if (speed_kph <= 0.0009) {
+            estimatedTime.setText("Undefined");
+        } else {
+            estimatedTime.setText(formatted2_time);
+        }
 
-        String formatted_speed = String.format("%.4f", speed_kph);
-        String formatted2_time = String.format("%.2f", time);
+        prTime = nextTime;
+        previousLatitude = latitude;
+        previousLongitude = longitude;
 
-
-        busSpeed.setText(formatted_speed+" Kph");
-        estimatedTime.setText(formatted2_time+" sec");
-
-        previousLatitude = nextLatitude;
-        previousLongitude = nextLongitude;
-
-
+        if (checker == 0) {
+            for (int i = 0; i < 7; i++) {
+                if (i == studentTime) {
+                    if (time <= (timeArray[i] * 60)) {
+                        sendNotification("Bus will be at your stop in " + timeArray[i] + " minutes");
+                        checker++;
+                    }
+                }
+            }
+        }
     }
 
 
@@ -140,60 +166,69 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
 
     private void getDataFromFirebase() {
 
-                        studentRef.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
-                                    Student student = studentSnapshot.getValue(Student.class);
-                                    if (student.getStudentID() == 15137038) {
-                                        final int routeId = student.getStudentRouteID();
-                                        stopId = student.getStudentStopID();
-                                        routeRef.addValueEventListener(new ValueEventListener() {
-                                            @Override
-                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
-                                                    Route route = routeSnapshot.getValue(Route.class);
-                                                    if (route.getRouteID() == routeId) {
-                                                        final String busId = route.getRouteBusID();
-                                                        busRef.addValueEventListener(new ValueEventListener() {
-                                                            @Override
-                                                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot busSnapshot : dataSnapshot.getChildren()) {
-                                                                    Bus bus = busSnapshot.getValue(Bus.class);
-                                                                    if (bus.getBusID().equals( busId)) {
-                                                                        latitude = bus.getBusLatitude();
-                                                                        longitude = bus.getBusLongitude();
-                                                                        nextLatitude = latitude;
-                                                                        nextLongitude = longitude;
-                                                                        updateBusLocationOnMap(latitude, longitude);
-                                                                    }
-                                                                }
+        try {
+            studentRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
+                        Student student = studentSnapshot.getValue(Student.class);
+                        if (student.getStudentID() == 15137038) {
+                            final int routeId = student.getStudentRouteID();
+                            stopId = student.getStudentStopID();
+                            studentTime = student.getAlertArrivalTime();
+                            routeRef.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
+                                        Route route = routeSnapshot.getValue(Route.class);
+                                        if (route.getRouteID() == routeId) {
+                                            final String busId = route.getRouteBusID();
+                                            busRef.addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                                    for (DataSnapshot busSnapshot : dataSnapshot.getChildren()) {
+                                                        Bus bus = busSnapshot.getValue(Bus.class);
+                                                        if (bus.getBusID().equals(busId)) {
+                                                            latitude = bus.getBusLatitude();
+                                                            longitude = bus.getBusLongitude();
+                                                            nextTime = System.currentTimeMillis();
+                                                            if (previousLatitude == 0 && previousLongitude == 0) {
+                                                                previousLatitude = latitude;
+                                                                previousLongitude = longitude;
+                                                                prTime = System.currentTimeMillis();
                                                             }
-
-                                                            @Override
-                                                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                                            }
-                                                        });
+                                                            updateBusLocationOnMap(latitude, longitude);
+                                                        }
                                                     }
                                                 }
-                                            }
 
-                                            @Override
-                                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                                            }
-                                        });
+                                                }
+                                            });
+                                        }
                                     }
                                 }
-                            }
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            }
-                        });
+                                }
+                            });
+                        }
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
@@ -203,11 +238,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng myLocation = new LatLng(latitude,longitude);
 
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
+        /*mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));*/
 
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
+        /*mGoogleMap.addMarker(new MarkerOptions().position(myLocation).title("SE Lab").icon(fromResource(R.drawable.markertwo)));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));*/
 
    /*    //int x=10;
         mGoogleMap = googleMap;
@@ -226,6 +261,10 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         Point displaySize = new Point();
        getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));*/
+    }
+
+    public void lngLat(){
+
     }
 
     double distance_on_geoid(double lat1, double lon1, double lat2, double lon2) {
@@ -264,25 +303,103 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
 
     LatLng getStopLatLng(final int stop_id){
 
-        stopRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot stopSnapshot : dataSnapshot.getChildren()){
-                    Stop stop = stopSnapshot.getValue(Stop.class);
-                    if (stop.getStopID()==stop_id){
-                        lat = stop.getStopLatitude();
-                        lng = stop.getStopLongitude();
+        try {
+            stopRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot stopSnapshot : dataSnapshot.getChildren()) {
+                        Stop stop = stopSnapshot.getValue(Stop.class);
+                        if (stop.getStopID() == stop_id) {
+                            lat = stop.getStopLatitude();
+                            lng = stop.getStopLongitude();
+                        }
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }catch (Exception e){
+            Toast.makeText(getContext(), "Error: " + e, Toast.LENGTH_LONG).show();
+        }
+            LatLng latLng = new LatLng(lat, lng);
+            return latLng;
+    }
+
+    private void sendNotification(String notificationDetails) {
+        // Create an explicit content Intent that starts the main Activity.
+        Intent notificationIntent = new Intent(getContext(), studentHome.class);
+
+        // Construct a task stack.
+        TaskStackBuilder stackBuilder = TaskStackBuilder.create(getContext());
+
+        // Add the main Activity to the task stack as the parent.
+        stackBuilder.addParentStack(studentHome.class);
+
+        // Push the content Intent onto the stack.
+        stackBuilder.addNextIntent(notificationIntent);
+
+        // Get a PendingIntent containing the entire back stack.
+        PendingIntent notificationPendingIntent =
+                stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Get a notification builder that's compatible with platform versions >= 4
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext());
+
+        // Define the notification settings.
+        builder.setSmallIcon(R.mipmap.ic_launcher)
+                // In a real app, you may want to use a library like Volley
+                // to decode the Bitmap.
+                .setLargeIcon(BitmapFactory.decodeResource(getResources(),
+                        R.mipmap.ic_launcher))
+                .setColor(getResources().getColor(R.color.pendingColor))
+                .setContentTitle("Bus is Arriving")
+                .setContentText(notificationDetails)
+                .setContentIntent(notificationPendingIntent);
+
+        // Dismiss notification once the user touches it.
+        builder.setAutoCancel(true);
+
+        // Get an instance of the Notification manager
+        NotificationManager mNotificationManager =
+                (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Issue the notification
+        mNotificationManager.notify(0, builder.build());
+    }
+
+    private String formatTime(double seconds){
+        String fTime;
+        int p1 = (int) (seconds % 60);
+        int p2 = (int) (seconds / 60);
+        int p3 = p2 % 60;
+        p2 = p2 / 60;
+        if(p3 == 0 && p2 == 0){
+            fTime =  p1 + " s";
+        }else if(p2 == 0){
+            if(p1 < 10){
+                fTime = p3 + ":" + "0" + p1 + " m";
+            }else{
+                fTime = p3 + ":" + p1 + " m";
             }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+        }else{
+            if(p1<10 && p3<10){
+                fTime = p2 + ":0" + p3 + ":0" + p1 + " h";
+            }else if(p1<10){
+                fTime = p2 + ":" + p3 + ":0" + p1 + " h";
+            }else if(p3<10){
+                fTime = p2 + ":0" + p3 + ":" + p1 + " h";
+            }else{
+                fTime = p2 + ":" + p3 + ":" + p1 + " h";
             }
-        });
-        LatLng latLng = new LatLng(lat,lng);
-        return latLng;
+
+        }
+
+        return fTime;
+
     }
 
 
