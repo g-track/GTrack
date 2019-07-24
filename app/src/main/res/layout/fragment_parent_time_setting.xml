@@ -129,6 +129,14 @@
                     android:gravity="center_horizontal"
                     android:popupTheme="@color/colorAccent"
                     android:theme="@style/spinnerTheme" />
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="30dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="30dp"
+                    android:src="@drawable/listdown_icon"
+                    android:layout_below="@id/img_student_clock_2"
+                    android:layout_alignRight="@id/parent_timeSpinner_id"/>
 
             </RelativeLayout>
 

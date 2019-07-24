@@ -23,18 +23,19 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 /**
  * A simple {@link Fragment} subclass.
  */
 public class parentViewBusDetails extends Fragment {
     private FirebaseDatabase database;
-    private DatabaseReference parentRef,studentRef,routeRef,busRef,driverRef;
-    private String routeName,driverName;
+    private DatabaseReference parentRef, studentRef, routeRef, busRef, driverRef;
+    private String routeName, driverName;
 
-   
+
     private ProgressDialog progressDialog;
 
-    private TextView busNoText,driverText,routeText, driverPhone;
+    private TextView busNoText, driverText, routeText, driverPhone;
 
     String busNo;
 
@@ -46,7 +47,7 @@ public class parentViewBusDetails extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view =  inflater.inflate(R.layout.fragment_parent_view_bus_details, container, false);
+        View view = inflater.inflate(R.layout.fragment_parent_view_bus_details, container, false);
         initialization(view);
         getDataFromFirebase();
         return view;
@@ -59,43 +60,44 @@ public class parentViewBusDetails extends Fragment {
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()) {
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentID()==51){
+                    if (parent.getParentID() == 51) {
                         final int childId = parent.getChildStudentID();
                         studentRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
+                                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                                     Student student = studentSnapshot.getValue(Student.class);
-                                    if (student.getStudentID()==childId){
+                                    if (student.getStudentID() == childId) {
                                         final int routeId = student.getStudentRouteID();
                                         routeRef.addValueEventListener(new ValueEventListener() {
                                             @Override
                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()){
+                                                for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()) {
                                                     Route route = routeSnapshot.getValue(Route.class);
-                                                    if (route.getRouteID()==routeId){
+                                                    if (route.getRouteID() == routeId) {
                                                         routeName = route.getRouteName();
                                                         routeText.setText(routeName);
                                                         final String busId = route.getRouteBusID();
                                                         busRef.addValueEventListener(new ValueEventListener() {
                                                             @Override
                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                for (DataSnapshot busSnapshot : dataSnapshot.getChildren()){
+                                                                for (DataSnapshot busSnapshot : dataSnapshot.getChildren()) {
                                                                     Bus bus = busSnapshot.getValue(Bus.class);
-                                                                    if (bus.getBusID().equals(busId)){
+                                                                    if (bus.getBusID().equals(busId)) {
                                                                         final int driverId = bus.getBusDriverID();
                                                                         busNo = bus.getBusID();
                                                                         busNoText.setText(busNo);
                                                                         driverRef.addValueEventListener(new ValueEventListener() {
                                                                             @Override
                                                                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                                                                for (DataSnapshot driverSnapshot : dataSnapshot.getChildren()){
+                                                                                for (DataSnapshot driverSnapshot : dataSnapshot.getChildren()) {
                                                                                     Driver driver = driverSnapshot.getValue(Driver.class);
-                                                                                    if (driver.getDriverID()==driverId){
+                                                                                    if (driver.getDriverID() == driverId) {
                                                                                         driverName = driver.getDriverName();
                                                                                         driverText.setText(driverName);
+                                                                                        driverPhone.setText(driver.getDriverPhone());
 
                                                                                         progressDialog.dismiss();
 
@@ -145,7 +147,7 @@ public class parentViewBusDetails extends Fragment {
 
             }
         });
-       // progressDialog.dismiss();
+        // progressDialog.dismiss();
     }
 
     private void initialization(View view) {

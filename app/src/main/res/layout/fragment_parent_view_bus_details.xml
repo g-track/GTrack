@@ -102,9 +102,9 @@
 
                     <TextView
                         android:id="@+id/parent_bus_no_id"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="28dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="8dp"
                         android:paddingTop="5dp"
@@ -155,9 +155,9 @@
 
                     <TextView
                         android:id="@+id/parent_driver_name_id"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
+                        android:layout_marginStart="36dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="8dp"
                         android:paddingTop="5dp"
@@ -206,9 +206,9 @@
 
                     <TextView
                         android:id="@+id/parent_route_name_id"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="16dp"
+                        android:layout_marginStart="36dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="8dp"
                         android:paddingTop="5dp"
@@ -229,6 +229,7 @@
                 android:layout_height="45dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
                 android:layout_marginBottom="24dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
@@ -258,8 +259,9 @@
 
                     <TextView
                         android:id="@+id/parent_driver_phone_name_id"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="20dp"
                         android:layout_marginTop="4dp"
                         android:layout_marginEnd="8dp"
                         android:paddingTop="5dp"

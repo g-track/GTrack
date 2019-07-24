@@ -29,18 +29,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp">
+                android:layout_marginTop="50dp">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/parent_profile_image"
-                    android:layout_width="150dp"
-                    android:layout_height="150dp"
+                    android:layout_width="120dp"
+                    android:layout_height="120dp"
                     android:src="@drawable/profileimage"
                     android:layout_centerHorizontal="true"
                     android:elevation="2dp" />
@@ -54,7 +54,7 @@
                     <android.support.v7.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="90dp"
+                        android:layout_marginTop="70dp"
                         android:padding="15dp"
                         app:cardCornerRadius="10dp">
 
@@ -77,11 +77,11 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginTop="70dp"
-                                    android:layout_marginBottom="30dp"
+                                    android:layout_marginBottom="20dp"
                                     android:fontFamily="sans-serif-medium"
                                     android:text="Muhammad Ali"
                                     android:textColor="@color/colorWhite"
-                                    android:textSize="25sp"
+                                    android:textSize="20sp"
                                     android:textStyle="bold"/>
 
                             </LinearLayout>
@@ -106,16 +106,16 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="CNIC: "
-                                    android:textSize="17dp"
-                                    android:layout_marginTop="20dp"
+                                    android:textSize="14dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp"/>
                                 <TextView
                                     android:id="@+id/parent_cnicNo_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="  35301-1234567-3"
-                                    android:textSize="17dp"
-                                    android:layout_marginTop="20dp"
+                                    android:textSize="14dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp"
                                     android:layout_alignBaseline="@id/parent_cnic_textView"
                                     android:layout_toRightOf="@id/parent_cnic_textView"/>
@@ -126,7 +126,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/editTextBG"
-                                android:layout_marginTop="20dp"/>
+                                android:layout_marginTop="8dp"/>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -136,25 +136,25 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Phone: "
-                                    android:textSize="17dp"
-                                    android:layout_marginTop="20dp"
+                                    android:textSize="14dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp"/>
                                 <TextView
                                     android:id="@+id/parent_phoneNo_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="03001234567"
-                                    android:textSize="17dp"
-                                    android:layout_marginTop="20dp"
+                                    android:textSize="14dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp"
                                     android:layout_alignBaseline="@id/parent_phone_textView"
                                     android:layout_toRightOf="@id/parent_phone_textView"/>
 
                                 <ImageView
                                     android:id="@+id/btn_parent_phone_edit"
-                                    android:layout_marginTop="20dp"
-                                    android:layout_width="30dp"
-                                    android:layout_height="30dp"
+                                    android:layout_marginTop="5dp"
+                                    android:layout_width="25dp"
+                                    android:layout_height="25dp"
                                     android:src="@drawable/edit_phone"
                                     android:layout_alignParentEnd="true"
                                     android:layout_alignParentRight="true"
@@ -168,7 +168,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/editTextBG"
-                                android:layout_marginTop="20dp"/>
+                                android:layout_marginTop="8dp"/>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
@@ -178,16 +178,16 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="Child ID:"
-                                    android:textSize="17dp"
-                                    android:layout_marginTop="20dp"
+                                    android:textSize="14dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp" />
                                 <TextView
                                     android:id="@+id/parent_childid_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:text="15137070"
-                                    android:textSize="17dp"
-                                    android:layout_marginTop="20dp"
+                                    android:textSize="14dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp"
                                     android:layout_alignBaseline="@id/childid_parent_textView"
                                     android:layout_toRightOf="@id/childid_parent_textView"/>
@@ -198,7 +198,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
                                 android:background="@color/editTextBG"
-                                android:layout_marginTop="20dp"/>
+                                android:layout_marginTop="8dp"/>
                             <RelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -208,12 +208,12 @@
                                     android:id="@+id/parent_updatePassword_textView"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginTop="12dp"
+                                    android:layout_marginTop="10dp"
                                     android:paddingLeft="20dp"
                                     android:textColor="@color/colorWhite"
                                     android:text="Update Password"
-                                    android:textSize="17dp"
-                                    android:layout_marginBottom="20dp"/>
+                                    android:textSize="14dp"
+                                    android:layout_marginBottom="10dp"/>
 
 
                             </RelativeLayout>

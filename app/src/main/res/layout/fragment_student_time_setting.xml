@@ -63,13 +63,13 @@
 
     <ScrollView
         android:id="@+id/sv_layout"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="2dp"
         android:layout_marginEnd="4dp"
-
         android:layout_marginBottom="8dp"
+        android:paddingBottom="20dp"
         android:scrollbars="none"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,9 +81,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="4dp"
             android:layout_marginEnd="8dp"
-            android:paddingBottom="40dp"
+            android:layout_marginBottom="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/cv_button_student_setting">
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_marginStart="4dp"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="3dp"
@@ -145,6 +145,14 @@
                         android:gravity="center_horizontal"
                         android:popupTheme="@color/colorAccent"
                         android:theme="@style/spinnerTheme" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="30dp"
+                        android:src="@drawable/listdown_icon"
+                        android:layout_below="@id/img_student_clock_1"
+                        android:layout_alignRight="@id/student_timeSpinner_1"/>
 
                 </RelativeLayout>
 
@@ -208,6 +216,14 @@
                         android:gravity="center_horizontal"
                         android:popupTheme="@color/colorAccent"
                         android:theme="@style/spinnerTheme" />
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="30dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginTop="30dp"
+                        android:src="@drawable/listdown_icon"
+                        android:layout_below="@id/img_student_clock_2"
+                        android:layout_alignRight="@id/student_timeSpinner_2"/>
 
                 </RelativeLayout>
 

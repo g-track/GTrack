@@ -66,9 +66,12 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
     private Marker mMarker;
     private DatabaseReference studentRef,routeRef,busRef,stopRef;
     private FirebaseDatabase database;
+    ArrayList<Double> latList, lngList;
+    ArrayList<Long> timeList;
     private double M_PI = 3.14159;
     private TextView busSpeed,estimatedTime;
-    private int stopId, studentTime, checker=0;
+    private int stopId, studentTime, counter=0;
+    private boolean checker = true;
     double lat ,lng;
     int[] timeArray = {5, 10,15, 20, 30, 45, 60};
     //MarkerOptions place1, place2;
@@ -109,8 +112,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         routeRef = database.getReference("route");
         stopRef = database.getReference("stop");
         busRef = database.getReference("bus");
-        busSpeed = view.findViewById(R.id.parent_busSpeed_id);
-        estimatedTime = view.findViewById(R.id.parent_estimatedTime_id);
+        busSpeed = view.findViewById(R.id.student_busSpeed_id);
+        estimatedTime = view.findViewById(R.id.student_estimatedTime_id);
+        latList = new ArrayList<Double>();
+        lngList = new ArrayList<Double>();
+        timeList = new ArrayList<Long>();
 
     }
 
@@ -126,42 +132,68 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mMarker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 18));
 
-        double dist = distance_on_geoid(latitude, longitude, previousLatitude, previousLongitude);
+        if(counter < 6){
+            latList.add(latitude);
+            lngList.add(longitude);
+            timeList.add(nextTime);
+            counter++;
+        }else{
 
-        double time_s = ((nextTime - prTime) / 1000.0);
+            counter = 0;
+
+            for(int i=0; i<= latList.size()-1; i++){
+                nextLatitude += latList.get(i);
+                nextLongitude += lngList.get(i);
+                nextTime += timeList.get(i);
+            }
+            nextLatitude = nextLatitude / 6;
+            nextLongitude = nextLongitude / 6;
+            nextTime = nextTime / 6;
+
+            latList.clear();
+            lngList.clear();
+            timeList.clear();
 
 
-        double speed_mps = dist / time_s;
-        double speed_kph = (speed_mps * 3.6);
+            double dist = distance_on_geoid(nextLatitude, nextLongitude, previousLatitude, previousLongitude);
+            double time_s = ((nextTime - prTime) / 1000.0);
 
 
-        LatLng stopLocation = getStopLatLng(stopId);
-        double distance = (distance_on_geoid(latitude, longitude, stopLocation.latitude, stopLocation.longitude));
-        double time = (distance / speed_mps);
-        String formatted_speed = String.format("%.2f", speed_kph);
-        Log.i("Time", "Time is " + time);
-        String formatted2_time = formatTime(time);
-        busSpeed.setText(formatted_speed + " Kph");
-        if (speed_kph <= 0.0009) {
-            estimatedTime.setText("Undefined");
-        } else {
-            estimatedTime.setText(formatted2_time);
-        }
+            prTime = nextTime;
+            previousLatitude = nextLatitude;
+            previousLongitude = nextLongitude;
 
-        prTime = nextTime;
-        previousLatitude = latitude;
-        previousLongitude = longitude;
+            nextLongitude = 0;
+            nextLatitude = 0;
 
-        if (checker == 0) {
-            for (int i = 0; i < 7; i++) {
-                if (i == studentTime) {
-                    if (time <= (timeArray[i] * 60)) {
-                        sendNotification("Bus will be at your stop in " + timeArray[i] + " minutes");
-                        checker++;
+            double speed_mps = dist / time_s;
+            double speed_kph = (speed_mps * 3.6);
+
+            LatLng stopLocation = getStopLatLng(stopId);
+            double distance = (distance_on_geoid(latitude, longitude, stopLocation.latitude, stopLocation.longitude));
+            double time = (distance / speed_mps);
+            String formatted_speed = String.format("%.2f", speed_kph);
+            Log.i("Time", "Time is " + time);
+            String formatted2_time = formatTime(time);
+            busSpeed.setText(formatted_speed + " Kph");
+            if (speed_kph <= 0.0009) {
+                estimatedTime.setText("Undefined");
+            } else {
+                estimatedTime.setText(formatted2_time);
+            }
+
+            if (checker) {
+                for (int i = 0; i < 7; i++) {
+                    if (i == studentTime) {
+                        if (time <= (timeArray[i] * 60)) {
+                            sendNotification("Bus will be at your stop in " + timeArray[i] + " minutes");
+                            checker = false;
+                        }
                     }
                 }
             }
         }
+
     }
 
 
@@ -248,8 +280,6 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         LatLng myLocation = new LatLng(latitude,longitude);
-
-        mGoogleMap.addMarker(new MarkerOptions().position(myLocation));
         mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude,myLocation.longitude),18.0f));
 
     }
