@@ -3,17 +3,14 @@ package com.example.g_track.Activities;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.renderscript.Sampler;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
+import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -84,7 +81,7 @@ public class studentComplaintCompose extends AppCompatActivity {
 
     public static String  getCurrentTimeUsingDate() {
         Date date = new Date();
-        String strDateFormat = "dd-MM-yyyy hh:mm:ss aaa";
+        String strDateFormat = "dd-MM-yyyy hh:mm:ss";
         DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
         String formattedDate= dateFormat.format(date);
         return formattedDate;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,7 +7,7 @@
     android:background="@color/colorWhite"
     tools:context=".Activities.studentComplaintCompose">
 
-    <android.support.v7.widget.Toolbar
+    <androidx.appcompat.widget.Toolbar
         android:id="@+id/compose_toolbar_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -18,9 +18,9 @@
         app:layout_constraintTop_toTopOf="parent"
         android:theme="@style/ToolBarStyle">
 
-    </android.support.v7.widget.Toolbar>
+    </androidx.appcompat.widget.Toolbar>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cv_compose_subject_email"
 
         app:cardElevation="3dp"
@@ -44,14 +44,14 @@
                 android:layout_height="wrap_content"
                 android:background="@color/editTextBG"
                 android:hint="@string/subject"
-                android:padding="20dp"
+                android:padding="15dp"
                 android:textColor="@color/colorBlack"
-                android:textSize="20sp" />
+                android:textSize="14sp" />
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/cv_compose_desc_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -78,6 +78,7 @@
                 android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:minLines="1"
+                android:textSize="12dp"
                 android:padding="20dp"
                 android:scrollbars="vertical"
                 android:textColor="@color/colorBlack"
@@ -85,13 +86,13 @@
 
         </LinearLayout>
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
 
     <Button
         android:id="@+id/email_send_btn_id"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="10dp"
@@ -99,9 +100,9 @@
         android:text="Submit"
         android:textAllCaps="false"
         android:textColor="@color/colorWhite"
-        android:textSize="22sp"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cv_compose_desc_email" />
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

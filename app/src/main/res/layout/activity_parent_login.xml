@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,7 +9,7 @@
     android:background="@color/colorWhite">
 
 
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/parent_login_CardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -99,7 +99,7 @@
                     android:background="@color/editTextBG"
                     android:hint="Enter your ID..."
                     android:paddingLeft="20dp"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -131,13 +131,13 @@
                     android:hint="@string/enter_your_password"
                     android:inputType="textPassword"
                     android:paddingLeft="20dp"
-                    android:textSize="15sp" />
+                    android:textSize="14sp" />
             </RelativeLayout>
 
             <Button
                 android:id="@+id/parent_btn_login"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/parent_login_password_relative_layout"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="20dp"
@@ -149,27 +149,27 @@
                 android:onClick="parentLogin"
                 android:text="@string/login"
                 android:textColor="@color/colorWhite"
-                android:textSize="18sp" />
+                android:textSize="14sp" />
 
             <Button
                 android:id="@+id/parent_btn_forgetPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
                 android:layout_below="@id/parent_btn_login"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="25dp"
                 android:background="@color/transparent"
                 android:fontFamily="sans-serif-medium"
                 android:onClick="forgetPassword"
                 android:text="@string/forget_password"
                 android:textAllCaps="false"
                 android:textColor="@color/colorBlack"
-                android:textSize="15sp" />
+                android:textSize="12sp" />
 
 
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-</android.support.constraint.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
