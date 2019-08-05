@@ -1,58 +1,30 @@
 
 package com.example.g_track.Fragments;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.app.ProgressDialog;
-import android.app.TaskStackBuilder;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.g_track.Activities.studentHome;
-import com.example.g_track.Model.Bus;
-import com.example.g_track.Model.Location;
-import com.example.g_track.Model.Parent;
-import com.example.g_track.Model.Route;
-import com.example.g_track.Model.Stop;
-import com.example.g_track.Model.Student;
 import com.example.g_track.R;
 import com.example.g_track.TrackBusService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromBitmap;
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
-import static java.lang.Math.acos;
-import static java.lang.Math.cos;
-import static java.lang.Math.sin;
 
 /**
  * A simple {@link Fragment} subclass.

@@ -4,15 +4,14 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
-import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
 import com.example.g_track.R;

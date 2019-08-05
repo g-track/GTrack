@@ -1,57 +1,60 @@
 package com.example.g_track;
 
-import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.os.IBinder;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationCompat;
+import android.preference.PreferenceManager;
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.example.g_track.Activities.studentHome;
 import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import java.util.TimeZone;
 
 import static java.lang.Math.acos;
 import static java.lang.Math.cos;
 import static java.lang.Math.sin;
 
 public class TrackBusService extends Service {
-    private GoogleMap mGoogleMap;
-    private GoogleApiClient googleApiClient;
-    private DatabaseReference studentRef,routeRef,busRef,stopRef, geoRef;
-    private FirebaseDatabase database;
-    private double latitude = 32.20561 ,longitude = 74.19276;
-    private double previousLatitude=0,previousLongitude=0,nextLatitude,nextLongitude;
-    private long prTime, nextTime;
-    private int stopId, studentTime, counter=0;
-    private boolean checker = true;
-    double lat ,lng;
-    int[] timeArray = {5, 10,15, 20, 30, 45, 60};
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+    private static final String TIME_DEPATRURE_1 = "13:30";
+    private static final String TIME_DEPATRURE_2 = "16:20";
 
-    ArrayList<Double> latList, lngList,timeCheckList;
-    ArrayList<Long> timeList ;
+
+    private DatabaseReference studentRef, routeRef, busRef, stopRef, geoRef;
+    private FirebaseDatabase database;
+    private double latitude = 32.20561, longitude = 74.19276;
+    private double previousLatitude = 0, previousLongitude = 0, nextLatitude, nextLongitude;
+    private long prTime, nextTime;
+    private int stopId, studentTime,studentTime2,counter = 0;
+    private boolean checker, checker2, alertStatus;
+    double lat, lng;
+    int[] timeArray = {5, 10, 15, 20, 30, 45, 60};
+    ArrayList<Double> latList, lngList, timeCheckList;
+    ArrayList<Long> timeList;
     private double M_PI = 3.14159;
 
     @Override
@@ -63,8 +66,10 @@ public class TrackBusService extends Service {
     public void onCreate() {
         Log.i("SERVICE", "Service Started");
         initialization();
+        prTime = System.currentTimeMillis();
         getDataFromFirebase();
     }
+
     private void initialization() {
         database = FirebaseDatabase.getInstance();
         studentRef = database.getReference("student");
@@ -76,19 +81,24 @@ public class TrackBusService extends Service {
         lngList = new ArrayList<Double>();
         timeList = new ArrayList<Long>();
         timeCheckList = new ArrayList<Double>();
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        editor = sharedPreferences.edit();
     }
 
+
     private void getDataFromFirebase() {
-        try {
             studentRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    try{
                     for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                         Student student = studentSnapshot.getValue(Student.class);
                         if (student.getStudentID() == 15137038) {
                             final int routeId = student.getStudentRouteID();
                             stopId = student.getStudentStopID();
                             studentTime = student.getAlertArrivalTime();
+                            studentTime2 = student.getAlertDepartureTime();
+                            alertStatus = student.isAlertStatus();
                             routeRef.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -107,9 +117,8 @@ public class TrackBusService extends Service {
                                                             nextTime = System.currentTimeMillis();
                                                             Log.i("LAT", "lat"+latitude);
                                                             if (previousLatitude == 0 && previousLongitude == 0) {
-                                                                previousLatitude = latitude;
-                                                                previousLongitude = longitude;
-                                                                prTime = System.currentTimeMillis();
+                                                                previousLatitude = latitude+0.00001;
+                                                                previousLongitude = longitude+0.00001;
                                                             }
                                                             updateBusLocationOnMap(latitude, longitude);
                                                         }
@@ -128,13 +137,14 @@ public class TrackBusService extends Service {
                             });
                         }
                     }
+                    }catch (Exception e){
+                        Toast.makeText(getApplicationContext(), "Exception "+ e, Toast.LENGTH_SHORT).show();
+                    }
                 }
                 @Override
                 public void onCancelled(@NonNull DatabaseError databaseError) {
                 }
             });
-        }catch (Exception e){
-        }
     }
 
     private void updateBusLocationOnMap(double latitude, double longitude) {
@@ -178,21 +188,45 @@ public class TrackBusService extends Service {
             String formatted2_time = formatTime(time);
 
 
-            if (checker) {
-                for (int c = 0; c < 7; c++) {
-                    if (c == studentTime) {
-                        if (time <= (timeArray[c] * 60)) {
-                            timeCheckList.add(time);
-                            if(timeCheckList.size() == 3) {
-                                sendNotification("Bus will be at your stop in " + timeArray[c] + " minutes");
-                                checker = false;
+            if(alertStatus){
+                checker2 = sharedPreferences.getBoolean("Checker2", true);
+                if (checker2) {
+                    alertDepartureTime();
+                }
+
+                checker = sharedPreferences.getBoolean("Checker", true);
+                Log.i("SP", "Value "+ checker);
+                if (checker) {
+                    for (int c = 0; c < 7; c++) {
+                        if (c == studentTime) {
+                            if (time <= (timeArray[c] * 60)) {
+                                timeCheckList.add(time);
+                                if(timeCheckList.size() == 3) {
+                                    sendNotification("Bus will be at your stop in " + timeArray[c] + " minutes", "G-Track");
+                                    editor.putLong("Time", System.currentTimeMillis());
+                                    editor.putBoolean("Checker", false);
+                                    editor.commit();
+                                    checker = sharedPreferences.getBoolean("Checker", true);
+                                    Log.i("SP_AFTER", "Value "+ checker);
+                                }
+                            }else {
+                                timeCheckList.clear();
                             }
-                        }else {
-                            timeCheckList.clear();
                         }
                     }
                 }
+                long timeStamp = (System.currentTimeMillis() - sharedPreferences.getLong("Time", System.currentTimeMillis()));
+                long timeStamp2 = (System.currentTimeMillis() - sharedPreferences.getLong("Time2", System.currentTimeMillis()));
+                if(timeStamp >= 300000){
+                    editor.putBoolean("Checker", true); //TODO Turn 300000 into 12 hours
+                    editor.commit();
+                }
+                if(timeStamp2 >= 300000){
+                    editor.putBoolean("Checker2", true);
+                    editor.commit();
+                }
             }
+
 
             Intent i = new Intent("Service_Data");
             i.putExtra("lat", previousLatitude);
@@ -206,8 +240,43 @@ public class TrackBusService extends Service {
 
         }
     }
+    public void alertDepartureTime(){
+        try {
+            Date date = new Date();
+            String strDateFormat = "dd-MM-yyyy hh:mm";
+            DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
+            String formattedDate= dateFormat.format(date);
 
-    private void sendNotification(String notificationDetails) {
+
+            String todayDate = "dd-MM-yyyy ";
+            DateFormat dateFormat1 = new SimpleDateFormat(todayDate);
+            String dateTimeToday = dateFormat1.format(date);
+            dateTimeToday = dateTimeToday + TIME_DEPATRURE_1;
+
+            SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
+            Date date1 = sdf.parse(formattedDate);
+            Date date2 = sdf.parse(dateTimeToday);
+
+            long dateMili1 = date1.getTime();
+            long dateMili2 = date2.getTime();
+
+            for (int c = 0; c < 7; c++) {
+                if (c == studentTime2) {
+                    if ((dateMili2-dateMili1) <= (timeArray[c]*60)*1000) {
+                        sendNotification("Bus will depart in " + timeArray[c] + " minutes", "G-Track");
+                        editor.putLong("Time2", System.currentTimeMillis());
+                        editor.putBoolean("Checker2", false);
+                        editor.commit();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void sendNotification(String notificationDetails, String notificationTitle) {
         // Create an explicit content Intent that starts the main Activity.
         Intent notificationIntent = new Intent(getApplicationContext(), studentHome.class);
         // Construct a task stack.
@@ -222,13 +291,13 @@ public class TrackBusService extends Service {
         // Get a notification builder that's compatible with platform versions >= 4
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getApplicationContext());
         // Define the notification settings.
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.mipmap.schoolbus)
                 // In a real app, you may want to use a library like Volley
                 // to decode the Bitmap.
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
-                        R.mipmap.ic_launcher))
-                .setColor(getResources().getColor(R.color.pendingColor))
-                .setContentTitle("Bus is Arriving")
+                        R.mipmap.schoolbus))
+                .setColor(getResources().getColor(R.color.colorWhite))
+                .setContentTitle(notificationTitle)
                 .setContentText(notificationDetails)
                 .setContentIntent(notificationPendingIntent);
         // Dismiss notification once the user touches it.
@@ -316,5 +385,4 @@ public class TrackBusService extends Service {
         }
         return fTime;
     }
-
 }

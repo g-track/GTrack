@@ -1,6 +1,5 @@
 package com.example.g_track.Activities;
 
-import android.Manifest;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -9,10 +8,6 @@ import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.telephony.SmsManager;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,6 +15,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.example.g_track.Model.Parent;
 import com.example.g_track.Model.User;
@@ -95,7 +94,7 @@ public class parentLogin extends AppCompatActivity {
 
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+            public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
                     Parent parent = parentSnapshot.getValue(Parent.class);
                     if (parent.getParentName().equals(name)){
@@ -121,7 +120,7 @@ public class parentLogin extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+            public void onCancelled(DatabaseError databaseError) {
 
             }
         });
@@ -162,24 +161,7 @@ public class parentLogin extends AppCompatActivity {
         return (check==PackageManager.PERMISSION_GRANTED);
     }
 
-    private void checkForSmsPermission() {
-        if (ActivityCompat.checkSelfPermission(this,
-                Manifest.permission.SEND_SMS) !=
-                PackageManager.PERMISSION_GRANTED) {
-           // Log.d(TAG, getString(R.string.permission_not_granted));
-            // Permission not yet granted. Use requestPermissions().
-            // MY_PERMISSIONS_REQUEST_SEND_SMS is an
-            // app-defined int constant. The callback method gets the
-            // result of the request.
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                requestPermissions(new String[]{SEND_SMS},
-                        REQUEST_SMS);
-            }
-        } else {
-            // Permission already granted. Enable the SMS button.
 
-        }
-    }
 
     private void SendMySMS() {
         if (checkPermission(SEND_SMS)) {

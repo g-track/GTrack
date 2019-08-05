@@ -4,9 +4,9 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
-import android.support.v4.app.Fragment;
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,10 +18,6 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.example.g_track.Model.Bus;
-import com.example.g_track.Model.Driver;
-import com.example.g_track.Model.Route;
-import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
@@ -29,9 +25,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static android.R.layout.simple_spinner_dropdown_item;
 import static android.R.layout.simple_spinner_item;
@@ -44,7 +37,6 @@ public class studentTimeSettingFragment extends Fragment {
     private Spinner timeSpinner;
     private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
-    private ProgressDialog progressDialog;
     private ConstraintLayout alert_time_set_layout;
     DatabaseReference databaseReference;
     Student studentData, student;
@@ -63,8 +55,7 @@ public class studentTimeSettingFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_time_setting, container, false);
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading...");
+
         initialization(view);
         setToogleButton();
         setSpinner();
@@ -76,10 +67,16 @@ public class studentTimeSettingFragment extends Fragment {
 
 
     private void setToogleButton() {
-        progressDialog.show();
+
+
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ProgressDialog progressDialog;
+                progressDialog = new ProgressDialog(getContext());
+                progressDialog.setMessage("Loading...");
+                progressDialog.show();
+
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
                     if (studentData.getStudentID() == 15137038) {
@@ -100,18 +97,24 @@ public class studentTimeSettingFragment extends Fragment {
                     }
                 }
                 progressDialog.dismiss();
+
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
+
         });
         Log.i("ALERT STATUS OUT", "onDataChange: " + status);
+
     }
 
 
     private void setOfOnAlert() {
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
         progressDialog.show();
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -154,6 +157,9 @@ public class studentTimeSettingFragment extends Fragment {
     }
 
     private void setSpinner() {
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
         progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -170,8 +176,6 @@ public class studentTimeSettingFragment extends Fragment {
                 timeSpinner.setSelection(student.getAlertArrivalTime());
                 departureTimeSpinner.setAdapter(adapter);
                 departureTimeSpinner.setSelection(student.getAlertDepartureTime());
-
-                progressDialog.dismiss();
             }
 
             @Override
@@ -179,8 +183,7 @@ public class studentTimeSettingFragment extends Fragment {
 
             }
         });
-
-
+        progressDialog.dismiss();
     }
 
     private void initialization(View view) {
@@ -194,6 +197,9 @@ public class studentTimeSettingFragment extends Fragment {
     }
 
     private void setArrivalTime(final int pos) {
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
         progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -219,6 +225,9 @@ public class studentTimeSettingFragment extends Fragment {
     }
 
     private void setDepartureTime(final int pos) {
+        ProgressDialog progressDialog;
+        progressDialog = new ProgressDialog(getContext());
+        progressDialog.setMessage("Loading...");
         progressDialog.show();
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override

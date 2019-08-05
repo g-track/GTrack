@@ -3,10 +3,11 @@ package com.example.g_track.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.example.g_track.Model.User;
 import com.example.g_track.R;
