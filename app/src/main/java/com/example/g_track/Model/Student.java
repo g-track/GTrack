@@ -6,6 +6,7 @@ public class Student {
     String studentPhone;
     String fatherName;
     String fatherCNIC;
+    String studentPassword;
     int  studentRouteID;
     int studentStopID;
     boolean feeStatus;
@@ -13,6 +14,17 @@ public class Student {
     int alertDepartureTime;
     int alertArrivalTime;
     boolean studentStatus;
+
+    public Student() {
+    }
+
+    public String getStudentPassword() {
+        return studentPassword;
+    }
+
+    public void setStudentPassword(String studentPassword) {
+        this.studentPassword = studentPassword;
+    }
 
     public int getStudentID() {
         return studentID;

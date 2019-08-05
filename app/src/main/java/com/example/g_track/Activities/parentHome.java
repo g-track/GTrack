@@ -1,6 +1,7 @@
 package com.example.g_track.Activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 import com.example.g_track.Fragments.parentProfileFragment;
 import com.example.g_track.Fragments.parentTimeSettingFragment;
 import com.example.g_track.Fragments.parentTrackBusFragment;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 
 public class parentHome extends AppCompatActivity {
@@ -102,6 +104,11 @@ public class parentHome extends AppCompatActivity {
                         break;
                     case R.id.parent_logOut_id:
                         Toast.makeText(parentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();
+                        User user = new User(parentHome.this);
+                        user.removeUser();
+                        Intent intent = new Intent(getApplicationContext(),parentLogin.class);
+                        startActivity(intent);
+                        finish();
                         break;
                     default:
                         return true;

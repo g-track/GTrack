@@ -259,7 +259,6 @@
                     android:text="@string/sign_up"
                     android:textColor="@color/colorWhite"
                     android:textSize="18sp"
-
                     />
 
                 <Button

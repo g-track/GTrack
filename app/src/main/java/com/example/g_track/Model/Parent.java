@@ -5,6 +5,7 @@ public class Parent{
     String parentName;
     String parentCNIC;
     String parentPhoneNo;
+    String parentPassword;
     int childStudentID;
     int arrivalTime;
     boolean alertStatus;
@@ -12,6 +13,14 @@ public class Parent{
 
 
     public Parent() {
+    }
+
+    public String getParentPassword() {
+        return parentPassword;
+    }
+
+    public void setParentPassword(String parentPassword) {
+        this.parentPassword = parentPassword;
     }
 
     public boolean isAlertStatus() {

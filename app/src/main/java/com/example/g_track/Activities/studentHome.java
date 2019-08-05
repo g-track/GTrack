@@ -1,6 +1,9 @@
 package com.example.g_track.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.NavigationView;
@@ -11,11 +14,10 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
-
 
 import com.example.g_track.Fragments.studentComplaintFragment;
 import com.example.g_track.Fragments.studentProfileFragment;
@@ -24,6 +26,7 @@ import com.example.g_track.Fragments.studentTrackBusFragment;
 import com.example.g_track.Fragments.studentUpdateStopFragment;
 import com.example.g_track.Fragments.studentViewBusDetailsFragment;
 import com.example.g_track.Fragments.studentViewRouteFragment;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 
 public class studentHome extends AppCompatActivity {
@@ -60,6 +63,10 @@ public class studentHome extends AppCompatActivity {
         setUpToolbar();
         actionOnClickingMainItems();
         actionOnClickingBottomMenu();
+
+        SharedPreferences prefs = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
+        String name = prefs.getString("username", "");
+        Log.i("Sohail", "onCreate: LogIn "+name);
     }
 
     private void actionOnClickingBottomMenu() {
@@ -140,9 +147,12 @@ public class studentHome extends AppCompatActivity {
                        // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.logOut_id:
-                        Toast.makeText(studentHome.this, "Log Out is Clicked.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(studentHome.this, "Now Your are LogOut.", Toast.LENGTH_SHORT).show();
+                        User user = new User(studentHome.this);
+                        user.removeUser();
                         Intent intent = new Intent(getApplicationContext(),studentLogin.class);
                         startActivity(intent);
+                        finish();
                         break;
                      default:
                          return true;

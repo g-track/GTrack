@@ -1,8 +1,6 @@
 package com.example.g_track.Fragments;
 
 
-import android.Manifest;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,12 +17,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.g_track.R;
+import com.example.g_track.SenderMail;
 import com.example.g_track.TrackBusService;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -60,8 +57,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
         initialization(view);
+
+        SenderMail sm = new SenderMail(getContext(),"sohailm816@gmail.com");
         Intent i = new Intent(getContext(), TrackBusService.class);
         getActivity().startService(i);
+
 
         return view;
     }

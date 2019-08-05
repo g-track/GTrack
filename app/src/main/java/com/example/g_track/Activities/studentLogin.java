@@ -1,9 +1,11 @@
 package com.example.g_track.Activities;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -11,20 +13,26 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.g_track.Activities.studentHome;
+import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class studentLogin extends AppCompatActivity {
     private EditText studentId;
     private EditText studentPassword;
     private Button btnStudentLogin;
-    private FirebaseAuth mAuth;
-    String email,password;
+    private String password;
+    private String Id;
+    private DatabaseReference studentRef;
+    private FirebaseDatabase database;
+    private boolean checkRegister;
+    private ProgressDialog progressDialog;
+    protected static final SharedPreferences settings = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +47,8 @@ public class studentLogin extends AppCompatActivity {
         studentId = findViewById(R.id.editText_student_id);
         studentPassword = findViewById(R.id.editText_student_password);
         btnStudentLogin = findViewById(R.id.student_btn_login);
-       // mAuth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        studentRef = database.getReference("student");
     }
 
     private TextWatcher loginTextWatcher = new TextWatcher() {
@@ -69,34 +78,47 @@ public class studentLogin extends AppCompatActivity {
 
 
     public void studentLogin(View view){
-       // Toast.makeText(this, "Login Successfull!", Toast.LENGTH_LONG).show();
-        email = studentId.getText().toString();
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading....");
+        progressDialog.show();
+        checkRegister = false;
+        Id = studentId.getText().toString();
         password = studentPassword.getText().toString();
+        studentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+               for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
+                   Student student = studentSnapshot.getValue(Student.class);
+                   if (student.getStudentID() == Integer.valueOf(Id) ){
+                       checkRegister = true;
+                       if (password.equals(student.getStudentPassword())){
+                           Intent studentHomePage = new Intent(getApplicationContext(), studentHome.class);
+                           startActivity(studentHomePage);
+                           User user = new User(studentLogin.this);
+                           user.setUserId(Id);
+                           user.setUserType("Student");
+                           Toast.makeText(studentLogin.this, "Your are Login Successfully", Toast.LENGTH_SHORT).show();
+                       }
+                       else {
+                           Toast.makeText(studentLogin.this, "Your Password Is Wrong.Please try Again", Toast.LENGTH_SHORT).show();
+                       }
+                   }
+                }
+               if (checkRegister==false){
+                   Toast.makeText(studentLogin.this, "Your are not Register.Please register her/him before Login", Toast.LENGTH_SHORT).show();
+               }
+               studentId.setText("");
+               studentPassword.setText("");
+               progressDialog.dismiss();
+            }
 
-     /*   mAuth.signInWithEmailAndPassword(email,password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                           // Log.d(TAG, "signInWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                            //updateUI(user);
-                        } else {
-                            // If sign in fails, display a message to the user.
-                           // Log.w(TAG, "signInWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                            //updateUI(null);
-                        }
+            }
+        });
 
-                        // ...
-                    }
-                });*/
 
-        Intent studentHomePage = new Intent(getApplicationContext(), studentHome.class);
-        startActivity(studentHomePage);
     }
 
     @Override

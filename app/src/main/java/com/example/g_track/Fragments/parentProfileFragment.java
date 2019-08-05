@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -19,9 +18,9 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.g_track.Activities.changePassword;
 import com.example.g_track.Model.Parent;
 import com.example.g_track.R;
-import com.example.g_track.Activities.parentForgetPassword;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -107,7 +106,8 @@ public class parentProfileFragment extends Fragment {
     }
 
     public void updatePassword(View view){
-        Intent updatePassword = new Intent(this.getContext(), parentForgetPassword.class);
+        Intent updatePassword = new Intent(this.getContext(), changePassword.class);
+        updatePassword.putExtra("userType","Parent");
         startActivity(updatePassword);
     }
 

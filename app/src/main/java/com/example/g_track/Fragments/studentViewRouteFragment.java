@@ -45,6 +45,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     private FirebaseDatabase database;
     private DatabaseReference studentRef,routeRef,stopRef;
     private ProgressDialog progressDialog;
+    private GoogleMap mMap;
 
     public studentViewRouteFragment() {
         // Required empty public constructor
@@ -60,7 +61,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         initialization();
-
+        setLocationOfBusesOnMap();
         return view;
     }
 
@@ -94,8 +95,8 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                                         options.position(latLng);
                                         options.title(stop.getStopName()).icon(fromResource(R.drawable.markertwo)).visible(true);
                                         // options.snippet("someDesc");
-                                        mGoogleMap.addMarker(options);
-                                        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 13.0f));
+                                        mMap.addMarker(options);
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 8.0f));
                                         progressDialog.dismiss();
                                     }
                                 }
@@ -129,9 +130,9 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
 
         setLocationOfBusesOnMap();*/
 
-       GoogleMap mMap = googleMap;
-        LatLng origin = new LatLng(-7.788969, 110.338382);
-        LatLng destination = new LatLng(-7.781200, 110.349709);
+        mMap = googleMap;
+        LatLng origin = new LatLng(31.788969, 73.338382);
+        LatLng destination = new LatLng(33.781200, 75.349709);
         DrawRouteMaps.getInstance(getContext())
                 .draw(origin, destination, mMap);
         DrawMarker.getInstance(getContext()).draw(mMap, origin, R.drawable.markertwo, "Origin Location");

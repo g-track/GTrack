@@ -18,11 +18,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.g_track.Activities.changePassword;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
 import com.example.g_track.R;
-import com.example.g_track.Activities.parentForgetPassword;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -165,7 +165,8 @@ public class studentProfileFragment extends Fragment {
     }
 
     public void updatePassword(View view){
-        Intent updatePassword = new Intent(this.getContext(), parentForgetPassword.class);
+        Intent updatePassword = new Intent(this.getContext(), changePassword.class);
+        updatePassword.putExtra("userType","Student");
         startActivity(updatePassword);
     }
 
