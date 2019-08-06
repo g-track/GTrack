@@ -9,10 +9,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.NotificationCompat;
-import android.util.Log;
 
 import com.example.g_track.Activities.studentHome;
 import com.example.g_track.Model.Bus;
@@ -20,6 +21,7 @@ import com.example.g_track.Model.Parent;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -64,7 +66,7 @@ public class ParentTrackBusService extends Service {
 
     private void initialization() {
         database = FirebaseDatabase.getInstance();
-        parentRef = database.getReference("Parent");
+        parentRef = database.getReference("parent");
         studentRef = database.getReference("student");
         routeRef = database.getReference("route");
         stopRef = database.getReference("stop");
@@ -76,12 +78,13 @@ public class ParentTrackBusService extends Service {
     }
 
     private void getDataFromFirebase() {
+        final User user = new User(getApplicationContext());
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()) {
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentID() == 51) {
+                    if (parent.getChildStudentID() == Integer.valueOf(user.getUserId())) {
                         final int childId = parent.getChildStudentID();
                         studentRef.addValueEventListener(new ValueEventListener() {
                             @Override

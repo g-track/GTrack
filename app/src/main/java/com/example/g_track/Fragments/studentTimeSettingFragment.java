@@ -4,9 +4,6 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +15,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -76,10 +78,11 @@ public class studentTimeSettingFragment extends Fragment {
                 progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
+                User user = new User(getContext());
 
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == 15137038) {
+                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
                         student = studentData;
                         status = student.isAlertStatus();
                         //studentKey = studentSnapShot.getKey();
@@ -116,6 +119,7 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
@@ -124,7 +128,7 @@ public class studentTimeSettingFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                             studentData = studentSnapShot.getValue(Student.class);
-                            if (studentData.getStudentID() == 15137038) {
+                            if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
                                 student = studentData;
                                 studentKey = studentSnapShot.getKey();
                             }
@@ -161,12 +165,13 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == 15137038) {
+                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())){
                         student = studentData;
                     }
                 }
@@ -201,12 +206,13 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == 15137038) {
+                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
                         student = studentData;
                         studentKey = studentSnapShot.getKey();
                     }
@@ -229,12 +235,13 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == 15137038) {
+                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
                         student = studentData;
                         studentKey = studentSnapShot.getKey();
                         Log.i("STUDENT", studentKey);

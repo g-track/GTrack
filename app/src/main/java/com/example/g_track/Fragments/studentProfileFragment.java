@@ -23,6 +23,7 @@ import com.example.g_track.Activities.changePassword;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -82,12 +83,13 @@ public class studentProfileFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     final Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==15137038){
+                    if (student.getStudentID()==Integer.valueOf(user.getUserId())){
                         studentKey = studentSnapshot.getKey();
                         studentName.setText(student.getStudentName());
                         studentId.setText(String.valueOf(student.getStudentID()));

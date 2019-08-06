@@ -10,16 +10,18 @@ import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
-import androidx.annotation.NonNull;
-import androidx.core.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationCompat;
 
 import com.example.g_track.Activities.studentHome;
 import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,7 +33,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.TimeZone;
 
 import static java.lang.Math.acos;
 import static java.lang.Math.cos;
@@ -87,13 +88,14 @@ public class TrackBusService extends Service {
 
 
     private void getDataFromFirebase() {
+        final User user = new User(getApplicationContext());
             studentRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     try{
                     for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                         Student student = studentSnapshot.getValue(Student.class);
-                        if (student.getStudentID() == 15137038) {
+                        if (student.getStudentID() == Integer.valueOf(user.getUserId())) {
                             final int routeId = student.getStudentRouteID();
                             stopId = student.getStudentStopID();
                             studentTime = student.getAlertArrivalTime();

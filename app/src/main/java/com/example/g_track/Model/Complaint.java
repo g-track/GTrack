@@ -9,7 +9,7 @@ public class Complaint implements Parcelable {
     String complaintSubject;
     int resolvedStatus;
     boolean complaintStatus;
-    long studentId;
+    int studentId;
     String complaintTime;
 
 
@@ -23,7 +23,7 @@ public class Complaint implements Parcelable {
         complaintSubject = in.readString();
         resolvedStatus = in.readInt();
         complaintStatus = in.readByte() != 0;
-        studentId = in.readLong();
+        studentId = in.readInt();
         complaintTime = in.readString();
     }
 
@@ -47,13 +47,14 @@ public class Complaint implements Parcelable {
         this.complaintTime = complaintTime;
     }
 
-    public long getStudentId() {
+    public int getStudentId() {
         return studentId;
     }
 
-    public void setStudentId(long studentId) {
+    public void setStudentId(int studentId) {
         this.studentId = studentId;
     }
+
     public int getComplaintID() {
         return complaintID;
     }

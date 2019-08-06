@@ -15,6 +15,7 @@ import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -77,14 +78,14 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
         progressDialog.setMessage("Loading...");
         progressDialog.show();
 
+        final User user = new User(getContext());
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID() == 15137038) {
+                    if (student.getStudentID() == Integer.valueOf(user.getUserId())) {
                         final int routeId = student.getStudentRouteID();
-
                         stopRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -116,8 +117,6 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
 
             }
         });
-
-
     }
 
     @Override
@@ -137,7 +136,6 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                 .draw(origin, destination, mMap);
         DrawMarker.getInstance(getContext()).draw(mMap, origin, R.drawable.markertwo, "Origin Location");
         DrawMarker.getInstance(getContext()).draw(mMap, destination, R.drawable.markertwo, "Destination Location");
-
         LatLngBounds bounds = new LatLngBounds.Builder()
                 .include(origin)
                 .include(destination).build();

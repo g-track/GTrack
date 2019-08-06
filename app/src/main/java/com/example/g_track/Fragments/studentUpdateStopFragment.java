@@ -2,7 +2,6 @@ package com.example.g_track.Fragments;
 
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -81,17 +81,20 @@ public class studentUpdateStopFragment extends Fragment {
         });
     }
 
+
+
     private void setStopFromFirebaseToSpinner() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
        stopList = new ArrayList<>();
+        final User user = new User(getContext());
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (final DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==15137038){
+                    if (student.getStudentID()== Integer.valueOf(user.getUserId())){
                        studentKey = studentSnapshot.getKey();
                         routeId = student.getStudentRouteID();
                         final int stopId = student.getStudentStopID();
@@ -145,7 +148,7 @@ public class studentUpdateStopFragment extends Fragment {
 
                                             }
                                         });
-                                        studentRef.child(studentKey).child("studentStopID").setValue(updatedStopId);
+                                        //studentRef.child(studentKey).child("studentStopID").setValue(updatedStopId);
                                     }
 
                                     @Override
@@ -183,11 +186,13 @@ public class studentUpdateStopFragment extends Fragment {
         routeRef = database.getReference("route");
     }
 
+
     private void setColorOfSelectedItem(){
         spinnerStopLsit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ((TextView) view).setTextColor(Color.WHITE); //Change selected text color
+                ((TextView) spinnerStopLsit.getSelectedView()).setTextColor(getResources().getColor(R.color.colorWhite));
+                //Change selected text color
             }
 
             @Override

@@ -3,18 +3,19 @@ package com.example.g_track.Fragments;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Driver;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -51,13 +52,13 @@ public class studentViewBusDetailsFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-
+        final User user = new User(getContext());
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==15137038){
+                    if (student.getStudentID()==Integer.valueOf(user.getUserId())){
                         final int routeId = student.getStudentRouteID();
                         routeRef.addValueEventListener(new ValueEventListener() {
                             @Override

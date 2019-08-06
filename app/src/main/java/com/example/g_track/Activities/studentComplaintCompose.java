@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.g_track.Model.Complaint;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -103,10 +104,11 @@ public class studentComplaintCompose extends AppCompatActivity {
     }
 
     private void generateComplaint(){
+        User user = new User(getApplicationContext());
 
         String subject = complaintSubject.getText().toString();
         String desc = complaintDesc.getText().toString();
-        long studentId = 15137029;
+        int studentId = Integer.valueOf(user.getUserId());
         String time = getCurrentTimeUsingDate();
         int status = 1;
         complaint = new Complaint();

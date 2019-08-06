@@ -4,9 +4,6 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +15,12 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.Fragment;
+
 import com.example.g_track.Model.Parent;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,12 +72,13 @@ public class parentTimeSettingFragment extends Fragment {
 
     private void setToogleButton(){
         progressDialog.show();
+        final User user = new User(getContext());
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
                     parentData = parentSnapShot.getValue(Parent.class);
-                    if(parentData.getParentID() == 51){
+                    if(parentData.getChildStudentID() == Integer.valueOf(user.getUserId())){
                         parent = parentData;
                         status = parent.isAlertStatus();
                         //studentKey = studentSnapShot.getKey();
@@ -105,6 +108,7 @@ public class parentTimeSettingFragment extends Fragment {
 
 
     private void setOfOnAlert() {
+        final User user = new User(getContext());
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
@@ -113,12 +117,11 @@ public class parentTimeSettingFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
                             parentData = parentSnapShot.getValue(Parent.class);
-                            if(parentData.getParentID() == 51){
+                            if(parentData.getChildStudentID() == Integer.valueOf(user.getUserId())){
                                 parent = parentData;
                                 parentKey = parentSnapShot.getKey();
                             }
                         }
-
                     }
 
                     @Override
@@ -147,12 +150,13 @@ public class parentTimeSettingFragment extends Fragment {
 
     private void setSpinner() {
         progressDialog.show();
+        final User user = new User(getContext());
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
                     parentData = parentSnapShot.getValue(Parent.class);
-                    if(parentData.getParentID() == 51){
+                    if(parentData.getChildStudentID() == Integer.valueOf(user.getUserId())){
                         parent = parentData;
                     }
                 }
@@ -174,7 +178,7 @@ public class parentTimeSettingFragment extends Fragment {
     }
 
     private void initialization(View view) {
-        parentDatabase = FirebaseDatabase.getInstance().getReference("Parent");
+        parentDatabase = FirebaseDatabase.getInstance().getReference("parent");
         parent = new Parent();
         parentData = new Parent();
         timeSpinner = view.findViewById(R.id.parent_timeSpinner_id);
@@ -184,12 +188,13 @@ public class parentTimeSettingFragment extends Fragment {
 
     private void setArrivalTime(final int pos){
         progressDialog.show();
+        final User user = new User(getContext());
         parentDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot parentSnapShot: dataSnapshot.getChildren()){
                     parentData = parentSnapShot.getValue(Parent.class);
-                    if(parentData.getParentID() == 51){
+                    if(parentData.getChildStudentID() == Integer.valueOf(user.getUserId())){
                         parent = parentData;
                         parentKey = parentSnapShot.getKey();
                     }

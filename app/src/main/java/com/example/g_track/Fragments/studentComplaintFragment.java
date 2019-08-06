@@ -4,20 +4,22 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.example.g_track.Model.Complaint;
-import com.example.g_track.R;
-import com.example.g_track.Adapters.complaintAdapter;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.g_track.Activities.studentComplaintCompose;
+import com.example.g_track.Adapters.complaintAdapter;
+import com.example.g_track.Model.Complaint;
+import com.example.g_track.Model.User;
+import com.example.g_track.R;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -83,13 +85,14 @@ public class studentComplaintFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 complaintList.clear();
                 for(DataSnapshot complaintSnapShot: dataSnapshot.getChildren()){
                     Complaint complaint = complaintSnapShot.getValue(Complaint.class);
-                    if(complaint.getComplaintStatus()){
+                    if((complaint.getComplaintStatus())&&(complaint.getStudentId()==Integer.valueOf(user.getUserId()))){
                         complaintList.add(complaint);
                     }
 
