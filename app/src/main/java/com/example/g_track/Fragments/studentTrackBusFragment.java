@@ -25,6 +25,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.example.g_track.AlertCheckService;
 import com.example.g_track.R;
 //import com.example.g_track.SenderMail;
 import com.example.g_track.TrackBusService;
@@ -74,12 +75,8 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         Intent i = new Intent(getContext(), TrackBusService.class);
         getActivity().startService(i);
 
-        /*mMarker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(busLatitude, busLongitude))
-                .title("====Bus Location====").visible(true)
-                .snippet("Lat:" + busLatitude + " , Lng:" + busLongitude)
-                .icon(fromResource(R.drawable.markerone)));
-        mMarker.showInfoWindow();
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(busLatitude, busLongitude), 14));*/
+       Intent service = new Intent(getContext(), AlertCheckService.class);
+       getActivity().startService(service);
         return view;
     }
 

@@ -122,7 +122,7 @@ public class complaintAdapter extends RecyclerView.Adapter<complaintAdapter.comp
 
         try
         {
-            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss a");
             Date past = format.parse(date);
             Date now = new Date();
             long seconds=TimeUnit.MILLISECONDS.toSeconds(now.getTime() - past.getTime());

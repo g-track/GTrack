@@ -49,6 +49,8 @@
         <service
             android:name=".TrackBusService"
             android:exported="false" />
+        <service android:name=".AlertCheckService"
+            android:exported="false"/>
     </application>
 
 </manifest>

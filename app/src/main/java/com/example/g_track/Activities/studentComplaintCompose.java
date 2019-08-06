@@ -81,7 +81,7 @@ public class studentComplaintCompose extends AppCompatActivity {
 
     public static String  getCurrentTimeUsingDate() {
         Date date = new Date();
-        String strDateFormat = "dd-MM-yyyy hh:mm:ss";
+        String strDateFormat = "dd-MM-yyyy hh:mm:ss a";
         DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
         String formattedDate= dateFormat.format(date);
         return formattedDate;
