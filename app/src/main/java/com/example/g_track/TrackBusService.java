@@ -245,6 +245,7 @@ public class TrackBusService extends Service {
     public void alertDepartureTime(){
         try {
             Date date = new Date();
+            Date date3 = new Date();
             String strDateFormat = "dd-MM-yyyy hh:mm";
             DateFormat dateFormat = new SimpleDateFormat(strDateFormat);
             String formattedDate= dateFormat.format(date);
@@ -253,18 +254,27 @@ public class TrackBusService extends Service {
             String todayDate = "dd-MM-yyyy ";
             DateFormat dateFormat1 = new SimpleDateFormat(todayDate);
             String dateTimeToday = dateFormat1.format(date);
+            String dateTimeToday2 = dateFormat1.format(date3);
             dateTimeToday = dateTimeToday + TIME_DEPATRURE_1;
+            dateTimeToday2 = dateTimeToday2 + TIME_DEPATRURE_2;
 
             SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy hh:mm");
             Date date1 = sdf.parse(formattedDate);
             Date date2 = sdf.parse(dateTimeToday);
+            Date date4 = sdf.parse(dateTimeToday2);
 
+            long dateMili3 = date4.getTime();
             long dateMili1 = date1.getTime();
             long dateMili2 = date2.getTime();
 
             for (int c = 0; c < 7; c++) {
                 if (c == studentTime2) {
                     if ((dateMili2-dateMili1) <= (timeArray[c]*60)*1000) {
+                        sendNotification("Bus will depart in " + timeArray[c] + " minutes", "G-Track");
+                        editor.putLong("Time2", System.currentTimeMillis());
+                        editor.putBoolean("Checker2", false);
+                        editor.commit();
+                    }else if((dateMili3-dateMili1) <= (timeArray[c]*60)*1000){
                         sendNotification("Bus will depart in " + timeArray[c] + " minutes", "G-Track");
                         editor.putLong("Time2", System.currentTimeMillis());
                         editor.putBoolean("Checker2", false);
