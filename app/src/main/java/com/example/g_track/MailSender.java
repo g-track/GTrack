@@ -1,3 +1,4 @@
+/*
 package com.example.g_track;
 
 import java.io.ByteArrayInputStream;
@@ -54,7 +55,9 @@ public class MailSender extends javax.mail.Authenticator {
         try {
             MimeMessage message = new MimeMessage(session);
             DataHandler handler = new DataHandler(new ByteArrayDataSource(body.getBytes(), "text/html"));
-            /*message.setSender(new InternetAddress(sender, "Dhaval Solanki"));*/
+            */
+/*message.setSender(new InternetAddress(sender, "Dhaval Solanki"));*//*
+
             message.setFrom(new InternetAddress(sender, from));
             message.setSubject(subject);
 
@@ -103,10 +106,12 @@ public class MailSender extends javax.mail.Authenticator {
 
 
 
+*/
 /**
  * @author Alexander Y. Kleymenov
  * @version $Revision$
- */
+ *//*
+
 
 
 
@@ -127,4 +132,4 @@ final class JSSEProvider extends Provider {
             }
         });
     }
-}
+}*/

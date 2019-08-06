@@ -89,7 +89,7 @@ public class parentLogin extends AppCompatActivity {
 
     public void parentLogin(View view){
         checkParent = false;
-        final String name = parentUsername.getText().toString();
+        final String childId = parentUsername.getText().toString();
         final String password = parentPassword.getText().toString();
 
         parentRef.addValueEventListener(new ValueEventListener() {
@@ -97,13 +97,14 @@ public class parentLogin extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentName().equals(name)){
+                    String id = String.valueOf(parent.getChildStudentID());
+                    if (id.equals(childId)){
                         checkParent = true;
                         if (parent.getParentPassword().equals(password)){
                             Intent intent = new Intent(getApplicationContext(),parentHome.class);
                             startActivity(intent);
                             User user = new User(parentLogin.this);
-                            user.setUserId(name);
+                            user.setUserId(id);
                             user.setUserType("Parent");
                             Toast.makeText(parentLogin.this, "You are login Successfully.", Toast.LENGTH_SHORT).show();
                         }else {
@@ -152,6 +153,13 @@ public class parentLogin extends AppCompatActivity {
                  "Sohail Jhakhar",
                 "sohailm816@gmail.com" + "", "WeMeal Team",
                  "sohailm816@gmail.com"); //email list send comma separated string like ("a@gmail.com,b@dahs.com")*/
+    }
+
+    public void register(View view){
+        Intent intent = new Intent(parentLogin.this,parentRegister.class);
+        startActivity(intent);
+        finish();
+
     }
 
 

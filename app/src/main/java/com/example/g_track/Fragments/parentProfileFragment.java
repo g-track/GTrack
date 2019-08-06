@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.g_track.Activities.changePassword;
 import com.example.g_track.Model.Parent;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -71,20 +72,21 @@ public class parentProfileFragment extends Fragment {
                 updatePassword(v);
             }
         });
-        getDataFromFirebase();
+        viewParentDetails();
         return view;
     }
 
-    private void getDataFromFirebase() {
+    private void viewParentDetails() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User user = new User(getContext());
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentID()==51){
+                    if (parent.getChildStudentID()==Integer.valueOf(user.getUserId())){
                         parentKey = parentSnapshot.getKey();
                         parentName.setText(parent.getParentName());
                         parentCNIC.setText(parent.getParentCNIC());
@@ -101,8 +103,6 @@ public class parentProfileFragment extends Fragment {
 
             }
         });
-
-
 
     }
 
@@ -122,7 +122,7 @@ public class parentProfileFragment extends Fragment {
         parentCNIC = view.findViewById(R.id.parent_cnicNo_textView);
         parentChildID = view.findViewById(R.id.parent_childid_textView);
         database = FirebaseDatabase.getInstance();
-        parentRef = database.getReference("Parent");
+        parentRef = database.getReference("parent");
         //progressBar = view.findViewById(R.id.parent_profile_spin_kit);
     }
 

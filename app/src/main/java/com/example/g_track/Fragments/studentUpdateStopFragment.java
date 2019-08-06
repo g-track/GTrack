@@ -4,9 +4,6 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Color;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-//import com.example.g_track.Model.Root;
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
@@ -27,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+//import com.example.g_track.Model.Root;
 
 
 /**
@@ -55,8 +56,6 @@ public class studentUpdateStopFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_student_update_stop, container, false);
         initialization(view);
-
-       // fetchingRoot();
         setStopFromFirebaseToSpinner();
         setRouteName();
         setColorOfSelectedItem();

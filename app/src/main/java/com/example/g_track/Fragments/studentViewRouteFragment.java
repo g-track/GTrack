@@ -4,11 +4,12 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
@@ -60,7 +61,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                 (SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         initialization();
-        setLocationOfBusesOnMap();
+        viewRouteDetails();
         return view;
     }
 
@@ -71,7 +72,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
         stopRef = database.getReference("stop");
     }
 
-    private void setLocationOfBusesOnMap() {
+    private void viewRouteDetails() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();

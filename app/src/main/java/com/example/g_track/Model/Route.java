@@ -1,15 +1,31 @@
 package com.example.g_track.Model;
 
-import java.util.ArrayList;
-
 public class Route {
     int routeID;
    // ArrayList<Stop> stops;
     String routeName;
     boolean routeStatus;
     String routeBusID;
+    double destinationLatitude;
+    double destinationLongitude;
 
     public Route() {
+    }
+
+    public double getDestinationLatitude() {
+        return destinationLatitude;
+    }
+
+    public void setDestinationLatitude(double destinationLatitude) {
+        this.destinationLatitude = destinationLatitude;
+    }
+
+    public double getDestinationLongitude() {
+        return destinationLongitude;
+    }
+
+    public void setDestinationLongitude(double destinationLongitude) {
+        this.destinationLongitude = destinationLongitude;
     }
 
     public String getRouteBusID() {

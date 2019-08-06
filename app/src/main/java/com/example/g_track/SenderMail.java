@@ -1,4 +1,5 @@
 package com.example.g_track;
+/*
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -72,3 +73,4 @@ public class SenderMail extends AsyncTask<Void,Void ,Void> {
         Toast.makeText(context, "Message Send.", Toast.LENGTH_SHORT).show();
     }
 }
+*/

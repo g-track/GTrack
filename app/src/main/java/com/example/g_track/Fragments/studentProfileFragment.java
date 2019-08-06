@@ -5,8 +5,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -17,6 +15,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.g_track.Activities.changePassword;
 import com.example.g_track.Model.Route;
@@ -76,9 +77,8 @@ public class studentProfileFragment extends Fragment {
         return view;
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
+
+    public void viewStudentDeatails(){
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
@@ -138,6 +138,13 @@ public class studentProfileFragment extends Fragment {
 
             }
         });
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        viewStudentDeatails();
     }
 
     private void initialization(View view) {

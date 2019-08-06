@@ -130,7 +130,7 @@ public class parentRegister extends AppCompatActivity {
                             parent.setParentName(name);
                             parent.setParentPassword(password);
                             parentRef.push().setValue(parent);
-                            Intent intent = new Intent(getApplicationContext(),parentLogin.class);
+                            Intent intent = new Intent(getApplicationContext(),parentHome.class);
                             startActivity(intent);
                             Toast.makeText(parentRegister.this, "Your are register successfully.Now you need to login", Toast.LENGTH_SHORT).show();
 
