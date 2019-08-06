@@ -3,11 +3,7 @@ package com.example.g_track.Activities;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import androidx.appcompat.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.MenuItem;
@@ -15,6 +11,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.example.g_track.Model.Complaint;
 import com.example.g_track.R;
@@ -54,7 +54,7 @@ public class studentComplaintCompose extends AppCompatActivity {
 
     private void setUpToolbar() {
         setSupportActionBar(compose_toolbar);
-        getSupportActionBar().setTitle("Compose Email");
+        getSupportActionBar().setTitle("Compose Complaint");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 

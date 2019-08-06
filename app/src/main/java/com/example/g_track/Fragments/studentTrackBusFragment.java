@@ -26,7 +26,7 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.g_track.R;
-import com.example.g_track.SenderMail;
+//import com.example.g_track.SenderMail;
 import com.example.g_track.TrackBusService;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -70,7 +70,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_student_track_bus, container, false);
         initialization(view);
-        SenderMail sm = new SenderMail(getContext(),"sohailm816@gmail.com");
+       // SenderMail sm = new SenderMail(getContext(),"sohailm816@gmail.com");
         Intent i = new Intent(getContext(), TrackBusService.class);
         getActivity().startService(i);
 

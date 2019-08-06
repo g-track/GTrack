@@ -3,19 +3,20 @@ package com.example.g_track.Activities;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 
 import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Driver;
 import com.example.g_track.Model.Parent;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -30,12 +31,8 @@ public class parentViewBusDetails extends Fragment {
     private FirebaseDatabase database;
     private DatabaseReference parentRef, studentRef, routeRef, busRef, driverRef;
     private String routeName, driverName;
-
-
     private ProgressDialog progressDialog;
-
     private TextView busNoText, driverText, routeText, driverPhone;
-
     String busNo;
 
     public parentViewBusDetails() {
@@ -56,12 +53,13 @@ public class parentViewBusDetails extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
+        final User use = new User(getContext());
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()) {
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentID() == 51) {
+                    if (parent.getChildStudentID() == Integer.valueOf(use.getUserId()) ) {
                         final int childId = parent.getChildStudentID();
                         studentRef.addValueEventListener(new ValueEventListener() {
                             @Override
@@ -97,10 +95,7 @@ public class parentViewBusDetails extends Fragment {
                                                                                         driverName = driver.getDriverName();
                                                                                         driverText.setText(driverName);
                                                                                         driverPhone.setText(driver.getDriverPhone());
-
                                                                                         progressDialog.dismiss();
-
-
                                                                                     }
                                                                                 }
                                                                             }
@@ -139,6 +134,8 @@ public class parentViewBusDetails extends Fragment {
                         });
                     }
                 }
+
+
             }
 
             @Override
@@ -146,7 +143,7 @@ public class parentViewBusDetails extends Fragment {
 
             }
         });
-        // progressDialog.dismiss();
+        progressDialog.dismiss();
     }
 
     private void initialization(View view) {
@@ -155,7 +152,7 @@ public class parentViewBusDetails extends Fragment {
         routeText = view.findViewById(R.id.parent_route_name_id);
         driverPhone = view.findViewById(R.id.parent_driver_phone_name_id);
         database = FirebaseDatabase.getInstance();
-        parentRef = database.getReference("Parent");
+        parentRef = database.getReference("parent");
         studentRef = database.getReference("student");
         routeRef = database.getReference("route");
         busRef = database.getReference("bus");

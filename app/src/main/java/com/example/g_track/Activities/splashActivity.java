@@ -21,7 +21,7 @@ public class splashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        constraintLayout = findViewById(R.id.userTypeLayout);
+        constraintLayout =findViewById(R.id.userTypeLayout);
 
         User user = new User(splashActivity.this);
         if (user.getUserId() != null) {

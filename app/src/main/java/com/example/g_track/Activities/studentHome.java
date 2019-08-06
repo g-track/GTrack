@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
 
@@ -58,8 +57,6 @@ public class studentHome extends AppCompatActivity {
 
         }
 
-
-
         initialization();
         setUpToolbar();
         actionOnClickingMainItems();
@@ -67,7 +64,7 @@ public class studentHome extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
         String name = prefs.getString("username", "");
-        Log.i("Sohail", "onCreate: LogIn "+name);
+       // Log.i("Sohail", "onCreate: LogIn "+name);
     }
 
     private void actionOnClickingBottomMenu() {
@@ -137,7 +134,6 @@ public class studentHome extends AppCompatActivity {
                         loadFragment(fragment);
                         main_drawer.closeDrawer(GravityCompat.START);
                         actionBar.setTitle("Route Details");
-
                         break;
                     case R.id.viewBusDetails_id:
                        // Toast.makeText(studentHome.this, "View Bus Details is Clicked.", Toast.LENGTH_SHORT).show();

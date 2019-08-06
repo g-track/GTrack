@@ -197,7 +197,7 @@
                         android:layout_toRightOf="@id/img_student_clock_2"
                         android:drawablePadding="20dp"
                         android:paddingLeft="20dp"
-                        android:text="Set Time Of Alert Before Bus Arrival at Stop"
+                        android:text="Set Time Of Alert Before Bus departure from University"
                         android:textColor="@color/colorBlack"
                         android:textSize="16sp" />
 

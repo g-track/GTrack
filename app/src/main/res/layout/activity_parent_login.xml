@@ -162,8 +162,8 @@
                 android:layout_marginBottom="25dp"
                 android:background="@color/transparent"
                 android:fontFamily="sans-serif-medium"
-                android:onClick="forgetPassword"
-                android:text="@string/forget_password"
+                android:onClick="register"
+                android:text="Not register yet, Please click here to Register?"
                 android:textAllCaps="false"
                 android:textColor="@color/colorBlack"
                 android:textSize="12sp" />
