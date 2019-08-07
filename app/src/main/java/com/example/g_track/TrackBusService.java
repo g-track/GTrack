@@ -21,7 +21,6 @@ import com.example.g_track.Model.Bus;
 import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
-import com.example.g_track.Model.User;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,7 +43,7 @@ public class TrackBusService extends Service {
     private static final String TIME_DEPATRURE_1 = "13:30";
     private static final String TIME_DEPATRURE_2 = "16:20";
 
-
+    String id;
     private DatabaseReference studentRef, routeRef, busRef, stopRef, geoRef;
     private FirebaseDatabase database;
     private double latitude = 32.20561, longitude = 74.19276;
@@ -88,14 +87,15 @@ public class TrackBusService extends Service {
 
 
     private void getDataFromFirebase() {
-        final User user = new User(getApplicationContext());
+        id = sharedPreferences.getString("id", "1");
+        //final User user = new User(getApplicationContext());
             studentRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     try{
                     for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                         Student student = studentSnapshot.getValue(Student.class);
-                        if (student.getStudentID() == Integer.valueOf(user.getUserId())) {
+                        if (student.getStudentID() == Integer.valueOf(id)) {
                             final int routeId = student.getStudentRouteID();
                             stopId = student.getStudentStopID();
                             studentTime = student.getAlertArrivalTime();

@@ -63,12 +63,6 @@ public class studentProfileFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_profile, container, false);
 
         initialization(view);
-        btnEditPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editPhone(v);
-            }
-        });
         updatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,7 +145,6 @@ public class studentProfileFragment extends Fragment {
 
     private void initialization(View view) {
         studentProfileImage = view.findViewById(R.id.student_profile_image);
-        btnEditPhone = view.findViewById(R.id.btn_student_phone_edit);
         phoneText = view.findViewById(R.id.student_phoneNo_textView);
         updatePassword = view.findViewById(R.id.student_updatePassword_textView);
         studentId = view.findViewById(R.id.student_id_textView);
@@ -179,25 +172,6 @@ public class studentProfileFragment extends Fragment {
         startActivity(updatePassword);
     }
 
-    public void editPhone(View view){
-        try{
-            updatePhone = new AlertDialog.Builder(getContext());
-            final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_phone_parent, null);
-            popupEditTextPhone = popupView.findViewById(R.id.editText_parent_edit_phone);
-            popupEditTextPhone.setText(phoneText.getText());
-            btnUpdatePhone = popupView.findViewById(R.id.btn_popup_parent_edit_phone);
-            popupEditTextPhone.addTextChangedListener(updatePhoneNo);
-            btnUpdatePhone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    updatePhone(popupView);
-                }
-            });
-            updatePhone.setView(popupView);
-            dialogPopup = updatePhone.create();
-            dialogPopup.show();
-        }catch(Exception e){}
-    }
 
     private TextWatcher updatePhoneNo = new TextWatcher() {
         @Override

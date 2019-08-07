@@ -102,6 +102,7 @@ public class parentLogin extends AppCompatActivity {
                         checkParent = true;
                         if (parent.getParentPassword().equals(password)){
                             Intent intent = new Intent(getApplicationContext(),parentHome.class);
+                            intent.putExtra("userType","Parent");
                             startActivity(intent);
                             User user = new User(parentLogin.this);
                             user.setUserId(id);

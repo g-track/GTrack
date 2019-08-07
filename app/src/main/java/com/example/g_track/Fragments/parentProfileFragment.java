@@ -1,6 +1,4 @@
 package com.example.g_track.Fragments;
-
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -60,12 +58,6 @@ public class parentProfileFragment extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_parent_profile, container, false);
         //progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
         initialization(view);
-        btnEditPhone.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editPhone(v);
-            }
-        });
         updatePassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,7 +107,6 @@ public class parentProfileFragment extends Fragment {
 
     private void initialization(View view) {
         parentProfileImage = view.findViewById(R.id.parent_profile_image);
-        btnEditPhone = view.findViewById(R.id.btn_parent_phone_edit);
         phoneText = view.findViewById(R.id.parent_phoneNo_textView);
         updatePassword = view.findViewById(R.id.parent_updatePassword_textView);
         parentName = view.findViewById(R.id.parent_login_Text);
@@ -124,33 +115,6 @@ public class parentProfileFragment extends Fragment {
         database = FirebaseDatabase.getInstance();
         parentRef = database.getReference("parent");
         //progressBar = view.findViewById(R.id.parent_profile_spin_kit);
-    }
-
-    public void updatePhone(View view){
-        phoneText.setText(popupEditTextPhone.getText());
-        dialogPopup.cancel();
-        parentRef.child(parentKey).child("parentPhoneNo").setValue(String.valueOf(popupEditTextPhone.getText()));
-
-    }
-
-    public void editPhone(View view){
-        try{
-            updatePhone = new AlertDialog.Builder(getContext());
-            final View popupView = getLayoutInflater().inflate(R.layout.popup_edit_phone_parent, null);
-            popupEditTextPhone = popupView.findViewById(R.id.editText_parent_edit_phone);
-            popupEditTextPhone.setText(phoneText.getText());
-            btnUpdatePhone = popupView.findViewById(R.id.btn_popup_parent_edit_phone);
-            popupEditTextPhone.addTextChangedListener(updatePhoneNo);
-            btnUpdatePhone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    updatePhone(popupView);
-                }
-            });
-            updatePhone.setView(popupView);
-            dialogPopup = updatePhone.create();
-            dialogPopup.show();
-        }catch(Exception e){}
     }
 
     private TextWatcher updatePhoneNo = new TextWatcher() {

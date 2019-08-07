@@ -150,18 +150,6 @@
                                     android:layout_alignBaseline="@id/parent_phone_textView"
                                     android:layout_toRightOf="@id/parent_phone_textView"/>
 
-                                <ImageView
-                                    android:id="@+id/btn_parent_phone_edit"
-                                    android:layout_marginTop="5dp"
-                                    android:layout_width="25dp"
-                                    android:layout_height="25dp"
-                                    android:src="@drawable/edit_phone"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginRight="10dp"
-                                    />
-
-
                             </RelativeLayout>
 
                             <View

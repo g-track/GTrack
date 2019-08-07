@@ -52,21 +52,18 @@ public class changePassword extends AppCompatActivity {
         final String newPass = newPassEdt.getText().toString();
         final String confirmPass = confirmPassEdt.getText().toString();
 
-        User user = new User(changePassword.this);
-        final String name = user.getUserId();
-
+        final User user = new User(changePassword.this);
         parentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot parentSnapshot : dataSnapshot.getChildren()){
                     Parent parent = parentSnapshot.getValue(Parent.class);
-                    if (parent.getParentName().equals(name)){
+                    if (parent.getChildStudentID()==Integer.valueOf(user.getUserId())){
                         parentKey = parentSnapshot.getKey();
                         if (oldPass.equals(parent.getParentPassword())){
                             if ((newPass.equals(confirmPass))&&(!newPass.isEmpty())){
                                 parentRef.child(parentKey).child("parentPassword").setValue(newPass);
-                                Intent intent = new Intent(changePassword.this,parentLogin.class);
-                                intent.putExtra("userType","Parent");
+                                Intent intent = new Intent(changePassword.this,parentHome.class);
                                 startActivity(intent);
                                 Toast.makeText(changePassword.this, "your password is reset Successfully", Toast.LENGTH_SHORT).show();
 
@@ -99,20 +96,19 @@ public class changePassword extends AppCompatActivity {
         final String newPass = newPassEdt.getText().toString();
         final String confirmPass = confirmPassEdt.getText().toString();
 
-        User user = new User(changePassword.this);
-        final String id = user.getUserId();
+        final User user = new User(changePassword.this);
 
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()== Integer.valueOf(id)){
+                    if (student.getStudentID()== Integer.valueOf(user.getUserId())){
                         studentKey = studentSnapshot.getKey();
                         if (oldPass.equals(student.getStudentPassword())){
                             if ((newPass.equals(confirmPass))&&(!newPass.isEmpty())){
                                 studentRef.child(studentKey).child("studentPassword").setValue(newPass);
-                                Intent intent = new Intent(changePassword.this,studentLogin.class);
+                                Intent intent = new Intent(changePassword.this,studentHome.class);
                                 startActivity(intent);
                                 finish();
                                 Toast.makeText(changePassword.this, "your password is reset Successfully", Toast.LENGTH_SHORT).show();

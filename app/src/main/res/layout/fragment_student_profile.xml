@@ -200,15 +200,6 @@
                                     android:text="03212342211"
                                     android:textSize="14dp" />
 
-                                <ImageView
-                                    android:id="@+id/btn_student_phone_edit"
-                                    android:layout_width="20dp"
-                                    android:layout_height="20dp"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_marginTop="12dp"
-                                    android:layout_marginRight="20dp"
-                                    android:src="@drawable/edit_phone" />
 
 
                             </RelativeLayout>

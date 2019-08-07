@@ -2,8 +2,10 @@ package com.example.g_track.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +22,6 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.example.g_track.Model.Student;
-import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -44,6 +45,8 @@ public class studentTimeSettingFragment extends Fragment {
     Student studentData, student;
     private String studentKey;
     boolean status;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     String[] time = {"5 minutes", "10 minutes", "15 minutes", "20 minutes", "30 minutes", "45 minutes", "1 hour"};
 
 
@@ -78,11 +81,11 @@ public class studentTimeSettingFragment extends Fragment {
                 progressDialog = new ProgressDialog(getContext());
                 progressDialog.setMessage("Loading...");
                 progressDialog.show();
-                User user = new User(getContext());
-
+                //User user = new User(getContext());
+                id = sharedPreferences.getString("id", "1");
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
+                    if (studentData.getStudentID() == Integer.valueOf(id)) {
                         student = studentData;
                         status = student.isAlertStatus();
                         //studentKey = studentSnapShot.getKey();
@@ -119,7 +122,8 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        final User user = new User(getContext());
+        id = sharedPreferences.getString("id", "1");
+        //final User user = new User(getContext());
         OffOnAlert_btn.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, final boolean isChecked) {
@@ -128,7 +132,7 @@ public class studentTimeSettingFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                             studentData = studentSnapShot.getValue(Student.class);
-                            if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
+                            if (studentData.getStudentID() == Integer.valueOf(id)) {
                                 student = studentData;
                                 studentKey = studentSnapShot.getKey();
                             }
@@ -165,13 +169,14 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        final User user = new User(getContext());
+        id = sharedPreferences.getString("id", "1");
+        //final User user = new User(getContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())){
+                    if (studentData.getStudentID() == Integer.valueOf(id)){
                         student = studentData;
                     }
                 }
@@ -199,6 +204,8 @@ public class studentTimeSettingFragment extends Fragment {
         alert_time_set_layout = view.findViewById(R.id.layout_spinner_1);
         departureTimeSpinner = view.findViewById(R.id.student_timeSpinner_2);
         databaseReference = FirebaseDatabase.getInstance().getReference("student");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        editor = sharedPreferences.edit();
     }
 
     private void setArrivalTime(final int pos) {
@@ -206,13 +213,14 @@ public class studentTimeSettingFragment extends Fragment {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        final User user = new User(getContext());
+        id = sharedPreferences.getString("id", "1");
+        //final User user = new User(getContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
+                    if (studentData.getStudentID() == Integer.valueOf(id)) {
                         student = studentData;
                         studentKey = studentSnapShot.getKey();
                     }
@@ -229,19 +237,20 @@ public class studentTimeSettingFragment extends Fragment {
         }
         progressDialog.dismiss();
     }
-
+    String id;
     private void setDepartureTime(final int pos) {
         ProgressDialog progressDialog;
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading...");
         progressDialog.show();
-        final User user = new User(getContext());
+        id = sharedPreferences.getString("id", "1");
+        //final User user = new User(getActivity().getBaseContext());
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapShot : dataSnapshot.getChildren()) {
                     studentData = studentSnapShot.getValue(Student.class);
-                    if (studentData.getStudentID() == Integer.valueOf(user.getUserId())) {
+                    if (studentData.getStudentID() == Integer.valueOf(id)) {
                         student = studentData;
                         studentKey = studentSnapShot.getKey();
                         Log.i("STUDENT", studentKey);

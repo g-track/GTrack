@@ -1,10 +1,12 @@
 package com.example.g_track.Activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -24,10 +26,16 @@ import com.example.g_track.Fragments.studentTrackBusFragment;
 import com.example.g_track.Fragments.studentUpdateStopFragment;
 import com.example.g_track.Fragments.studentViewBusDetailsFragment;
 import com.example.g_track.Fragments.studentViewRouteFragment;
+import com.example.g_track.Model.Student;
 import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class studentHome extends AppCompatActivity {
     private Toolbar toolbar;
@@ -37,6 +45,12 @@ public class studentHome extends AppCompatActivity {
     private BottomNavigationView main_student_bottomNavigation;
     private ActionBar actionBar;
     private  String extraTag = "";
+    private DatabaseReference studentRef;
+    private FirebaseDatabase database;
+    private TextView studentName;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,9 +76,36 @@ public class studentHome extends AppCompatActivity {
         actionOnClickingMainItems();
         actionOnClickingBottomMenu();
 
-        SharedPreferences prefs = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
-        String name = prefs.getString("username", "");
+       // SharedPreferences prefs = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
+      //  String name = prefs.getString("username", "");
        // Log.i("Sohail", "onCreate: LogIn "+name);
+
+        setStudentNameOnProfile();
+    }
+
+    private void setStudentNameOnProfile() {
+        id = sharedPreferences.getString("id", "1");
+       // final User user = new User(getApplicationContext());
+        studentRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
+                    Student student = studentSnapshot.getValue(Student.class);
+                    if (student.getStudentID()==Integer.valueOf(id)){
+                        String name = student.getStudentName();
+                        studentName.setText(name);
+
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 
     private void actionOnClickingBottomMenu() {
@@ -163,6 +204,12 @@ public class studentHome extends AppCompatActivity {
         main_drawer = findViewById(R.id.drawer_id);
         main_navigationView = findViewById(R.id.navigationView_id);
         main_student_bottomNavigation = findViewById(R.id.bottomNavigation_id);
+        View headerView = main_navigationView.getHeaderView(0);
+        studentName = headerView.findViewById(R.id.textView);
+        database = FirebaseDatabase.getInstance();
+        studentRef = database.getReference("student");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = sharedPreferences.edit();
     }
 
     private void loadFragment(Fragment fragment){
