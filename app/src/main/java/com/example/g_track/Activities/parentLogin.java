@@ -15,11 +15,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
 import com.example.g_track.Model.Parent;
 import com.example.g_track.Model.User;
 import com.example.g_track.R;
@@ -28,7 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.Random;
 
 import static android.Manifest.permission.SEND_SMS;
@@ -107,7 +104,6 @@ public class parentLogin extends AppCompatActivity {
                             User user = new User(parentLogin.this);
                             user.setUserId(id);
                             user.setUserType("Parent");
-                            Toast.makeText(parentLogin.this, "You are login Successfully.", Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(parentLogin.this, "Password Wrong. Please try Again.", Toast.LENGTH_SHORT).show();
                         }

@@ -99,7 +99,6 @@ public class studentLogin extends AppCompatActivity {
                            User user = new User(studentLogin.this);
                            user.setUserId(Id);
                            user.setUserType("Student");
-                           Toast.makeText(studentLogin.this, "Your are Login Successfully", Toast.LENGTH_SHORT).show();
                        }
                        else {
                            Toast.makeText(studentLogin.this, "Your Password Is Wrong.Please try Again", Toast.LENGTH_SHORT).show();

@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -181,7 +180,6 @@ public class studentHome extends AppCompatActivity {
                        // main_student_bottomNavigation.setVisibility(View.INVISIBLE);
                         break;
                     case R.id.logOut_id:
-                        Toast.makeText(studentHome.this, "Now Your are LogOut.", Toast.LENGTH_SHORT).show();
                         User user = new User(studentHome.this);
                         user.removeUser();
                         Intent intent = new Intent(getApplicationContext(),studentLogin.class);
