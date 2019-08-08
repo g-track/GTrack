@@ -4,6 +4,7 @@ package com.example.g_track.Fragments;
 import android.app.ProgressDialog;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.ahmadrosid.lib.drawroutemap.DrawMarker;
 import com.ahmadrosid.lib.drawroutemap.DrawRouteMaps;
+import com.example.g_track.Model.Route;
 import com.example.g_track.Model.Stop;
 import com.example.g_track.Model.Student;
 import com.example.g_track.Model.User;
@@ -32,8 +34,6 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +47,8 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     private DatabaseReference studentRef,routeRef,stopRef;
     private ProgressDialog progressDialog;
     private GoogleMap mMap;
+    double routeLatitude, routeLongitude;
+    int routeId;
 
     public studentViewRouteFragment() {
         // Required empty public constructor
@@ -64,6 +66,47 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
         initialization();
         viewRouteDetails();
         return view;
+    }
+
+    public void getRouteDestination(){
+        routeRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot routeSnapshot : dataSnapshot.getChildren()){
+                    Route route = routeSnapshot.getValue(Route.class);
+                    if (route.getRouteID()==1){
+                        routeLatitude = route.getDestinationLatitude();
+                        routeLongitude = route.getDestinationLongitude();
+                        String routeName = route.getRouteName();
+                        LatLng origin = new LatLng(32.2049, 74.1924);
+                        Log.i("Sohail", "onMapReady: "+routeLatitude+" , "+routeLongitude);
+                        LatLng destination = new LatLng(routeLatitude, routeLongitude);
+                        DrawRouteMaps.getInstance(getContext())
+                                .draw(origin, destination, mMap);
+                        DrawMarker.getInstance(getContext()).draw(mMap, origin, R.drawable.markertwo, "Route Origin: GIFT University");
+                        DrawMarker.getInstance(getContext()).draw(mMap, destination, R.drawable.markertwo, "Destination of "+routeName + " route");
+                        LatLngBounds bounds = new LatLngBounds.Builder()
+                                .include(origin)
+                                .include(destination).build();
+                        Point displaySize = new Point();
+                        getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
+                        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+                        Log.i("Sohail", "onMapReady: "+routeLatitude+" , "+routeLongitude);
+                    }
+
+                }
+
+                Log.i("Sohail", "onMapReady outside loop: "+routeLatitude+" , "+routeLongitude);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Log.i("Sohail", "onMapReady outside: "+routeLatitude+" , "+routeLongitude);
+
     }
 
     private void initialization() {
@@ -85,19 +128,21 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()) {
                     Student student = studentSnapshot.getValue(Student.class);
                     if (student.getStudentID() == Integer.valueOf(user.getUserId())) {
-                        final int routeId = student.getStudentRouteID();
+                        routeId = student.getStudentRouteID();
                         stopRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                int i = 1;
                                 for (DataSnapshot stopSnapshot : dataSnapshot.getChildren()) {
                                     Stop stop = stopSnapshot.getValue(Stop.class);
                                     if (stop.getStopRouteID() ==routeId) {
                                         LatLng latLng = new LatLng(stop.getStopLatitude(), stop.getStopLongitude());
                                         options.position(latLng);
-                                        options.title(stop.getStopName()).icon(fromResource(R.drawable.markertwo)).visible(true);
+                                        options.title("stop No."+i+": " + stop.getStopName()).visible(true);
                                         // options.snippet("someDesc");
+                                        i++;
                                         mMap.addMarker(options);
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 8.0f));
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(stop.getStopLatitude(), stop.getStopLongitude()), 10.0f));
                                         progressDialog.dismiss();
                                     }
                                 }
@@ -122,6 +167,7 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
     @Override
     public void onMapReady(GoogleMap googleMap) {
 
+        getRouteDestination();
       /*  mGoogleMap = googleMap;
         mGoogleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
         mGoogleMap.addMarker(new MarkerOptions().position(myLocation));
@@ -129,19 +175,27 @@ public class studentViewRouteFragment extends Fragment implements OnMapReadyCall
 
         setLocationOfBusesOnMap();*/
 
+
+
         mMap = googleMap;
-        LatLng origin = new LatLng(31.788969, 73.338382);
-        LatLng destination = new LatLng(33.781200, 75.349709);
-        DrawRouteMaps.getInstance(getContext())
+        LatLng origin = new LatLng(32.2049, 74.1924);
+        Log.i("Sohail", "onMapReady: "+routeLatitude+" , "+routeLongitude);
+        LatLng destination = new LatLng(routeLatitude, routeLongitude);
+       /* DrawRouteMaps.getInstance(getContext())
                 .draw(origin, destination, mMap);
-        DrawMarker.getInstance(getContext()).draw(mMap, origin, R.drawable.markertwo, "Origin Location");
-        DrawMarker.getInstance(getContext()).draw(mMap, destination, R.drawable.markertwo, "Destination Location");
+        DrawMarker.getInstance(getContext()).draw(mMap, origin, R.drawable.markertwo, "Route Origin: GIFT University");
+        DrawMarker.getInstance(getContext()).draw(mMap, destination, R.drawable.markertwo, "Destination Location ");
         LatLngBounds bounds = new LatLngBounds.Builder()
                 .include(origin)
                 .include(destination).build();
         Point displaySize = new Point();
         getActivity().getWindowManager().getDefaultDisplay().getSize(displaySize);
-        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(bounds, displaySize.x, 250, 30));*/
+    }
 
+    @Override
+    public void onStart() {
+
+        super.onStart();
     }
 }

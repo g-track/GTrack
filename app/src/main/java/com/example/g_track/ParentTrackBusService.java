@@ -7,6 +7,7 @@ import android.app.Service;
 import android.app.TaskStackBuilder;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
 import android.os.IBinder;
 import android.util.Log;
@@ -38,13 +39,16 @@ import static java.lang.Math.sin;
 
 public class ParentTrackBusService extends Service {
 
+    private SharedPreferences sharedPreferences;
+    private SharedPreferences.Editor editor;
+
     private DatabaseReference parentRef,studentRef,routeRef,busRef,stopRef;
     private FirebaseDatabase database;
     private double latitude = 32.20561 ,longitude = 74.19276;
     private double previousLatitude=0,previousLongitude=0,nextLatitude,nextLongitude;
     private long prTime, nextTime;
     private int stopId, studentTime, counter=0;
-    private boolean checker = true;
+    private boolean  checkerparent;
     double lat ,lng;
     int[] timeArray = {5, 10,15, 20, 30, 45, 60};
 
@@ -61,6 +65,7 @@ public class ParentTrackBusService extends Service {
     public void onCreate() {
         Log.i("SERVICE", "Service Started");
         initialization();
+        prTime = System.currentTimeMillis();
         getDataFromFirebase();
     }
 
@@ -115,7 +120,7 @@ public class ParentTrackBusService extends Service {
                                                                         if (previousLatitude == 0.0 || previousLongitude == 0.0) {
                                                                             previousLatitude = latitude;
                                                                             previousLongitude = longitude;
-                                                                            prTime = System.currentTimeMillis();
+
                                                                         }
                                                                         updateBusLocationOnMap(latitude, longitude);
 
@@ -197,14 +202,17 @@ public class ParentTrackBusService extends Service {
             Log.i("HELLO", "Time is " + time);
             String formatted2_time = formatTime(time);
 
-            if (checker) {
+
+            checkerparent = sharedPreferences.getBoolean("CheckerParent", true);
+
+            if (checkerparent) {
                 for (int c = 0; c < 7; c++) {
                     if (c == studentTime) {
                         if (time <= (timeArray[c] * 60)) {
                             timeCheckList.add(time);
                             if(timeCheckList.size() == 3) {
                                 sendNotification("Bus will be at your stop in " + timeArray[c] + " minutes");
-                                checker = false;
+                                checkerparent = false;
                                 if(!isRunning(getApplicationContext())){
                                     stopSelf();
                                 }
@@ -214,6 +222,11 @@ public class ParentTrackBusService extends Service {
                         }
                     }
                 }
+            }
+            long timeStamp2 = (System.currentTimeMillis() - sharedPreferences.getLong("TimeParent", System.currentTimeMillis()));
+            if(timeStamp2 >= 43200000){
+                editor.putBoolean("CheckerParent", true); //TODO Turn 300000 into 12 hours
+                editor.commit();
             }
 
             Intent i = new Intent("Service_Data");
@@ -262,7 +275,7 @@ public class ParentTrackBusService extends Service {
                 .setLargeIcon(BitmapFactory.decodeResource(getResources(),
                         R.mipmap.ic_launcher))
                 .setColor(getResources().getColor(R.color.pendingColor))
-                .setContentTitle("Bus is Arriving")
+                .setContentTitle("G-track")
                 .setContentText(notificationDetails)
                 .setContentIntent(notificationPendingIntent);
         // Dismiss notification once the user touches it.

@@ -148,7 +148,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
                 .snippet("Lat:" + latitude + " , Lng:" + longitude)
                 .icon(fromResource(R.drawable.markerone)));
         mMarker.showInfoWindow();
-        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 16));
+        mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17));
         double speed2 = Double.valueOf(speed);
 
         Log.i("SPEED", "Speed" + speed);
@@ -204,7 +204,7 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
             mMarker.showInfoWindow();
         }
 
-        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude, myLocation.longitude), 14.0f));
+        mGoogleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(myLocation.latitude, myLocation.longitude), 17.0f));
     }
 
     public void lngLat() {

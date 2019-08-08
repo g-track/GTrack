@@ -1,9 +1,9 @@
 package com.example.g_track.Activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -48,9 +48,6 @@ public class studentHome extends AppCompatActivity {
     private DatabaseReference studentRef;
     private FirebaseDatabase database;
     private TextView studentName;
-    SharedPreferences sharedPreferences;
-    SharedPreferences.Editor editor;
-    private String id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,22 +73,21 @@ public class studentHome extends AppCompatActivity {
         actionOnClickingMainItems();
         actionOnClickingBottomMenu();
 
-       // SharedPreferences prefs = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
-      //  String name = prefs.getString("username", "");
+        SharedPreferences prefs = getSharedPreferences("LogIn", Context.MODE_PRIVATE);
+        String name = prefs.getString("username", "");
        // Log.i("Sohail", "onCreate: LogIn "+name);
 
         setStudentNameOnProfile();
     }
 
     private void setStudentNameOnProfile() {
-        id = sharedPreferences.getString("id", "1");
-       // final User user = new User(getApplicationContext());
+        final User user = new User(getApplicationContext());
         studentRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot studentSnapshot : dataSnapshot.getChildren()){
                     Student student = studentSnapshot.getValue(Student.class);
-                    if (student.getStudentID()==Integer.valueOf(id)){
+                    if (student.getStudentID()==Integer.valueOf(user.getUserId())){
                         String name = student.getStudentName();
                         studentName.setText(name);
 
@@ -208,8 +204,6 @@ public class studentHome extends AppCompatActivity {
         studentName = headerView.findViewById(R.id.textView);
         database = FirebaseDatabase.getInstance();
         studentRef = database.getReference("student");
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = sharedPreferences.edit();
     }
 
     private void loadFragment(Fragment fragment){

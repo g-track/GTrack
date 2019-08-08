@@ -4,7 +4,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -16,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.g_track.Model.Student;
+import com.example.g_track.Model.User;
 import com.example.g_track.R;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -31,8 +31,6 @@ public class studentLogin extends AppCompatActivity {
     private String Id;
     private DatabaseReference studentRef;
     private FirebaseDatabase database;
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     private boolean checkRegister;
     private ProgressDialog progressDialog;
     protected static final SharedPreferences settings = null;
@@ -52,8 +50,6 @@ public class studentLogin extends AppCompatActivity {
         btnStudentLogin = findViewById(R.id.student_btn_login);
         database = FirebaseDatabase.getInstance();
         studentRef = database.getReference("student");
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = sharedPreferences.edit();
     }
 
     private TextWatcher loginTextWatcher = new TextWatcher() {
@@ -97,14 +93,12 @@ public class studentLogin extends AppCompatActivity {
                    if (student.getStudentID() == Integer.valueOf(Id) ){
                        checkRegister = true;
                        if (password.equals(student.getStudentPassword())){
-                            editor.putString("id", Id);
-                            editor.commit();
                            Intent studentHomePage = new Intent(getApplicationContext(), studentHome.class);
                            studentHomePage.putExtra("userType","Student");
                            startActivity(studentHomePage);
-                           /*User user = new User(studentLogin.this);
+                           User user = new User(studentLogin.this);
                            user.setUserId(Id);
-                           user.setUserType("Student");*/
+                           user.setUserType("Student");
                            Toast.makeText(studentLogin.this, "Your are Login Successfully", Toast.LENGTH_SHORT).show();
                        }
                        else {
