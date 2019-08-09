@@ -37,6 +37,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.text.DecimalFormat;
+
 import static com.google.android.gms.maps.model.BitmapDescriptorFactory.fromResource;
 
 
@@ -143,9 +145,11 @@ public class studentTrackBusFragment extends Fragment implements OnMapReadyCallb
         if (null != mMarker) {
             mMarker.remove();
         }
+        double lat = Double.parseDouble(new DecimalFormat("##.##").format(latitude));
+        double lng = Double.parseDouble(new DecimalFormat("##.##").format(longitude));
         mMarker = mGoogleMap.addMarker(new MarkerOptions().position(new LatLng(latitude, longitude))
                 .title("====Bus Location====").visible(true)
-                .snippet("Lat:" + latitude + " , Lng:" + longitude)
+                .snippet("Lat:" + lat + " , Lng:" + lng)
                 .icon(fromResource(R.drawable.markerone)));
         mMarker.showInfoWindow();
         mGoogleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(latitude, longitude), 17));

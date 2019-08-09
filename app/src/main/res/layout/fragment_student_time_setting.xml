@@ -91,7 +91,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_student_spinner_1"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
@@ -154,14 +154,49 @@
                         android:layout_below="@id/img_student_clock_1"
                         android:layout_alignRight="@id/student_timeSpinner_1"/>
 
+
+                        <LinearLayout
+                            android:id="@+id/cv_time_2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_below="@id/student_timeSpinner_1"
+                            android:layout_toRightOf="@id/img_student_clock_1">
+
+                            <RadioGroup
+                                android:id="@+id/myRadioGroup"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkedButton="@+id/first">
+
+                                <RadioButton
+                                    android:id="@+id/first"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="First Time" />
+
+                                <RadioButton
+                                    android:id="@+id/second"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Second Time" />
+
+
+                            </RadioGroup>
+                        </LinearLayout>
+
                 </RelativeLayout>
+
 
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cv_student_spinner_2"
                 android:layout_width="0dp"
-                android:layout_height="150dp"
+                android:layout_height="200dp"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="4dp"
@@ -225,9 +260,44 @@
                         android:layout_below="@id/img_student_clock_2"
                         android:layout_alignRight="@id/student_timeSpinner_2"/>
 
+                        <LinearLayout
+                            android:id="@+id/cv_time"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="24dp"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="24dp"
+                            android:layout_marginBottom="10dp"
+                            android:layout_toRightOf="@id/img_student_clock_2"
+                            android:layout_below="@id/student_timeSpinner_2">
+
+                            <RadioGroup
+                                android:id="@+id/myRadioGroup2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:checkedButton="@+id/firstDep">
+
+                                <RadioButton
+                                    android:id="@+id/firstDep"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="First Time" />
+
+                                <RadioButton
+                                    android:id="@+id/secondDep"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="Second Time" />
+
+
+                            </RadioGroup>
+                        </LinearLayout>
+
                 </RelativeLayout>
 
             </androidx.cardview.widget.CardView>
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

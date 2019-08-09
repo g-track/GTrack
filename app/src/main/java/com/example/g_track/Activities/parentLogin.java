@@ -107,7 +107,6 @@ public class parentLogin extends AppCompatActivity {
                             User user = new User(parentLogin.this);
                             user.setUserId(id);
                             user.setUserType("Parent");
-                            Toast.makeText(parentLogin.this, "You are login Successfully.", Toast.LENGTH_SHORT).show();
                         }else {
                             Toast.makeText(parentLogin.this, "Password Wrong. Please try Again.", Toast.LENGTH_SHORT).show();
                         }

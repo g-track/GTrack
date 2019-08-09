@@ -48,7 +48,7 @@ public class ParentTrackBusService extends Service {
     private double previousLatitude=0,previousLongitude=0,nextLatitude,nextLongitude;
     private long prTime, nextTime;
     private int stopId, studentTime, counter=0;
-    private boolean  checkerparent;
+    private boolean  checkerparent, alertStatus;
     double lat ,lng;
     int[] timeArray = {5, 10,15, 20, 30, 45, 60};
 
@@ -91,6 +91,7 @@ public class ParentTrackBusService extends Service {
                     Parent parent = parentSnapshot.getValue(Parent.class);
                     if (parent.getChildStudentID() == Integer.valueOf(user.getUserId())) {
                         final int childId = parent.getChildStudentID();
+                        alertStatus = parent.isAlertStatus();
                         studentRef.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -204,25 +205,25 @@ public class ParentTrackBusService extends Service {
 
 
             checkerparent = sharedPreferences.getBoolean("CheckerParent", true);
-
-            if (checkerparent) {
-                for (int c = 0; c < 7; c++) {
-                    if (c == studentTime) {
-                        if (time <= (timeArray[c] * 60)) {
-                            timeCheckList.add(time);
-                            if(timeCheckList.size() == 3) {
-                                sendNotification("Bus will be at your stop in " + timeArray[c] + " minutes");
-                                checkerparent = false;
-                                if(!isRunning(getApplicationContext())){
-                                    stopSelf();
+            if(alertStatus){
+                if (checkerparent) {
+                    for (int c = 0; c < 7; c++) {
+                        if (c == studentTime) {
+                            if (time <= (timeArray[c] * 60)) {
+                                timeCheckList.add(time);
+                                if(timeCheckList.size() == 3) {
+                                    sendNotification("Bus will be at your stop in " + timeArray[c] + " minutes");
+                                    editor.putBoolean("CheckerParent", false);
+                                    editor.commit();
                                 }
+                            }else {
+                                timeCheckList.clear();
                             }
-                        }else {
-                            timeCheckList.clear();
                         }
                     }
                 }
             }
+
             long timeStamp2 = (System.currentTimeMillis() - sharedPreferences.getLong("TimeParent", System.currentTimeMillis()));
             if(timeStamp2 >= 43200000){
                 editor.putBoolean("CheckerParent", true); //TODO Turn 300000 into 12 hours
@@ -242,17 +243,6 @@ public class ParentTrackBusService extends Service {
         }
     }
 
-    public static boolean isRunning(Context ctx) {
-        ActivityManager activityManager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
-
-        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(Integer.MAX_VALUE);
-
-        for (ActivityManager.RunningTaskInfo task : tasks) {
-            if (ctx.getPackageName().equalsIgnoreCase(task.baseActivity.getPackageName()))
-                return true;
-        }
-        return false;
-    }
 
     private void sendNotification(String notificationDetails) {
         // Create an explicit content Intent that starts the main Activity.

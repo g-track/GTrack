@@ -2,8 +2,10 @@ package com.example.g_track.Fragments;
 
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.CompoundButton;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -35,6 +40,13 @@ import static android.R.layout.simple_spinner_item;
  * A simple {@link Fragment} subclass.
  */
 public class studentTimeSettingFragment extends Fragment {
+    private RadioGroup radioGroup, radioGroup2;
+    private RadioButton radioButtonFirst;
+    private RadioButton radioButtonSecond;
+    private RadioButton radioButtonFirstDep;
+    private RadioButton radioButtonSecondDep;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
     private Spinner timeSpinner;
     private Spinner departureTimeSpinner;
     private Switch OffOnAlert_btn;
@@ -58,12 +70,64 @@ public class studentTimeSettingFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_student_time_setting, container, false);
 
         initialization(view);
+        setRadioGroup();
+
+        int one = sharedPreferences.getInt("radioTime", 1);
+        if(one == 1){
+            radioButtonFirst.setChecked(true);
+            radioButtonSecond.setChecked(false);
+        }else if(one == 2){
+            radioButtonFirst.setChecked(false);
+            radioButtonSecond.setChecked(true);
+        }else{
+
+        }
+        int two = sharedPreferences.getInt("radioTimeDep", 1);
+        if(two == 1){
+            radioButtonFirstDep.setChecked(true);
+            radioButtonSecondDep.setChecked(false);
+        }else if(two == 2){
+            radioButtonFirstDep.setChecked(false);
+            radioButtonSecondDep.setChecked(true);
+        }else{
+
+        }
         setToogleButton();
         setSpinner();
         setColorOfSelectedItem();
         setOfOnAlert();
 
         return view;
+    }
+    private void setRadioGroup(){
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.first){
+                    editor.putInt("radioTime", 1);
+                    editor.commit();
+                }else if(checkedId == R.id.second){
+                    editor.putInt("radioTime", 2);
+                    editor.commit();
+                }
+                int n = sharedPreferences.getInt("radioTime", 3);
+            }
+        });
+        radioGroup2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                if(checkedId == R.id.firstDep){
+                    editor.putInt("radioTimeDep", 1);
+                    editor.commit();
+                }else if(checkedId == R.id.secondDep){
+                    editor.putInt("radioTimeDep", 2);
+                    editor.commit();
+                }
+                int n = sharedPreferences.getInt("radioTimeDep", 3);
+            }
+        });
+
+
     }
 
 
@@ -195,9 +259,18 @@ public class studentTimeSettingFragment extends Fragment {
         OffOnAlert_btn = view.findViewById(R.id.switch_id);
         studentData = new Student();
         student = new Student();
+        radioGroup = view.findViewById(R.id.myRadioGroup);
+        radioButtonFirst = view.findViewById(R.id.first);
+        radioButtonSecond = view.findViewById(R.id.second);
+
+        radioGroup2 = view.findViewById(R.id.myRadioGroup2);
+        radioButtonFirstDep = view.findViewById(R.id.firstDep);
+        radioButtonSecondDep= view.findViewById(R.id.secondDep);
         alert_time_set_layout = view.findViewById(R.id.layout_spinner_1);
         departureTimeSpinner = view.findViewById(R.id.student_timeSpinner_2);
         databaseReference = FirebaseDatabase.getInstance().getReference("student");
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        editor = sharedPreferences.edit();
     }
 
     private void setArrivalTime(final int pos) {
